@@ -28,14 +28,14 @@ export default class LandingScreen extends React.Component {
           contentContainerStyle={styles.contentContainer}
         >
           <View style={styles.welcomeContainer}>
-            <Image
+            {/* <Image
               source={
                 __DEV__
                   ? require("../Images/logo.png")
                   : require("../assets/images/robot-prod.png")
               }
               style={styles.welcomeImage}
-            />
+            /> */}
           </View>
 
           <View style={styles.getStartedContainer}>
@@ -45,18 +45,28 @@ export default class LandingScreen extends React.Component {
               Our Mission Statement Goes Here
             </Text>
           </View>
+
           <View style={styles.gamesContainer}>
             <Text style={styles.gamesTitle}>Games: </Text>
-            <View />
+
             <Text>Memory </Text>
+
             <View style={styles.memoryGames}> </View>
+
             <Text>Problem Solving </Text>
+
             <View style={styles.memoryGames}> </View>
+
             <Text>Language</Text>
+
             <View style={styles.memoryGames}> </View>
+
             <Text>Speed </Text>
+
             <View style={styles.memoryGames}> </View>
+
             <Text>Math </Text>
+
             <View style={styles.memoryGames}> </View>
           </View>
         </ScrollView>
@@ -75,6 +85,7 @@ export default class LandingScreen extends React.Component {
       </View>
     );
   }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -179,7 +190,7 @@ const styles = StyleSheet.create({
   },
   navigationFilename: {
     marginTop: 5
-  },
+  }
   // helpContainer: {
   //   marginTop: 15,
   //   alignItems: "center"

@@ -49,7 +49,7 @@ export default class HomeScreen extends Component {
             </View>
 
           </View> */}
-            <Text style={styles.getStartedText}>Brain Train</Text>
+          <Text style={styles.getStartedText}>Brain Train</Text>
 
           <TouchableOpacity>
             <Button
@@ -61,6 +61,7 @@ export default class HomeScreen extends Component {
       </View>
     );
   }
+}
 
 const styles = StyleSheet.create({
   container: {
