@@ -62,7 +62,11 @@ const addGameSessionResults = (req, res, next) =>
 const editUserInfo = (req, res, next) => 
 {
   const dbInst = req.app.get('db');
-  res.status(200).json();
+  const { pword, pic } = req.body;
+  const { id } = req.params;
+  dbInst.edit_user_info([id, pword, pic])
+    .then(response => res.status(200).send(response))
+    .catch(err => console.log(`Error in edit_user_info() - ${err}`));
 };
 
 const editUserAchievements = (req, res, next) => 
