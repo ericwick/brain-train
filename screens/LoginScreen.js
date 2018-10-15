@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput
 } from "react-native";
+import AppNavigator from "./navigation/AppNavigator";
 
 class LoginScreen extends Component {
   constructor() {
@@ -33,16 +34,28 @@ class LoginScreen extends Component {
       <View style={styles.container}>
         <Text>This is the Login Page</Text>
 
+        <View>
         <TextInput
           onChange={e => this.handleUsername(e)}
           placeholder="USERNAME"
           style={styles.input}
         />
+        </View>
+        <View>
         <TextInput
           onChange={e => this.handlePassword(e)}
           placeholder="PASSWORD"
           style={styles.input}
         />
+        </View>
+
+        <View>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("Landing")} title="LandingScreen">
+          <Button>Submit</Button>
+          </TouchableOpacity>
+        </View>
+
+        <
 
         <TouchableOpacity>
           <Button

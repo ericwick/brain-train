@@ -5,7 +5,8 @@ import HomeScreen from "../screens/HomeScreen";
 
 const AppNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
-  Login: { screen: LoginScreen }
+  Login: { screen: LoginScreen },
+  Landing: { screen: LandingScreen }
 });
 
 export default AppNavigator;
