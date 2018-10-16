@@ -28,7 +28,7 @@ export default class LandingScreen extends React.Component {
           contentContainerStyle={styles.contentContainer}
         >
           <View style={styles.welcomeContainer}>
-            {/* <Image
+            <Text>{/* <Image
               source={
                 __DEV__
                   ? require("../Images/logo.png")
@@ -36,6 +36,7 @@ export default class LandingScreen extends React.Component {
               }
               style={styles.welcomeImage}
             /> */}
+            </Text>
           </View>
 
           <View style={styles.getStartedContainer}>
@@ -72,15 +73,17 @@ export default class LandingScreen extends React.Component {
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
-          {/* NAVIGATION BAR TO BE RENDERED HERE */}
+          <Text>
+            {/* NAVIGATION BAR TO BE RENDERED HERE */}
 
-          {/* <View
-            style={[styles.codeHighlightContainer, styles.navigationFilename]}
-          >
-            <MonoText style={styles.codeHighlightText}>
-              navigation/MainTabNavigator.js
-            </MonoText>
-          </View> */}
+            {/* <View
+              style={[styles.codeHighlightContainer, styles.navigationFilename]}
+            >
+              <MonoText style={styles.codeHighlightText}>
+                navigation/MainTabNavigator.js
+              </MonoText>
+            </View> */}
+          </Text>
         </View>
       </View>
     );

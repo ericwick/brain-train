@@ -10,17 +10,21 @@ const {
   getUser,
   getUsersGameStats,
   getGameStats,
-  getGamesList,
   addUser,
   addGameSessionResults,
   editUserInfo,
   editUserAchievements,
   editUserScores,
   removeUser,
-  removeUserStats
-} = require("./controller");
+  removeUserStats,
+  getServerTime
+} = require("./controllers/controller");
 
-const { getGAMEDATA } = require("./gameController");
+const {
+  getGamesList,
+  addNewGame,
+  getGAMEDATA
+} = require("./controllers/gameController");
 
 const app = express();
 app.use(json());
@@ -35,17 +39,20 @@ app.use(express.static(`${__dirname}/../build`));
 
 app.get("/api/users", getAllUsers);
 app.get("/api/user/:id", getUser);
+app.post("/api/user", addUser); // Takes in { uname, pword } on req.body;
+app.put("/api/user/:id", editUserInfo); // Takes in { pword, pic } on req.body;
+
 app.get("/api/stats/:id", getUsersGameStats);
 app.get("/api/stats", getGameStats);
+app.post("/api/stats", addGameSessionResults); // Takes in { uid, gid, startTime, score } on req.body;
+
 app.get("/api/games", getGamesList);
-// app.get('/api/game',          getGAMEDATA);           //placeholder for gameController
-app.post("/api/user", addUser);
-// Takes in { uname, pword } on req.body;
-// app.post('/api/game',         addGameSessionResults);
-// app.put('/api/user',          editUserInfo); //takes in a block of user info. Includes username, password, anon toggle, favorites, etc
-// app.put('/api/user/achieve',  editUserAchievements);
-// app.put('/api/user/stats',    editUserScores);
-// app.delete('/api/user',       removeUser);
-// app.delete('/api/user/stats', removeUserStats);
+// app.get("/api/game", getGAMEDATA);           //placeholder for gameController
+
+app.get("/api/time", getServerTime);
+// app.put("/api/user/achieve",  editUserAchievements);
+// app.put("/api/user/stats",    editUserScores);
+// app.delete("/api/user",       removeUser);
+// app.delete("/api/user/stats", removeUserStats);
 
 app.listen(port, () => console.log(`Listening for requests on port ${port}`));

@@ -71,11 +71,11 @@ class LoginScreen extends Component {
   }
 
   render() {
-    let userCheck = users.map((e, i) => {
-      e.uname === this.state.username && e.password === this.state.password
-        ? handleSubmit()
-        : handleNewUser();
-    });
+    // let userCheck = users.map((e, i) => {
+    //   e.uname === this.state.username && e.password === this.state.password
+    //     ? handleSubmit()
+    //     : handleNewUser();
+    // });
 
     return (
       <View style={styles.container}>
@@ -86,7 +86,6 @@ class LoginScreen extends Component {
             onChange={e => this.handleUsername(e)}
             placeholder="USERNAME"
             style={styles.input}
-            // leftIcon={<Icon name="user" size={24} color="black" />}
           />
         </View>
         <View>
@@ -94,12 +93,10 @@ class LoginScreen extends Component {
             onChange={e => this.handlePassword(e)}
             placeholder="PASSWORD"
             style={styles.input}
-
-            // leftIcon={<Icon name="lock" size={24} color="black" />}
           />
         </View>
 
-        <TouchableOpacity style={styles.buttonStyle} onPress={userCheck}>
+        <TouchableOpacity style={styles.buttonStyle}>
           <Button
             onPress={() => this.props.navigation.navigate("Landing")}
             title="START"
@@ -148,7 +145,6 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: 50,
     marginLeft: 60,
-    fontSize: 40,
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 5

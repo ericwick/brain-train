@@ -33,32 +33,34 @@ const getGameStats = (req, res, next) => {
     .catch(err => console.log(`Error in get_global_stats() - ${err}`));
 };
 
-const getGamesList = (req, res, next) => {
-  const dbInst = req.app.get("db");
-  dbInst
-    .get_games_list()
-    .then(response => res.status(200).send(response))
-    .catch(err => console.log(`Error in get_games_list() - ${err}`));
-};
-
 const addUser = (req, res, next) => {
   const dbInst = req.app.get("db");
   const { uname, pword } = req.body;
   dbInst
-    .add_user(uname, pword)
+    .add_user([uname, pword])
     .then(response => res.status(200).send(response))
     .catch(err => console.log(`Error in add_user() - ${err}`));
 };
 
 const addGameSessionResults = (req, res, next) => {
   const dbInst = req.app.get("db");
-  res.status(200).json();
+  const { uid, gid, startTime, score } = req.body;
+  dbInst
+    .add_game_result([uid, gid, startTime, score])
+    .then(response => res.status(200).send(response))
+    .catch(err => console.log(`Error in add_game_result() - ${err}`));
 };
 
 const editUserInfo = (req, res, next) => {
   const dbInst = req.app.get("db");
-  res.status(200).json();
+  const { pword, pic } = req.body;
+  const { id } = req.params;
+  dbInst
+    .edit_user_info([id, pword, pic])
+    .then(response => res.status(200).send(response))
+    .catch(err => console.log(`Error in edit_user_info() - ${err}`));
 };
+
 const editUserAchievements = (req, res, next) => {
   //takes in a block of user info. Includes username, password, anon toggle, favorites, etc
   const dbInst = req.app.get("db");
@@ -80,17 +82,25 @@ const removeUserStats = (req, res, next) => {
   res.status(200).json();
 };
 
+const getServerTime = (req, res, next) => {
+  const dbInst = req.app.get("db");
+  dbInst
+    .get_current_time()
+    .then(response => res.status(200).send(response))
+    .catch(err => console.log(`Error in get_current_time() - ${err}`));
+};
+
 module.exports = {
   getAllUsers,
   getUser,
   getUsersGameStats,
   getGameStats,
-  getGamesList,
   addUser,
   addGameSessionResults,
   editUserInfo,
   editUserAchievements,
   editUserScores,
   removeUser,
-  removeUserStats
+  removeUserStats,
+  getServerTime
 };
