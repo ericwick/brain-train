@@ -98,14 +98,14 @@ class LoginScreen extends Component {
 
         <TouchableOpacity style={styles.buttonStyle}>
           <Button
-            onPress={() => this.props.navigation.navigate("Landing")}
+            onPress={() => this.props.navigation.navigate("Home")}
             title="START"
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.buttonStyle}>
           <Button
-            onPress={() => this.props.navigation.navigate("Home")}
+            onPress={() => this.props.navigation.navigate("Title")}
             title="BACK"
           />
         </TouchableOpacity>
