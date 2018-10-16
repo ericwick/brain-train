@@ -10,7 +10,6 @@ const {
   getUser,
   getUsersGameStats,
   getGameStats,
-  getGamesList,
   addUser,
   addGameSessionResults,
   editUserInfo,
@@ -21,7 +20,11 @@ const {
   getServerTime
 } = require("./controllers/controller");
 
-const { getGAMEDATA } = require("./controllers/gameController");
+const { 
+  getGamesList,
+  addNewGame,
+  getGAMEDATA
+} = require("./controllers/gameController");
 
 const app = express();
 app.use(json());

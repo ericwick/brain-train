@@ -33,14 +33,6 @@ const getGameStats = (req, res, next) =>
     .catch(err => console.log(`Error in get_global_stats() - ${err}`));
 };
 
-const getGamesList = (req, res, next) => 
-{
-  const dbInst = req.app.get('db');
-  dbInst.get_games_list()
-    .then(response => res.status(200).send(response))
-    .catch(err => console.log(`Error in get_games_list() - ${err}`));
-};
-
 const addUser = (req, res, next) => 
 {
   const dbInst = req.app.get('db');
@@ -107,7 +99,6 @@ module.exports = {
   getUser,
   getUsersGameStats,
   getGameStats,
-  getGamesList,
   addUser,
   addGameSessionResults,
   editUserInfo,
