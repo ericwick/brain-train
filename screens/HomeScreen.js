@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import {
   Image,
+  ImageBackground,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Button
+  View
 } from "react-native";
 import { WebBrowser } from "expo";
 import AppNavigator from "../navigation/AppNavigator";
+import { Button } from "react-native-elements";
 
 import { MonoText } from "../components/StyledText";
 
@@ -21,59 +22,58 @@ export default class HomeScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ImageBackground
+        source={require("../assets/images/cloud-background.jpg")}
+        style={styles.backgroundImage}
+      >
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <View style={styles.welcomeContainer}>
+          {/* <View style={styles.welcomeContainer}>
             <Image
-              source={
-                __DEV__
-                  ? require("../assets/images/robot-dev.png")
-                  : require("../assets/images/robot-prod.png")
-              }
+              source={require("../assets/images/train.png")}
               style={styles.welcomeImage}
             />
-          </View>
-
-          {/* <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}>Brain Train (Development)</Text>
-
-            <View
-              style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-            >
-              <MonoText style={styles.codeHighlightText}>
-                screens/HomeScreen.js
-              </MonoText>
-            </View>
-
           </View> */}
+
           <Text style={styles.getStartedText}>Brain Train</Text>
 
-          <TouchableOpacity>
-            <Button
-              onPress={() => this.props.navigation.navigate("Login")}
-              title="Login"
-            />
-          </TouchableOpacity>
+          <Button
+            onPress={() => this.props.navigation.navigate("Login")}
+            title="Login"
+            buttonStyle={{
+              backgroundColor: "#06439E",
+              width: 200,
+              height: 50,
+              marginTop: 50,
+              marginLeft: 70,
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 5
+            }}
+          />
         </ScrollView>
-      </View>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff"
+  backgroundImage: {
+    flex: 1
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: "rgba(0,0,0,0.4)",
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center"
+  login: {
+    height: 25,
+    width: 75,
+    marginVertical: 300,
+    marginHorizontal: 150,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "black",
+    borderStyle: "solid",
+    backgroundColor: "white"
   },
   contentContainer: {
     paddingTop: 30
@@ -84,70 +84,17 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   welcomeImage: {
-    width: 100,
-    height: 80,
+    width: 450,
+    height: 280,
     resizeMode: "contain",
-    marginTop: 3,
+    marginTop: 30,
+    marginBottom: 15,
     marginLeft: -10
   },
-  getStartedContainer: {
-    alignItems: "center",
-    marginHorizontal: 50
-  },
-  homeScreenFilename: {
-    marginVertical: 7
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)"
-  },
-  codeHighlightContainer: {
-    backgroundColor: "rgba(0,0,0,0.05)",
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
   getStartedText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    lineHeight: 24,
+    marginTop: 200,
+    fontSize: 47,
+    color: "black",
     textAlign: "center"
-  },
-  tabBarInfoContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: "black",
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: "center",
-    backgroundColor: "#fbfbfb",
-    paddingVertical: 20
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    textAlign: "center"
-  },
-  navigationFilename: {
-    marginTop: 5
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: "center"
-  },
-  helpLink: {
-    paddingVertical: 15
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: "#2e78b7"
   }
 });
