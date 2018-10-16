@@ -14,15 +14,20 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "dotenv": "^6.1.0",
     "expo": "^30.0.1",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "massive": "^5.5.0",
     "node-adb": "^0.1.6",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
-    "react-navigation": "^2.18.0"
+    "react-native-elements": "^0.19.1",
+    "react-native-vector-icons": "^6.0.2",
+    "react-navigation": "^2.18.0",
+    "sessions": "0.0.2-7"
   },
   "devDependencies": {
     "jest-expo": "30.0.0"
