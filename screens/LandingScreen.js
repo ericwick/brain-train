@@ -6,19 +6,42 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Button
 } from "react-native";
 import { WebBrowser } from "expo";
 import AppNavigator from "../navigation/AppNavigator";
+import axios from "axios";
 
 import { MonoText } from "../components/StyledText";
-// import Icon from 'react-native-vector-icons/FontAwesome';
-// import { Input } from "react-native-elements";
 
 export default class LandingScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: []
+    };
+  }
+  // We'll grab all users from reducer once its set up
+
   static navigationOptions = {
     header: null
   };
+
+  // componentDidMount() {
+  //   axios
+  //     .get("http://localhost:3001/api/users")
+  //     .then(response => {
+  //       console.log(response.data);
+  //       this.setState({
+  //         users: response.data
+  //       });
+  //       console.log(this.state.users, "ALL USERS");
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
 
   render() {
     return (
@@ -27,16 +50,7 @@ export default class LandingScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <View style={styles.welcomeContainer}>
-            {/* <Image
-              source={
-                __DEV__
-                  ? require("../Images/logo.png")
-                  : require("../assets/images/robot-prod.png")
-              }
-              style={styles.welcomeImage}
-            /> */}
-          </View>
+          <Text>{this.props.username}</Text>
 
           <View style={styles.getStartedContainer}>
             <Text style={styles.dailyChallenge}>Daily Challenge</Text>
@@ -44,6 +58,13 @@ export default class LandingScreen extends React.Component {
             <Text style={styles.missionStatement}>
               Our Mission Statement Goes Here
             </Text>
+          </View>
+
+          <View>
+            <Button
+              onPress={() => this.props.navigation.navigate("Home")}
+              title="LOGOUT"
+            />
           </View>
 
           <View style={styles.gamesContainer}>
@@ -117,16 +138,6 @@ const styles = StyleSheet.create({
   },
   homeScreenFilename: {
     marginVertical: 7
-  },
-  getStartedContainer: {
-    alignItems: "center",
-    // flex: "flex",
-    // borderColor: "black",
-    // borderWidth: 1,
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    lineHeight: 24,
-    textAlign: "center"
   },
   dailyChallenge: {
     borderColor: "black",

@@ -30,18 +30,11 @@ export default class HomeScreen extends Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          {/* <View style={styles.welcomeContainer}>
-            <Image
-              source={require("../assets/images/train.png")}
-              style={styles.welcomeImage}
-            />
-          </View> */}
-
           <Text style={styles.getStartedText}>Brain Train</Text>
 
           <Button
             onPress={() => this.props.navigation.navigate("Login")}
-            title="Login"
+            title="PLAY"
             buttonStyle={{
               backgroundColor: "#06439E",
               width: 200,

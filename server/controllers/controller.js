@@ -2,7 +2,10 @@ const getAllUsers = (req, res, next) => {
   const dbInst = req.app.get("db");
   dbInst
     .get_users()
-    .then(response => res.status(200).send(response))
+    .then(response => {
+      console.log(response);
+      res.status(200).send(response);
+    })
     .catch(err => console.log(`Error in get_users() - ${err}`));
 };
 
@@ -43,10 +46,14 @@ const getGamesList = (req, res, next) => {
 
 const addUser = (req, res, next) => {
   const dbInst = req.app.get("db");
-  const { uname, pword } = req.body;
+  const { username, password } = req.body;
+  console.log("REQ.BODY", req.body);
   dbInst
-    .add_user(uname, pword)
-    .then(response => res.status(200).send(response))
+    .add_user([username, password])
+    .then(response => {
+      console.log(response);
+      res.status(200).send(response);
+    })
     .catch(err => console.log(`Error in add_user() - ${err}`));
 };
 

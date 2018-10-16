@@ -18,9 +18,9 @@ const {
   editUserScores,
   removeUser,
   removeUserStats
-} = require("./controller");
+} = require("./controllers/controller");
 
-const { getGAMEDATA } = require("./gameController");
+const { getGAMEDATA } = require("./controllers/gameController");
 
 const app = express();
 app.use(json());
