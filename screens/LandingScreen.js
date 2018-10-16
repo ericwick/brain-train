@@ -14,6 +14,8 @@ import AppNavigator from "../navigation/AppNavigator";
 import { MonoText } from "../components/StyledText";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import { Input } from "react-native-elements";
+import { Button, Tile } from "react-native-elements";
+
 
 export default class LandingScreen extends React.Component {
   static navigationOptions = {
@@ -23,76 +25,110 @@ export default class LandingScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        {/* <Input placeholder="BASIC INPUT" /> */}
+        <Button
+          raised
+          icon={{ name: "home", size: 32 }}
+          buttonStyle={{ backgroundColor: "red", borderRadius: 10 }}
+          textStyle={{ textAlign: "center" }}
+          title={`Welcome to\nReact Native Elements`}
+        />
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
           <View style={styles.welcomeContainer}>
-            <Text>{/* <Image
+            <Image
               source={
                 __DEV__
-                  ? require("../Images/logo.png")
-                  : require("../assets/images/robot-prod.png")
+                  ? require("../assets/images/logo.png")
+                  : require("../assets/images/logo.png")
               }
               style={styles.welcomeImage}
-            /> */}
-            </Text>
+            />
           </View>
 
           <View style={styles.getStartedContainer}>
+            {this._maybeRenderDevelopmentModeWarning()}
+
             <Text style={styles.dailyChallenge}>Daily Challenge</Text>
 
-            <Text style={styles.missionStatement}>
-              Our Mission Statement Goes Here
-            </Text>
+              <Tile
+                imageSrc={require("../assets/images/Brain.jpg")}
+                title="Our Mission at Brain Train is to provide...some shit goes here "
+                featured
+                caption="Some Caption Text"
+              />
+             
           </View>
-
           <View style={styles.gamesContainer}>
             <Text style={styles.gamesTitle}>Games: </Text>
-
+            <View />
             <Text>Memory </Text>
-
             <View style={styles.memoryGames}> </View>
-
             <Text>Problem Solving </Text>
-
             <View style={styles.memoryGames}> </View>
-
             <Text>Language</Text>
-
             <View style={styles.memoryGames}> </View>
-
             <Text>Speed </Text>
-
             <View style={styles.memoryGames}> </View>
-
             <Text>Math </Text>
-
             <View style={styles.memoryGames}> </View>
           </View>
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
-          <Text>
-            {/* NAVIGATION BAR TO BE RENDERED HERE */}
-
-            {/* <View
-              style={[styles.codeHighlightContainer, styles.navigationFilename]}
-            >
-              <MonoText style={styles.codeHighlightText}>
-                navigation/MainTabNavigator.js
-              </MonoText>
-            </View> */}
+          <Text style={styles.tabBarInfoText}>
+            This is a tab bar. You can edit it in:
           </Text>
+
+          <View
+            style={[styles.codeHighlightContainer, styles.navigationFilename]}
+          >
+            <MonoText style={styles.codeHighlightText}>
+              navigation/MainTabNavigator.js
+            </MonoText>
+          </View>
         </View>
       </View>
     );
   }
+
+  _maybeRenderDevelopmentModeWarning() {
+    if (__DEV__) {
+      const learnMoreButton = (
+        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
+          {/* Learn more */}
+        </Text>
+      );
+
+      return <Text style={styles.developmentModeText}>{learnMoreButton}</Text>;
+    } else {
+      return (
+        <Text style={styles.developmentModeText}>
+          You are not in development mode, your app will run at full speed.
+        </Text>
+      );
+    }
+  }
+
+  _handleLearnMorePress = () => {
+    WebBrowser.openBrowserAsync(
+      "https://docs.expo.io/versions/latest/guides/development-mode"
+    );
+  };
+
+  _handleHelpPress = () => {
+    WebBrowser.openBrowserAsync(
+      "https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes"
+    );
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column", 
     backgroundColor: "#fff"
   },
   developmentModeText: {
@@ -111,14 +147,14 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   welcomeImage: {
-    width: 120,
-    height: 90,
+    width: 150,
+    height: 120,
     resizeMode: "contain",
     marginTop: 3,
     marginLeft: -10
     // marginRight:100
   },
-  homeScreenFilename: {
+  LandingScreenFilename: {
     marginVertical: 7
   },
   getStartedContainer: {
@@ -150,7 +186,7 @@ const styles = StyleSheet.create({
     color: "rgba(96,100,109, 1)",
     lineHeight: 24,
     textAlign: "center",
-    marginBottom: 10
+    marginBottom: 20
   },
   gamesTitle: {
     fontSize: 24
@@ -162,7 +198,7 @@ const styles = StyleSheet.create({
   memoryGames: {
     // alignItems: "left",
     height: 75,
-    width: 250,
+    width: 300,
     borderWidth: 1,
     borderColor: "black"
   },
@@ -193,16 +229,16 @@ const styles = StyleSheet.create({
   },
   navigationFilename: {
     marginTop: 5
+  },
+  helpContainer: {
+    marginTop: 15,
+    alignItems: "center"
+  },
+  helpLink: {
+    paddingVertical: 15
+  },
+  helpLinkText: {
+    fontSize: 14,
+    color: "#2e78b7"
   }
-  // helpContainer: {
-  //   marginTop: 15,
-  //   alignItems: "center"
-  // },
-  // helpLink: {
-  //   paddingVertical: 15
-  // },
-  // helpLinkText: {
-  //   fontSize: 14,
-  //   color: "#2e78b7"
-  // }
 });
