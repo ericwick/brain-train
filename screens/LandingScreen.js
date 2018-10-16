@@ -12,8 +12,12 @@ import {
 import { WebBrowser } from "expo";
 import AppNavigator from "../navigation/AppNavigator";
 import axios from "axios";
+import Nav from "../components/NavBar/Nav";
 
 import { MonoText } from "../components/StyledText";
+// import Icon from 'react-native-vector-icons/FontAwesome';
+// import { Input } from "react-native-elements";
+import { Tile } from "react-native-elements";
 
 export default class LandingScreen extends React.Component {
   constructor(props) {
@@ -28,81 +32,65 @@ export default class LandingScreen extends React.Component {
     header: null
   };
 
-  // componentDidMount() {
-  //   axios
-  //     .get("http://localhost:3001/api/users")
-  //     .then(response => {
-  //       console.log(response.data);
-  //       this.setState({
-  //         users: response.data
-  //       });
-  //       console.log(this.state.users, "ALL USERS");
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }
-
   render() {
     return (
       <View style={styles.container}>
+        {/* <Button
+          raised
+          icon={{ name: "home", size: 32 }}
+          buttonStyle={{
+            backgroundColor: "red",
+            borderRadius: 10,
+            marginTop: 40
+          }}
+          textStyle={{ textAlign: "center" }}
+          title={`Welcome to\nReact Native Elements`}
+        /> */}
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Text>{this.props.username}</Text>
-
-          <View style={styles.getStartedContainer}>
-            <Text style={styles.dailyChallenge}>Daily Challenge</Text>
-
-            <Text style={styles.missionStatement}>
-              Our Mission Statement Goes Here
-            </Text>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={require("../assets/images/logo.png")}
+              style={styles.welcomeImage}
+            />
           </View>
 
-          <View>
-            <Button
-              onPress={() => this.props.navigation.navigate("Home")}
-              title="LOGOUT"
+          <View style={styles.dailyChallenge}>
+            <Button title="DAILY CHALLENGE" />
+          </View>
+
+          <View style={styles.tilePic}>
+            <Tile
+              imageSrc={require("../assets/images/Brain.jpg")}
+              title="Our Mission at Brain Train is to provide...some shit goes here "
+              featured
+              caption="Some Caption Text"
             />
           </View>
 
           <View style={styles.gamesContainer}>
-            <Text style={styles.gamesTitle}>Games: </Text>
+            <Text style={styles.gamesTitle}>GAMES </Text>
+            <View />
 
-            <Text>Memory </Text>
-
-            <View style={styles.memoryGames}> </View>
-
-            <Text>Problem Solving </Text>
-
-            <View style={styles.memoryGames}> </View>
-
-            <Text>Language</Text>
-
-            <View style={styles.memoryGames}> </View>
-
-            <Text>Speed </Text>
-
-            <View style={styles.memoryGames}> </View>
-
-            <Text>Math </Text>
-
-            <View style={styles.memoryGames}> </View>
+            <View style={styles.memoryGames}>
+              <Button title="MEMORY" />
+            </View>
+            <View style={styles.memoryGames}>
+              <Button title="PROBLEM SOLVING" />
+            </View>
+            <View style={styles.memoryGames}>
+              <Button title="LANGUAGE" />
+            </View>
+            <View style={styles.memoryGames}>
+              <Button title="SPEED" />
+            </View>
+            <View style={styles.memoryGames}>
+              <Button title="MATH" />
+            </View>
           </View>
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          {/* NAVIGATION BAR TO BE RENDERED HERE */}
-
-          {/* <View
-            style={[styles.codeHighlightContainer, styles.navigationFilename]}
-          >
-            <MonoText style={styles.codeHighlightText}>
-              navigation/MainTabNavigator.js
-            </MonoText>
-          </View> */}
-        </View>
       </View>
     );
   }
@@ -111,14 +99,8 @@ export default class LandingScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: "rgba(0,0,0,0.4)",
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center"
+    flexDirection: "column",
+    backgroundColor: "#3783F5"
   },
   contentContainer: {
     paddingTop: 30
@@ -129,15 +111,12 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   welcomeImage: {
-    width: 120,
-    height: 90,
-    resizeMode: "contain",
-    marginTop: 3,
-    marginLeft: -10
+    width: 380,
+    height: 320,
+    resizeMode: "contain"
+    // marginTop: 3
+    // marginLeft: -10
     // marginRight:100
-  },
-  homeScreenFilename: {
-    marginVertical: 7
   },
   dailyChallenge: {
     borderColor: "black",
@@ -158,59 +137,42 @@ const styles = StyleSheet.create({
     color: "rgba(96,100,109, 1)",
     lineHeight: 24,
     textAlign: "center",
-    marginBottom: 10
+    marginBottom: 20
   },
   gamesTitle: {
-    fontSize: 24
+    fontSize: 35,
+    textAlign: "center",
+    marginRight: 20
   },
   gamesContainer: {
     marginLeft: 20
     // alignItems: "center"
   },
-  memoryGames: {
-    // alignItems: "left",
-    height: 75,
-    width: 250,
+  dailyChallenge: {
+    backgroundColor: "rgb(6,67,158)",
+    height: 150,
+    width: 350,
+    paddingTop: 45,
     borderWidth: 1,
-    borderColor: "black"
+    borderColor: "black",
+    borderRadius: 3,
+    marginTop: 40,
+    marginBottom: 80,
+    marginLeft: 10
   },
-  tabBarInfoContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: "black",
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: "center",
-    backgroundColor: "#fbfbfb",
-    paddingVertical: 20
+  memoryGames: {
+    backgroundColor: "rgb(6,67,158)",
+    height: 95,
+    width: 280,
+    paddingTop: 25,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 3,
+    marginVertical: 30,
+    marginLeft: 25
   },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    textAlign: "center"
-  },
-  navigationFilename: {
-    marginTop: 5
+  tilePic: {
+    marginTop: 10,
+    marginBottom: 70
   }
-  // helpContainer: {
-  //   marginTop: 15,
-  //   alignItems: "center"
-  // },
-  // helpLink: {
-  //   paddingVertical: 15
-  // },
-  // helpLinkText: {
-  //   fontSize: 14,
-  //   color: "#2e78b7"
-  // }
 });

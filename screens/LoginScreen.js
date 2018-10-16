@@ -23,8 +23,6 @@ class LoginScreen extends Component {
       users: [],
       newUser: false
     };
-    this.handleNewUser = this.handleNewUser.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
   }
 
@@ -41,54 +39,50 @@ class LoginScreen extends Component {
       });
   }
 
-  handleSubmit(id) {
-    users.map((e, i) => {
-      if (this.state.username === e.uname) {
-        id = e.id;
-      }
-    });
-    axios
-      .get(`http://localhost:3001/api/user/${id}`)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  handleNewUser() {
-    let { username, password } = this.state;
-    axios
-      .post("http://localhost:3001/api/user", { username, password })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   handleLogin() {
-    if (!this.state.users.length) {
-      return null;
-    } else {
-      this.state.users.map((e, i) => {
-        e.uname === this.state.username && e.password === this.state.password
-          ? () => this.handleSubmit()
-          : () => this.handleNewUser();
+    let { users, username, password } = this.state;
+    var userCheck = () => {
+      if (!users.length) {
+        return null;
+      } else {
+        for (var i = 0; i < users.length; i++) {
+          users[i].uname === username && users[i].password === password
+            ? () => handleSubmit()
+            : () => handleNewUser(username, password);
+        }
+      }
+    };
+    var handleSubmit = async () => {
+      let id = 0;
+      await users.map((e, i) => {
+        if (username === e.uname) {
+          id = e.id;
+        }
       });
-    }
-    function login() {
-      this.props.navigation.navigate("Landing");
-    }
-    login();
+      axios
+        .get(`http://localhost:3001/api/user/${id}`)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+
+    var handleNewUser = (uname, pword) => {
+      axios
+        .post("http://localhost:3001/api/user", { uname, pword })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    userCheck();
   }
 
   render() {
-    console.log(this.state.username, "USERNAME");
-    console.log(this.state.password, "PASSWORD");
-    console.log(this.state.users, "USERS");
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.loginTitle}>LOGIN</Text>
@@ -110,8 +104,14 @@ class LoginScreen extends Component {
           />
         </View>
 
-        <TouchableOpacity style={styles.startButtonStyle}>
-          <Button onPress={() => this.handleLogin()} title="START" />
+        <TouchableOpacity
+          style={styles.startButtonStyle}
+          onPress={this.handleLogin}
+        >
+          <Button
+            title="START"
+            onPress={() => this.props.navigation.navigate("Landing")}
+          />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.backButtonStyle}>
@@ -120,12 +120,6 @@ class LoginScreen extends Component {
             title="BACK"
           />
         </TouchableOpacity>
-
-        {/* <LandingScreen
-          style={styles.landing}
-          username={this.state.username}
-          password={this.state.password}
-        /> */}
       </ScrollView>
     );
   }

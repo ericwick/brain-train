@@ -1,13 +1,11 @@
 import React from "react";
-import { createStackNavigator } from "react-navigation";
-import LoginScreen from "../screens/LoginScreen";
+import { createSwitchNavigator } from "react-navigation";
 import HomeScreen from "../screens/HomeScreen";
+import LoginScreen from "../screens/LoginScreen";
 import LandingScreen from "../screens/LandingScreen";
 
-const AppNavigator = createStackNavigator({
+export default createSwitchNavigator({
   Home: { screen: HomeScreen },
   Login: { screen: LoginScreen },
   Landing: { screen: LandingScreen }
 });
-
-export default AppNavigator;
