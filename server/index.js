@@ -39,7 +39,8 @@ app.get("/api/stats/:id", getUsersGameStats);
 app.get("/api/stats", getGameStats);
 app.get("/api/games", getGamesList);
 // app.get('/api/game',          getGAMEDATA);           //placeholder for gameController
-// app.post('/api/user',         addUser);               // Takes in { uname, pword } on req.body;
+app.post("/api/user", addUser);
+// Takes in { uname, pword } on req.body;
 // app.post('/api/game',         addGameSessionResults);
 // app.put('/api/user',          editUserInfo); //takes in a block of user info. Includes username, password, anon toggle, favorites, etc
 // app.put('/api/user/achieve',  editUserAchievements);
