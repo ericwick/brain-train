@@ -4,6 +4,7 @@ import {  Icon } from "react-native-elements";
 
 import { ExpoLinksView } from "@expo/samples";
 import SocialMedia from "../components/SocialMedia/SocialMedia";
+import AppNavigator from '../navigation/AppNavigator';
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -18,7 +19,7 @@ export default class LinksScreen extends React.Component {
           <Button
             icon={<Icon name="arrow-right" size={15} color="blue" />}
             title="Leadboards"
-            onPress= {() => this.props.navigation.navigate("Leaderboards")}
+            onPress= {() => this.props.navigation.navigate("Leadboards")}
             />
         </TouchableOpacity>
         <SocialMedia />
