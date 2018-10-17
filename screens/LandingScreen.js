@@ -15,6 +15,7 @@ import { MonoText } from "../components/StyledText";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import { Input } from "react-native-elements";
 import { Button, Tile } from "react-native-elements";
+import PopupModal from '../components/popupModal/popupModal';
 
 
 export default class LandingScreen extends React.Component {
@@ -63,17 +64,21 @@ export default class LandingScreen extends React.Component {
           </View>
           <View style={styles.gamesContainer}>
             <Text style={styles.gamesTitle}>Games: </Text>
-            <View />
             <Text>Memory </Text>
-            <View style={styles.memoryGames}> </View>
+            <View style={styles.memoryGames}> 
+            </View>
             <Text>Problem Solving </Text>
-            <View style={styles.memoryGames}> </View>
+            <View style={styles.memoryGames}> 
+            </View>
             <Text>Language</Text>
-            <View style={styles.memoryGames}> </View>
+            <View style={styles.memoryGames}> 
+            </View>
             <Text>Speed </Text>
-            <View style={styles.memoryGames}> </View>
+            <View style={styles.memoryGames}> 
+            </View>
             <Text>Math </Text>
-            <View style={styles.memoryGames}> </View>
+            <View style={styles.memoryGames}> 
+            </View>
           </View>
         </ScrollView>
 

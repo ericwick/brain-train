@@ -29,7 +29,7 @@ export default class SettingsScreen extends Component {
           <Text style={styles.username}> Username </Text>
           <Text style={styles.editProfile}>Edit Profile</Text>
           <TouchableOpacity style={styles.editButton}
-          onPress={()=>{console.log('This button works')}}
+          onPress={() => this.props.navigation.navigate("editProfile")}
             >
             <Image
               style={{ width: 40, height: 40 }}
@@ -37,7 +37,7 @@ export default class SettingsScreen extends Component {
                 uri:
                   "https://d30y9cdsu7xlg0.cloudfront.net/png/6052-200.png"
               }}
-            />{" "}
+            />
           </TouchableOpacity>
         </View>
       </View>

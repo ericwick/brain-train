@@ -12,7 +12,7 @@ export default class SocialMedia extends Component {
         {/* <SocialIcon light type="medium" /> */}
         {/* <SocialIcon light raised={false} type="medium" /> */}
         <SocialIcon style={styles.socialButton} title="Sign In With Facebook" button type="facebook" />
-        <SocialIcon style={styles.socialButton} title="Some Twitter Message" button="true" raised underlayColor type="twitter" />
+        <SocialIcon style={styles.socialButton} title="Some Twitter Message" button raised underlayColor="grey" type="twitter" />
         <SocialIcon button type="medium" />
       </View>
     );
