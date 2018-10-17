@@ -1,78 +1,78 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { Component } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import PopupDialog, {
   DialogTitle,
   DialogButton,
   SlideAnimation,
   ScaleAnimation,
-  FadeAnimation,
-} from 'react-native-popup-dialog';
+  FadeAnimation
+} from "react-native-popup-dialog";
 
-const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const slideAnimation = new SlideAnimation({ slideFrom: "bottom" });
 const scaleAnimation = new ScaleAnimation();
 const fadeAnimation = new FadeAnimation({ animationDuration: 150 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
   dialogContentView: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
   navigationBar: {
-    borderBottomColor: '#b5b5b5',
+    borderBottomColor: "#b5b5b5",
     borderBottomWidth: 0.5,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff"
   },
   navigationTitle: {
-    padding: 10,
+    padding: 10
   },
   navigationButton: {
-    padding: 10,
+    padding: 10
   },
   navigationLeftButton: {
     paddingLeft: 20,
-    paddingRight: 40,
+    paddingRight: 40
   },
   navigator: {
-    flex: 1,
+    flex: 1
     // backgroundColor: '#000000',
-  },
+  }
 });
 
-export default class App extends Component {
+export default class EditProfile extends Component {
   state = {
-    dialogShow: false,
+    dialogShow: false
   };
 
   showScaleAnimationDialog = () => {
     this.scaleAnimationDialog.show();
-  }
+  };
 
-//   showSlideAnimationDialog = () => {
-//     this.slideAnimationDialog.show();
-//   }
+  //   showSlideAnimationDialog = () => {
+  //     this.slideAnimationDialog.show();
+  //   }
 
   showFadeAnimationDialog = () => {
     this.fadeAnimationDialog.show();
-  }
+  };
 
   render() {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <DialogButton
-            text="Game info"            
+            text="Game info"
             onPress={this.showScaleAnimationDialog}
           />
         </View>
 
         <PopupDialog
-          ref={(popupDialog) => {
+          ref={popupDialog => {
             this.scaleAnimationDialog = popupDialog;
           }}
           dialogAnimation={scaleAnimation}
@@ -84,7 +84,7 @@ export default class App extends Component {
                 this.scaleAnimationDialog.dismiss();
               }}
               key="button-1"
-            />,
+            />
           ]}
         >
           <View style={styles.dialogContentView}>
@@ -94,8 +94,6 @@ export default class App extends Component {
             />
           </View>
         </PopupDialog>
-
-       
       </View>
     );
   }
