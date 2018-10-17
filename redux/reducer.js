@@ -1,25 +1,28 @@
-import axios from "axios";
+import axios from 'axios';
 
 // CONSTANTS
-const GET_USERS = "GET_USERS";
+const GET_USERS = 'GET_USERS';
 
-// INITIAL APP STATE
+// INITIAL STATE
 const initialState = {
-  users: [],
-  stats: []
+  users: []
 };
 
-// REDUCER
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
+//REDUCER
+export default function reducer(state = initialState, action)
+{
+  console.log('Entering reducer()', action.payload);
+  switch(action.type)
+  {
     case `${GET_USERS}_FULFILLED`:
-      console.log("payload", action.payload);
+      console.log('payload', action.payload.data);
       return {
         ...state,
-        users: action.payload
+        users: action.payload.data
       };
     case `${GET_USERS}_REJECTED`:
-      console.log("Error - GET_USERS_REJECTED");
+      console.log('payload', action.payload);
+      console.log('Error - GET_USERS_REJECTED');
       break;
     default:
       return state;
@@ -27,9 +30,10 @@ export default function reducer(state = initialState, action) {
 }
 
 // ACTION CREATORS
-export function getUsers() {
+export function getUsers(){ 
+  console.log('action creator: getUsers');
   return {
     type: GET_USERS,
-    payload: axios.get("http://localhost:3001/api/stats")
+    payload: axios.get('http://localhost:3001/api/users')
   };
 }
