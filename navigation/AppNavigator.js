@@ -7,14 +7,14 @@ import Nav from "../components/NavBar/Nav";
 import ProfileScreen from "../screens/ProfileScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
 import LeaderboardsScreen from "../screens/LeaderboardsScreen";
-import EditProfile from "../components/Profiles/EditProfile";
+import editProfile from "../components/Profiles/editProfile";
 
 export default (AppNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
   Login: { screen: LoginScreen },
   Landing: { screen: LandingScreen },
   NavBar: { screen: Nav },
-  EditProfile: { screen: EditProfile },
+  EditProfile: { screen: editProfile },
   Profile: { screen: ProfileScreen },
   Leaderboard: { screen: LeaderboardScreen },
   Leadboards: { screen: LeaderboardsScreen }
