@@ -1,4 +1,5 @@
 const getAllUsers = (req, res, next) => {
+  console.log('HIT');
   const dbInst = req.app.get("db");
   dbInst
     .get_users()
