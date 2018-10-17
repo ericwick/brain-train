@@ -5,13 +5,12 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
-  Button
+  TextInput
 } from "react-native";
 import AppNavigator from "../navigation/AppNavigator";
 import axios from "axios";
 // import LandingScreen from "./LandingScreen";
-// import { Button, Input } from "react-native-elements";
+import { Button } from "react-native-elements";
 // import Icon from "react-native-vector-icons";
 
 class LoginScreen extends Component {
@@ -84,8 +83,8 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <Text style={styles.loginTitle}>LOGIN</Text>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.loginTitle}>Brain Train</Text>
 
         <View>
           <TextInput
@@ -93,6 +92,8 @@ class LoginScreen extends Component {
             placeholder="USERNAME"
             style={styles.input}
             autoCapitalize="none"
+            underlineColorAndroid="transparent"
+            placeholderTextColor="black"
           />
         </View>
         <View>
@@ -101,23 +102,52 @@ class LoginScreen extends Component {
             placeholder="PASSWORD"
             style={styles.input}
             autoCapitalize="none"
+            underlineColorAndroid="transparent"
+            placeholderTextColor="black"
           />
         </View>
 
-        <TouchableOpacity
-          style={styles.startButtonStyle}
-          onPress={this.handleLogin}
-        >
+        <TouchableOpacity>
           <Button
-            title="START"
             onPress={() => this.props.navigation.navigate("Landing")}
+            title="START"
+            buttonStyle={{
+              backgroundColor: "#06439E",
+              width: 350,
+              height: 60,
+              marginVertical: 10,
+              // marginLeft: 15,
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 5
+            }}
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.backButtonStyle}>
+        <View contentContainerStyle={styles.container}>
+          <Text>Forgot your username or password?</Text>
+          <TouchableOpacity
+            onPress={() => console.warn("You've been reminded")}
+          >
+            <Text>Yep, remind me.</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.linebreak} />
+
+        <TouchableOpacity>
           <Button
             onPress={() => this.props.navigation.navigate("Home")}
             title="BACK"
+            buttonStyle={{
+              backgroundColor: "#06439E",
+              width: 170,
+              height: 50,
+              marginTop: 70,
+              borderColor: "transparent",
+              borderWidth: 0,
+              borderRadius: 5
+            }}
           />
         </TouchableOpacity>
       </ScrollView>
@@ -128,48 +158,32 @@ class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#3783F5"
+    backgroundColor: "#3783F5",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  linebreak: {
+    borderBottomColor: "black",
+    borderBottomWidth: 2,
+    marginVertical: 40
   },
   input: {
-    width: 300,
-    height: 30,
-    textAlign: "center",
-    marginVertical: 45,
-    marginLeft: 30,
+    width: 350,
+    height: 60,
+    paddingLeft: 15,
+    marginVertical: 10,
     backgroundColor: "#AECEF3",
-    borderRadius: 7,
+    color: "black",
+    borderRadius: 3,
     borderColor: "transparent",
     borderWidth: 0
   },
-  button: {
-    width: 200,
-    marginTop: 300
-  },
   loginTitle: {
-    fontSize: 32,
+    fontFamily: "sans-serif-medium",
+    fontSize: 42,
     textAlign: "center",
-    marginTop: 30
-  },
-  backButtonStyle: {
-    backgroundColor: "rgb(6,67,158)",
-    width: 250,
-    height: 40,
-    marginTop: 50,
-    marginLeft: 60,
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 5
-  },
-  startButtonStyle: {
-    backgroundColor: "rgb(6,67,158)",
-    width: 250,
-    height: 80,
-    paddingTop: 20,
-    marginTop: 20,
-    marginLeft: 60,
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 5
+    marginTop: 85,
+    marginBottom: 10
   },
   landing: {
     display: "none"

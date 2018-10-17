@@ -6,8 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Button
+  View
 } from "react-native";
 import { WebBrowser } from "expo";
 import AppNavigator from "../navigation/AppNavigator";
@@ -17,7 +16,7 @@ import Nav from "../components/NavBar/Nav";
 import { MonoText } from "../components/StyledText";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import { Input } from "react-native-elements";
-import { Tile } from "react-native-elements";
+import { Button, Tile } from "react-native-elements";
 
 export default class LandingScreen extends React.Component {
   constructor(props) {
@@ -35,17 +34,6 @@ export default class LandingScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <Button
-          raised
-          icon={{ name: "home", size: 32 }}
-          buttonStyle={{
-            backgroundColor: "red",
-            borderRadius: 10,
-            marginTop: 40
-          }}
-          textStyle={{ textAlign: "center" }}
-          title={`Welcome to\nReact Native Elements`}
-        /> */}
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
@@ -57,8 +45,23 @@ export default class LandingScreen extends React.Component {
             />
           </View>
 
-          <View style={styles.dailyChallenge}>
-            <Button title="DAILY CHALLENGE" />
+          <View>
+            <Button
+              title="DAILY CHALLENGE"
+              onPress={() => this.props.navigation.navigate("Landing")}
+              buttonStyle={{
+                backgroundColor: "#06439E",
+                height: 150,
+                width: 350,
+                marginLeft: 18,
+                borderColor: "transparent",
+                borderWidth: 0,
+                borderRadius: 3,
+                paddingTop: 18,
+                marginTop: 30,
+                marginBottom: 80
+              }}
+            />
           </View>
 
           <View style={styles.tilePic}>
@@ -74,23 +77,90 @@ export default class LandingScreen extends React.Component {
             <Text style={styles.gamesTitle}>GAMES </Text>
             <View />
 
-            <View style={styles.memoryGames}>
-              <Button title="MEMORY" />
+            <View>
+              <Button
+                title="MEMORY"
+                onPress={() => this.props.navigation.navigate("Landing")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginVertical: 30,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
             </View>
-            <View style={styles.memoryGames}>
-              <Button title="PROBLEM SOLVING" />
+            <View>
+              <Button
+                title="PROBLEM SOLVING"
+                onPress={() => this.props.navigation.navigate("Landing")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginVertical: 30,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
             </View>
-            <View style={styles.memoryGames}>
-              <Button title="LANGUAGE" />
+            <View>
+              <Button
+                title="LANGUAGE"
+                onPress={() => this.props.navigation.navigate("Landing")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginVertical: 30,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
             </View>
-            <View style={styles.memoryGames}>
-              <Button title="SPEED" />
+            <View>
+              <Button
+                title="SPEED"
+                onPress={() => this.props.navigation.navigate("Landing")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginVertical: 30,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
             </View>
-            <View style={styles.memoryGames}>
-              <Button title="MATH" />
+            <View>
+              <Button
+                title="MATH"
+                onPress={() => this.props.navigation.navigate("Landing")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginTop: 30,
+                  marginBottom: 130,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
             </View>
           </View>
         </ScrollView>
+        <Nav navigation={this.props.navigation} />
       </View>
     );
   }
@@ -114,15 +184,11 @@ const styles = StyleSheet.create({
     width: 380,
     height: 320,
     resizeMode: "contain"
-    // marginTop: 3
-    // marginLeft: -10
-    // marginRight:100
   },
   dailyChallenge: {
     borderColor: "black",
     borderWidth: 1,
     alignItems: "center",
-    // marginHorizontal: 50,
     height: 75,
     width: 250,
     marginBottom: 20
@@ -146,30 +212,6 @@ const styles = StyleSheet.create({
   },
   gamesContainer: {
     marginLeft: 20
-    // alignItems: "center"
-  },
-  dailyChallenge: {
-    backgroundColor: "rgb(6,67,158)",
-    height: 150,
-    width: 350,
-    paddingTop: 45,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 3,
-    marginTop: 40,
-    marginBottom: 80,
-    marginLeft: 10
-  },
-  memoryGames: {
-    backgroundColor: "rgb(6,67,158)",
-    height: 95,
-    width: 280,
-    paddingTop: 25,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 3,
-    marginVertical: 30,
-    marginLeft: 25
   },
   tilePic: {
     marginTop: 10,
