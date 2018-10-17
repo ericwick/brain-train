@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     borderWidth: 0
   },
   loginTitle: {
-    fontFamily: "sans-serif-medium",
+    // fontFamily: "sans-serif-medium",
     fontSize: 42,
     textAlign: "center",
     marginTop: 85,

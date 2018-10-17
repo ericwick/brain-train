@@ -36,6 +36,15 @@ const getGameStats = (req, res, next) => {
     .catch(err => console.log(`Error in get_global_stats() - ${err}`));
 };
 
+const getLeaderboard = (req, res, next) => {
+  const dbInst = req.app.get("db");
+  const { gid } = req.params;
+  dbInst
+    .get_leaderboard_stats([gid, 20])
+    .then(response => res.status(200).send(response))
+    .catch(err => console.log(`Error in get_leaderboard_stats() - ${err}`));
+};
+
 const addUser = (req, res, next) => {
   const dbInst = req.app.get("db");
   const { username, password } = req.body;
@@ -109,5 +118,6 @@ module.exports = {
   editUserScores,
   removeUser,
   removeUserStats,
-  getServerTime
+  getServerTime, 
+  getLeaderboard
 };
