@@ -27,6 +27,8 @@
     "react-native-elements": "^0.19.1",
     "react-native-vector-icons": "^6.0.2",
     "react-navigation": "^2.18.0",
+    "react-redux": "^5.0.7",
+    "redux-promise-middleware": "^5.1.1",
     "sessions": "0.0.2-7"
   },
   "devDependencies": {
