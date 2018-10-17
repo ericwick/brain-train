@@ -18,7 +18,8 @@ const {
   editUserScores,
   removeUser,
   removeUserStats,
-  getServerTime
+  getServerTime,
+  getLeaderboard
 } = require("./controllers/controller");
 
 const {
@@ -47,6 +48,7 @@ app.put("/api/user/:id", editUserInfo); // Takes in { pword, pic } on req.body;
 
 app.get("/api/stats/:id", getUsersGameStats);
 app.get("/api/stats", getGameStats);
+app.get("/api/stats/leader/:gid", getLeaderboard)
 app.post("/api/stats", addGameSessionResults); // Takes in { uid, gid, startTime, score } on req.body;
 
 app.get("/api/games", getGamesList);

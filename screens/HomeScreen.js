@@ -10,15 +10,34 @@ import {
   View
 } from "react-native";
 import { WebBrowser } from "expo";
+import axios from "axios";
 import AppNavigator from "../navigation/AppNavigator";
 import { Button } from "react-native-elements";
+// import { connect } from "react-redux";
+// import { getUsers } from "../redux/reducer";
 
 import { MonoText } from "../components/StyledText";
 
 export default class HomeScreen extends Component {
+  constructor() {
+    super();
+    this.state = {
+      data: []
+    };
+  }
   static navigationOptions = {
     header: null
   };
+
+  componentDidMount() {
+    // this.props.getUsers();
+    axios
+      .get("http://localhost:3001/api/time")
+      .then(response => {
+        console.log("response.data", response);
+      })
+      .catch(err => console.log("err", err));
+  }
 
   render() {
     return (
@@ -26,27 +45,24 @@ export default class HomeScreen extends Component {
         source={require("../assets/images/cloud-background.jpg")}
         style={styles.backgroundImage}
       >
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <Text style={styles.title}>Brain Train</Text>
 
-          <Text style={styles.getStartedText}>Brain Train</Text>
-
-          <Button
-            onPress={() => this.props.navigation.navigate("Login")}
-            title="Login"
-            buttonStyle={{
-              backgroundColor: "#06439E",
-              width: 200,
-              height: 50,
-              marginTop: 50,
-              marginLeft: 70,
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 5
-            }}
-          />
+          <TouchableOpacity>
+            <Button
+              onPress={() => this.props.navigation.navigate("Login")}
+              title="PLAY"
+              buttonStyle={{
+                backgroundColor: "#06439E",
+                width: 300,
+                height: 80,
+                marginTop: 50,
+                borderColor: "transparent",
+                borderWidth: 0,
+                borderRadius: 5
+              }}
+            />
+          </TouchableOpacity>
         </ScrollView>
       </ImageBackground>
     );
@@ -60,8 +76,6 @@ const styles = StyleSheet.create({
   login: {
     height: 25,
     width: 75,
-    marginVertical: 300,
-    marginHorizontal: 150,
     padding: 10,
     borderWidth: 1,
     borderRadius: 5,
@@ -70,24 +84,19 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   contentContainer: {
-    paddingTop: 30
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   },
   welcomeContainer: {
     alignItems: "center",
     marginTop: 10,
     marginBottom: 20
   },
-  welcomeImage: {
-    width: 450,
-    height: 280,
-    resizeMode: "contain",
-    marginTop: 30,
-    marginBottom: 15,
-    marginLeft: -10
-  },
-  getStartedText: {
-    marginTop: 200,
-    fontSize: 47,
+  title: {
+    // fontFamily: "sans-serif-medium",
+    marginTop: 40,
+    fontSize: 65,
     color: "black",
     textAlign: "center"
   }
