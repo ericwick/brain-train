@@ -40,3 +40,16 @@ VALUES(1, 1, '2018-10-15T15:20:19.109624Z', '2018-10-15T15:49:55.058379Z', 2500)
 INSERT INTO global_games (game_name, game_cat, game_desc)
 VALUES('Make Me a Match', 'memory', 'Flip over cards to make pairs. Get as many matches in as few moves as possible.'),
       ('Speed Match', 'logic', 'Match the given card to its closest match. Do it fast for a time bonus.');
+
+
+--leaderboards stats 
+SELECT users.uid, username, gid, time_start, time_end, score FROM global_stats
+JOIN users ON global_stats.uid = users.uid;
+
+
+--sorting scores by gameID 
+
+SELECT users.uid, username, gid, score FROM global_stats
+JOIN users ON global_stats.uid = users.uid WHERE gid = $1 ORDER BY score DESC LIMIT $2; 
+
+

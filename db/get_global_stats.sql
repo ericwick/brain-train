@@ -1,1 +1,2 @@
-SELECT * FROM global_stats;
+SELECT users.uid, username, gid, time_start, time_end, score FROM global_stats
+JOIN users ON global_stats.uid = users.uid;

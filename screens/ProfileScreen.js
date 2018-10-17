@@ -56,7 +56,8 @@ export default class ProfileScreen extends Component {
             style={styles.image}
           />
 
-          <TouchableOpacity onPress={() => this.buttonCheck()}>
+          <TouchableOpacity  onPress={() => this.props.navigation.navigate("editProfile")}
+          >
             <Image
               style={styles.settings}
               source={{

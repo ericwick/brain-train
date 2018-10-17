@@ -17,6 +17,7 @@ import { MonoText } from "../components/StyledText";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import { Input } from "react-native-elements";
 import { Button, Tile } from "react-native-elements";
+import PopupModal from '../components/popupModal/popupModal';
 
 export default class LandingScreen extends React.Component {
   constructor(props) {
