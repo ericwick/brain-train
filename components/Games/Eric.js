@@ -11,12 +11,12 @@ import {
 } from "react-native";
 import { WebBrowser } from "expo";
 import axios from "axios";
-import AppNavigator from "../navigation/AppNavigator";
+import AppNavigator from "../../navigation/AppNavigator";
 import { Button } from "react-native-elements";
 
-import { MonoText } from "../components/StyledText";
+import { MonoText } from "../StyledText";
 
-export default class HomeScreen extends Component {
+export default class Eric extends Component {
   constructor() {
     super();
     this.state = {
@@ -28,43 +28,14 @@ export default class HomeScreen extends Component {
     header: null
   };
 
-  // EW - gathering current time on load
-  componentDidMount() {
-    axios
-      .get("http://localhost:3001/api/time")
-      .then(response => {
-        this.setState({
-          time: response.data
-        });
-        console.log("response.data", this.state.time);
-      })
-      .catch(err => console.log("err", err));
-  }
-
   render() {
     return (
       <ImageBackground
-        source={require("../assets/images/cloud-background.jpg")}
+        source={require("../../assets/images/cloud-background.jpg")}
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.title}>Brain Train</Text>
-
-          <TouchableOpacity>
-            <Button
-              onPress={() => this.props.navigation.navigate("Login")}
-              title="PLAY"
-              buttonStyle={{
-                backgroundColor: "#06439E",
-                width: 300,
-                height: 80,
-                marginTop: 50,
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 5
-              }}
-            />
-          </TouchableOpacity>
+          <Text style={styles.title}>Eric's Games</Text>
         </ScrollView>
       </ImageBackground>
     );

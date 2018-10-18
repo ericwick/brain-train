@@ -9,9 +9,7 @@ import {
 } from "react-native";
 import AppNavigator from "../navigation/AppNavigator";
 import axios from "axios";
-// import LandingScreen from "./LandingScreen";
 import { Button } from "react-native-elements";
-// import Icon from "react-native-vector-icons";
 
 class LoginScreen extends Component {
   constructor() {
@@ -24,6 +22,10 @@ class LoginScreen extends Component {
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
+
+  static navigationOptions = {
+    header: null
+  };
 
   async componentDidMount() {
     await axios
@@ -116,7 +118,6 @@ class LoginScreen extends Component {
               width: 350,
               height: 60,
               marginVertical: 10,
-              // marginLeft: 15,
               borderColor: "transparent",
               borderWidth: 0,
               borderRadius: 5
