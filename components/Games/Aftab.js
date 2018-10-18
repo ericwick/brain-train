@@ -10,15 +10,13 @@ import {
   View
 } from "react-native";
 import { WebBrowser } from "expo";
-import axios from 'axios';
-import AppNavigator from "../navigation/AppNavigator";
+import axios from "axios";
+import AppNavigator from "../../navigation/AppNavigator";
 import { Button } from "react-native-elements";
-import { connect } from "react-redux";
-import { getUsers } from "../redux/reducer";
 
-import { MonoText } from "../components/StyledText";
+import { MonoText } from "../StyledText";
 
-class HomeScreen extends Component {
+export default class Aftab extends Component {
   constructor() {
     super();
     this.state = {
@@ -26,39 +24,15 @@ class HomeScreen extends Component {
       time: []
     };
   }
-  static navigationOptions = {
-    header: null
-  };
-
-  // EW - gathering current time on load
-  componentDidMount() {
-    this.props.getUsers();
-  }
 
   render() {
     return (
       <ImageBackground
-        source={require("../assets/images/cloud-background.jpg")}
+        source={require("../../assets/images/cloud-background.jpg")}
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.title}>Brain Train</Text>
-
-          <TouchableOpacity>
-            <Button
-              onPress={() => this.props.navigation.navigate("Login")}
-              title="PLAY"
-              buttonStyle={{
-                backgroundColor: "#06439E",
-                width: 300,
-                height: 80,
-                marginTop: 50,
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 5
-              }}
-            />
-          </TouchableOpacity>
+          <Text style={styles.title}>Aftab's Games</Text>
         </ScrollView>
       </ImageBackground>
     );
@@ -96,6 +70,3 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
-
-const mapStateToProps = (state) => state;
-export default connect(mapStateToProps, { getUsers })(HomeScreen);
