@@ -30,8 +30,7 @@ export default class ProfileScreen extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get("http://localhost:3001/api/time")
+    axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/time`)
       .then(response => {
         console.log("response.data", response);
       })

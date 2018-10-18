@@ -10,15 +10,15 @@ import {
   View
 } from "react-native";
 import { WebBrowser } from "expo";
-import axios from "axios";
+import axios from 'axios';
 import AppNavigator from "../navigation/AppNavigator";
 import { Button } from "react-native-elements";
-// import { connect } from "react-redux";
-// import { getUsers } from "../redux/reducer";
+import { connect } from "react-redux";
+import { getUsers } from "../redux/reducer";
 
 import { MonoText } from "../components/StyledText";
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
@@ -30,13 +30,8 @@ export default class HomeScreen extends Component {
   };
 
   componentDidMount() {
-    // this.props.getUsers();
-    axios
-      .get("http://localhost:3001/api/time")
-      .then(response => {
-        console.log("response.data", response);
-      })
-      .catch(err => console.log("err", err));
+    console.log('HIT', __DEV__);
+    this.props.getUsers();
   }
 
   render() {
@@ -101,3 +96,6 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
+
+const mapStateToProps = (state) => state;
+export default connect(mapStateToProps, { getUsers })(HomeScreen);
