@@ -8,6 +8,9 @@ import ProfileScreen from "../screens/ProfileScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
 import LeaderboardsScreen from "../screens/LeaderboardsScreen";
 import editProfile from "../components/Profiles/editProfile";
+import Aftab from "../components/Games/Aftab";
+import Eric from "../components/Games/Eric";
+import Anthony from "../components/Games/Anthony";
 
 export default (AppNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -17,5 +20,8 @@ export default (AppNavigator = createStackNavigator({
   EditProfile: { screen: editProfile },
   Profile: { screen: ProfileScreen },
   Leaderboard: { screen: LeaderboardScreen },
-  Leadboards: { screen: LeaderboardsScreen }
+  Leadboards: { screen: LeaderboardsScreen },
+  Eric: { screen: Eric },
+  Aftab: { screen: Aftab },
+  Anthony: { screen: Anthony }
 }));

@@ -17,7 +17,7 @@ import { MonoText } from "../components/StyledText";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import { Input } from "react-native-elements";
 import { Button, Tile } from "react-native-elements";
-import PopupModal from '../components/popupModal/popupModal';
+import PopupModal from "../components/popupModal/popupModal";
 
 export default class LandingScreen extends React.Component {
   constructor(props) {
@@ -80,8 +80,8 @@ export default class LandingScreen extends React.Component {
 
             <View>
               <Button
-                title="MEMORY"
-                onPress={() => this.props.navigation.navigate("Landing")}
+                title="Anthony's Games"
+                onPress={() => this.props.navigation.navigate("Anthony")}
                 buttonStyle={{
                   backgroundColor: "#06439E",
                   width: 280,
@@ -96,8 +96,8 @@ export default class LandingScreen extends React.Component {
             </View>
             <View>
               <Button
-                title="PROBLEM SOLVING"
-                onPress={() => this.props.navigation.navigate("Landing")}
+                title="Aftab's Games"
+                onPress={() => this.props.navigation.navigate("Aftab")}
                 buttonStyle={{
                   backgroundColor: "#06439E",
                   width: 280,
@@ -112,8 +112,8 @@ export default class LandingScreen extends React.Component {
             </View>
             <View>
               <Button
-                title="LANGUAGE"
-                onPress={() => this.props.navigation.navigate("Landing")}
+                title="Eric's Games"
+                onPress={() => this.props.navigation.navigate("Eric")}
                 buttonStyle={{
                   backgroundColor: "#06439E",
                   width: 280,
@@ -174,7 +174,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#3783F5"
   },
   contentContainer: {
-    paddingTop: 30
+    paddingTop: 30,
+    justifyContent: "center",
+    alignItems: "center"
   },
   welcomeContainer: {
     alignItems: "center",

@@ -11,12 +11,12 @@ import {
 } from "react-native";
 import { WebBrowser } from "expo";
 import axios from "axios";
-import AppNavigator from "../navigation/AppNavigator";
+import AppNavigator from "../../navigation/AppNavigator";
 import { Button } from "react-native-elements";
 
-import { MonoText } from "../components/StyledText";
+import { MonoText } from "../StyledText";
 
-export default class HomeScreen extends Component {
+export default class Anthony extends Component {
   constructor() {
     super();
     this.state = {
@@ -24,22 +24,9 @@ export default class HomeScreen extends Component {
       time: []
     };
   }
-  // static navigationOptions = {
-  //   header: null
-  // };
-
-  // EW - gathering current time on load
-  componentDidMount() {
-    axios
-      .get("http://localhost:3001/api/time")
-      .then(response => {
-        this.setState({
-          time: response.data
-        });
-        console.log("response.data", this.state.time);
-      })
-      .catch(err => console.log("err", err));
-  }
+  static navigationOptions = {
+    header: null
+  };
 
   render() {
     return (

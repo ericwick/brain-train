@@ -80,12 +80,12 @@ export default class ProfileScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
     backgroundColor: "#3783F5"
   },
   contentContainer: {
-    paddingTop: 30
+    paddingTop: 30,
+    justifyContent: "center",
+    alignItems: "center"
   },
   profileTitle: {
     marginTop: 50,
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginTop: 20,
-    marginLeft: 130,
     borderWidth: 0,
     borderRadius: 80
   },
@@ -114,7 +113,6 @@ const styles = StyleSheet.create({
   settings: {
     width: 40,
     height: 40,
-    marginLeft: 185,
     marginTop: 15
   }
 });
