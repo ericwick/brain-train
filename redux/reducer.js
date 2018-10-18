@@ -39,17 +39,19 @@ export default function reducer(state = initialState, action)
 
 // ACTION CREATORS
 export function getUsers(){ 
-  console.log('action creator: getUsers');
+  let point = `http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`;
+  console.log('point', point);
   return {
     type: GET_USERS,
-    payload: axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
+    payload: axios.get(point)
   };
 }
 
-export function getStats(){ 
-  console.log('action creator: getStats');
+export function getStats(){
+  let point = `http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/stats`;
+  console.log('point', point);
   return {
     type: GET_STATS,
-    payload: axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/stats`)
+    payload: axios.get(point)
   };
 }
