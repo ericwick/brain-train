@@ -31,7 +31,7 @@ export default class Nav extends React.Component {
             style={styles.image}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Landing")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <Image
             source={require("../../assets/images/trainIcon.png")}
             style={styles.image}

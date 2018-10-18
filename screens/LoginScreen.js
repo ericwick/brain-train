@@ -111,7 +111,7 @@ class LoginScreen extends Component {
 
         <TouchableOpacity>
           <Button
-            onPress={() => this.props.navigation.navigate("Landing")}
+            onPress={() => this.props.navigation.navigate("Home")}
             title="START"
             buttonStyle={{
               backgroundColor: "#06439E",
