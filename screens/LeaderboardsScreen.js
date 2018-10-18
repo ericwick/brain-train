@@ -20,7 +20,6 @@ componentDidMount(){
   .then(res => {
     let users = res.data.map(e => e.username)
     let gamescore = res.data.map(e => [e.score])
-    // console.log(users, gamescore);
     this.setState({ 
       username: users,
       score: gamescore
@@ -30,7 +29,6 @@ componentDidMount(){
 }
 
   render() {
-   
     const state = this.state;
     return (
       <View style={styles.container}>

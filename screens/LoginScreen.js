@@ -62,7 +62,7 @@ class LoginScreen extends Component {
       axios
       axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user/${id}`)
         .then(response => {
-          console.log(response);
+          // console.log(response);
         })
         .catch(err => {
           console.log(err);
@@ -72,7 +72,7 @@ class LoginScreen extends Component {
     var handleNewUser = (uname, pword) => {
       axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`, { uname, pword })
         .then(response => {
-          console.log(response);
+          // console.log(response);
         })
         .catch(err => {
           console.log(err);

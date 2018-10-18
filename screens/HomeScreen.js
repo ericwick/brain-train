@@ -30,7 +30,6 @@ class HomeScreen extends Component {
   };
 
   componentDidMount() {
-    console.log('HIT', __DEV__);
     this.props.getUsers();
   }
 

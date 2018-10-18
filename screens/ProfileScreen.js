@@ -29,13 +29,13 @@ export default class ProfileScreen extends Component {
     header: null
   };
 
-  componentDidMount() {
-    axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/time`)
-      .then(response => {
-        console.log("response.data", response);
-      })
-      .catch(err => console.log("err", err));
-  }
+  // componentDidMount() {
+  //   axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/time`)
+  //     .then(response => {
+  //       console.log("response.data", response);
+  //     })
+  //     .catch(err => console.log("err", err));
+  // }
 
   buttonCheck() {
     console.warn("All good.");

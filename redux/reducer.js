@@ -14,11 +14,9 @@ const initialState = {
 //REDUCER
 export default function reducer(state = initialState, action)
 {
-  console.log('Entering reducer()', action.payload);
   switch(action.type)
   {
     case `${GET_USERS}_FULFILLED`:
-      console.log('payload', action.payload.data);
       return {
         ...state,
         users: action.payload.data
@@ -27,7 +25,6 @@ export default function reducer(state = initialState, action)
       console.log('Error - GET_USERS_REJECTED');
       break;
     case `${GET_STATS}_FULFILLED`:
-      console.log('payload', action.payload.data);
       return {
         ...state,
         users: action.payload.data
