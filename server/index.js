@@ -40,8 +40,8 @@ massive(process.env.CONNECTION_STRING)
 // point server to the build folder
 app.use(express.static(`${__dirname}/../build`));
 
-// app.get("/api/users", getAllUsers);
-app.get("/api/users", () => console.log('GetAllUsers()'));
+app.get("/api/users", getAllUsers);
+// app.get("/api/users", () => console.log('GetAllUsers()'));
 app.get("/api/user/:id", getUser);
 app.post("/api/user", addUser); // Takes in { uname, pword } on req.body;
 app.put("/api/user/:id", editUserInfo); // Takes in { pword, pic } on req.body;

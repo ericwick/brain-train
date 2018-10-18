@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import {
-  Table,
-  TableWrapper,
-  Row,
-  Rows,
-  Col
-} from "react-native-table-component";
+import { Platform, Text, View, StyleSheet } from "react-native";
+import { Table, TableWrapper, Row, Rows, Col } from "react-native-table-component";
 import LeaderboardTable from "../components/LeaderboardTable/LeaderboardTable";
 import axios from "axios";
 import AppNavigator from "../navigation/AppNavigator";
@@ -20,18 +14,19 @@ export default class Leaderboards extends Component {
       score: []
     };
   }
-
-  componentDidMount() {
-    axios.get(`http://localhost:3001/api/stats/leader/${1}`).then(res => {
-      let users = res.data.map(e => e.username);
-      let gamescore = res.data.map(e => [e.score]);
-      console.log(users, gamescore);
-      this.setState({
-        username: users,
-        score: gamescore
-      });
+  
+componentDidMount(){ 
+  axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/stats/leader/${1}`)
+  .then(res => {
+    let users = res.data.map(e => e.username)
+    let gamescore = res.data.map(e => [e.score])
+    this.setState({ 
+      username: users,
+      score: gamescore
     });
-  }
+  })
+  .catch(err => console.log('err', err))
+}
 
   render() {
     const state = this.state;

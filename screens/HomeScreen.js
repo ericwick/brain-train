@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   Image,
-  ImageBackground,
   Platform,
   ScrollView,
   StyleSheet,
@@ -10,83 +9,172 @@ import {
   View
 } from "react-native";
 import { WebBrowser } from "expo";
-import axios from "axios";
 import AppNavigator from "../navigation/AppNavigator";
-import { Button } from "react-native-elements";
+import axios from "axios";
+import Nav from "../components/NavBar/Nav";
 
 import { MonoText } from "../components/StyledText";
+// import Icon from 'react-native-vector-icons/FontAwesome';
+// import { Input } from "react-native-elements";
+import { Button, Tile } from "react-native-elements";
+import PopupModal from "../components/popupModal/popupModal";
 
-export default class HomeScreen extends Component {
-  constructor() {
-    super();
+export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      data: [],
-      time: []
+      users: []
     };
   }
+  // We'll grab all users from reducer once its set up
+
   static navigationOptions = {
     header: null
   };
 
-  // EW - gathering current time on load
-  componentDidMount() {
-    axios
-      .get("http://localhost:3001/api/time")
-      .then(response => {
-        this.setState({
-          time: response.data
-        });
-        console.log("response.data", this.state.time);
-      })
-      .catch(err => console.log("err", err));
-  }
-
   render() {
     return (
-      <ImageBackground
-        source={require("../assets/images/cloud-background.jpg")}
-        style={styles.backgroundImage}
-      >
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.title}>Brain Train</Text>
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={require("../assets/images/logo.png")}
+              style={styles.welcomeImage}
+            />
+          </View>
 
-          <TouchableOpacity>
+          <View>
             <Button
-              onPress={() => this.props.navigation.navigate("Login")}
-              title="PLAY"
+              title="DAILY CHALLENGE"
+              onPress={() => this.props.navigation.navigate("Home")}
               buttonStyle={{
                 backgroundColor: "#06439E",
-                width: 300,
-                height: 80,
-                marginTop: 50,
+                height: 150,
+                width: 350,
+                marginLeft: 18,
                 borderColor: "transparent",
                 borderWidth: 0,
-                borderRadius: 5
+                borderRadius: 3,
+                paddingTop: 18,
+                marginTop: 30,
+                marginBottom: 80
               }}
             />
-          </TouchableOpacity>
+          </View>
+
+          <View style={styles.tilePic}>
+            <Tile
+              imageSrc={require("../assets/images/Brain.jpg")}
+              title="Our Mission at Brain Train is to provide...some shit goes here "
+              featured
+              caption="Some Caption Text"
+            />
+          </View>
+
+          <View style={styles.gamesContainer}>
+            <Text style={styles.gamesTitle}>GAMES </Text>
+            <View />
+
+            <View>
+              <Button
+                title="Anthony's Games"
+                onPress={() => this.props.navigation.navigate("Anthony")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginVertical: 30,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
+            </View>
+            <View>
+              <Button
+                title="Aftab's Games"
+                onPress={() => this.props.navigation.navigate("Aftab")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginVertical: 30,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
+            </View>
+            <View>
+              <Button
+                title="Eric's Games"
+                onPress={() => this.props.navigation.navigate("Eric")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginVertical: 30,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
+            </View>
+            <View>
+              <Button
+                title="SPEED"
+                onPress={() => this.props.navigation.navigate("Home")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginVertical: 30,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
+            </View>
+            <View>
+              <Button
+                title="MATH"
+                onPress={() => this.props.navigation.navigate("Home")}
+                buttonStyle={{
+                  backgroundColor: "#06439E",
+                  width: 280,
+                  height: 95,
+                  marginTop: 30,
+                  marginBottom: 130,
+                  marginLeft: 28,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+              />
+            </View>
+          </View>
         </ScrollView>
-      </ImageBackground>
+        <Nav navigation={this.props.navigation} />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1
-  },
-  login: {
-    height: 25,
-    width: 75,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: "black",
-    borderStyle: "solid",
-    backgroundColor: "white"
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "#3783F5"
   },
   contentContainer: {
-    flex: 1,
+    paddingTop: 30,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -95,10 +183,41 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20
   },
-  title: {
-    marginTop: 40,
-    fontSize: 65,
-    color: "black",
-    textAlign: "center"
+  welcomeImage: {
+    width: 380,
+    height: 320,
+    resizeMode: "contain"
+  },
+  dailyChallenge: {
+    borderColor: "black",
+    borderWidth: 1,
+    alignItems: "center",
+    height: 75,
+    width: 250,
+    marginBottom: 20
+  },
+  missionStatement: {
+    position: "relative",
+    borderColor: "black",
+    borderWidth: 1,
+    height: 75,
+    width: 250,
+    fontSize: 17,
+    color: "rgba(96,100,109, 1)",
+    lineHeight: 24,
+    textAlign: "center",
+    marginBottom: 20
+  },
+  gamesTitle: {
+    fontSize: 35,
+    textAlign: "center",
+    marginRight: 20
+  },
+  gamesContainer: {
+    marginLeft: 20
+  },
+  tilePic: {
+    marginTop: 10,
+    marginBottom: 70
   }
 });

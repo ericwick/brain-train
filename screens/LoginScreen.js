@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Platform,
   StyleSheet,
   ScrollView,
   View,
@@ -29,7 +30,7 @@ class LoginScreen extends Component {
 
   async componentDidMount() {
     await axios
-      .get("http://localhost:3001/api/users")
+    axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
       .then(response => {
         this.setState({
           users: response.data
@@ -61,9 +62,9 @@ class LoginScreen extends Component {
         }
       });
       axios
-        .get(`http://localhost:3001/api/user/${id}`)
+      axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user/${id}`)
         .then(response => {
-          console.log(response);
+          // console.log(response);
         })
         .catch(err => {
           console.log(err);
@@ -71,10 +72,9 @@ class LoginScreen extends Component {
     };
 
     var handleNewUser = (uname, pword) => {
-      axios
-        .post("http://localhost:3001/api/user", { uname, pword })
+      axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`, { uname, pword })
         .then(response => {
-          console.log(response);
+          // console.log(response);
         })
         .catch(err => {
           console.log(err);
@@ -111,7 +111,7 @@ class LoginScreen extends Component {
 
         <TouchableOpacity>
           <Button
-            onPress={() => this.props.navigation.navigate("Landing")}
+            onPress={() => this.props.navigation.navigate("Home")}
             title="START"
             buttonStyle={{
               backgroundColor: "#06439E",

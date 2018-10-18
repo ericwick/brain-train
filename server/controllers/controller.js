@@ -1,12 +1,8 @@
 const getAllUsers = (req, res, next) => {
-  console.log('HIT');
   const dbInst = req.app.get("db");
   dbInst
     .get_users()
-    .then(response => {
-      console.log(response);
-      res.status(200).send(response);
-    })
+    .then(response => res.status(200).send(response))
     .catch(err => console.log(`Error in get_users() - ${err}`));
 };
 
