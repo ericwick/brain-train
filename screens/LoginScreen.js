@@ -23,6 +23,10 @@ class LoginScreen extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
+  static navigationOptions = {
+    header: null
+  };
+
   async componentDidMount() {
     await axios
       .get("http://localhost:3001/api/users")

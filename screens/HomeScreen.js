@@ -24,9 +24,9 @@ export default class HomeScreen extends Component {
       time: []
     };
   }
-  // static navigationOptions = {
-  //   header: null
-  // };
+  static navigationOptions = {
+    header: null
+  };
 
   // EW - gathering current time on load
   componentDidMount() {

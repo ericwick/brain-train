@@ -22,9 +22,9 @@ export default class LeaderboardScreen extends React.Component {
     };
   }
 
-  // static navigationOptions = {
-  //   title: "Stats"
-  // };
+  static navigationOptions = {
+    header: null
+  };
 
   // EW - get all Users
   componentDidMount() {

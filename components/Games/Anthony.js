@@ -31,27 +31,11 @@ export default class Anthony extends Component {
   render() {
     return (
       <ImageBackground
-        source={require("../assets/images/cloud-background.jpg")}
+        source={require("../../assets/images/cloud-background.jpg")}
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.title}>Brain Train</Text>
-
-          <TouchableOpacity>
-            <Button
-              onPress={() => this.props.navigation.navigate("Login")}
-              title="PLAY"
-              buttonStyle={{
-                backgroundColor: "#06439E",
-                width: 300,
-                height: 80,
-                marginTop: 50,
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 5
-              }}
-            />
-          </TouchableOpacity>
+          <Text style={styles.title}>Anthony's Games</Text>
         </ScrollView>
       </ImageBackground>
     );
