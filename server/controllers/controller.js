@@ -9,14 +9,34 @@ const getAllUsers = (req, res, next) => {
     .catch(err => console.log(`Error in get_users() - ${err}`));
 };
 
+// const getUser = (req, res, next) => {
+//   const dbInst = req.app.get("db");
+//   const { id } = req.params;
+//   dbInst
+//     .get_user(id)
+//     .then(response => res.status(200).send(response))
+//     .catch(err => console.log(`Error in get_user() - ${err}`));
+// };
+
 const getUser = (req, res, next) => {
   const dbInst = req.app.get("db");
-  const { id } = req.params;
-  dbInst
-    .get_user(id)
-    .then(response => res.status(200).send(response))
-    .catch(err => console.log(`Error in get_user() - ${err}`));
-};
+  const { username, password } = req.body;
+    if (req.session.user.username === username && req.session.user.password === password) {
+      dbInst
+      .get_user([username])
+      .then(response => res.status(200).json(req.session.user))
+      .catch(err => console.log(`Error in get_users() - ${err}`));
+    } 
+  };
+
+    const currentUser = (req, res, next) => {
+    res.status(200).json(req.session.user);
+  };
+
+
+
+
+
 
 const getUsersGameStats = (req, res, next) => {
   const dbInst = req.app.get("db");
@@ -48,15 +68,19 @@ const getLeaderboard = (req, res, next) => {
 const addUser = (req, res, next) => {
   const dbInst = req.app.get("db");
   const { username, password } = req.body;
-  console.log("REQ.BODY", req.body);
+  req.session.user.username = username;
   dbInst
     .add_user([username, password])
     .then(response => {
-      console.log(response);
       res.status(200).send(response);
     })
     .catch(err => console.log(`Error in add_user() - ${err}`));
 };
+
+
+
+
+
 
 const addGameSessionResults = (req, res, next) => {
   const dbInst = req.app.get("db");
@@ -106,9 +130,15 @@ const getServerTime = (req, res, next) => {
     .catch(err => console.log(`Error in get_current_time() - ${err}`));
 };
 
+const logout = (req, res, next) => {
+    req.session.destroy();
+    res.status(200).json(req.session);
+  },
+
 module.exports = {
   getAllUsers,
   getUser,
+  currentUser,
   getUsersGameStats,
   getGameStats,
   addUser,
@@ -121,3 +151,34 @@ module.exports = {
   getServerTime, 
   getLeaderboard
 };
+
+// const users = require("../models/users");
+
+// var id = 1;
+
+// module.exports = {
+//   login: (req, res, next) => {
+//     if (
+//       req.session.user.username === req.body.username &&
+//       req.session.user.password === req.body.password
+//     ) {
+//       req.session.user.username = req.body.username;
+//       res.status(200).json(req.session.user);
+//     } else {
+//       res.status(500).json("UNAUTHORIZED");
+//     }
+//   },
+//   register: (req, res, next) => {
+//     users.push(id, req.body.username, req.body.password);
+//     id++;
+//     req.session.user.username = req.body.username;
+//     res.status(200).json(req.session.user);
+//   },
+//   signout: (req, res, next) => {
+//     req.session.destroy();
+//     res.status(200).json(req.session);
+//   },
+//   getUser: (req, res, next) => {
+//     res.status(200).json(req.session.user);
+//   }
+// };

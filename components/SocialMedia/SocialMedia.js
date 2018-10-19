@@ -7,12 +7,21 @@ import { Text, StyleSheet, View } from "react-native";
 export default class SocialMedia extends Component {
   render() {
     return (
-      <View>
-        {/* <SocialIcon raised={false} type="gitlab" /> */}
-        {/* <SocialIcon light type="medium" /> */}
-        {/* <SocialIcon light raised={false} type="medium" /> */}
-        <SocialIcon style={styles.socialButton} title="Sign In With Facebook" button type="facebook" />
-        <SocialIcon style={styles.socialButton} title="Some Twitter Message" button raised underlayColor="grey" type="twitter" />
+      <View contentContainerStyle={styles.container}>
+        <SocialIcon
+          style={styles.socialButton}
+          title="Share scores on Facebook"
+          button
+          type="facebook"
+        />
+        <SocialIcon
+          style={styles.socialButton}
+          title="Tweet scores on Twitter"
+          button
+          raised
+          underlayColor="grey"
+          type="twitter"
+        />
         <SocialIcon button type="medium" />
       </View>
     );
@@ -20,8 +29,15 @@ export default class SocialMedia extends Component {
 }
 
 const styles = StyleSheet.create({
-  socialButton:{ 
-    height:40,
-    width: 60
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 55
+  },
+  socialButton: {
+    height: 50,
+    width: 240,
+    marginVertical: 20
   }
 });

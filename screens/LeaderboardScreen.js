@@ -10,7 +10,7 @@ import {
 import { Icon } from "react-native-elements";
 import axios from "axios";
 import { ExpoLinksView } from "@expo/samples";
-import SocialMedia from "../components/SocialMedia/SocialMedia";
+import LeaderboardTable from "../components/LeaderboardTable/LeaderboardTable";
 import AppNavigator from "../navigation/AppNavigator";
 import Nav from "../components/NavBar/Nav";
 
@@ -18,15 +18,17 @@ export default class LeaderboardScreen extends React.Component {
   constructor() {
     super();
     this.state = {
-      users: []
+      users: [],
+      username: [],
+      score: []
     };
+    this.getLeaders = this.getLeaders.bind(this);
   }
 
   static navigationOptions = {
     header: null
   };
 
-  // EW - get all Users
   componentDidMount() {
     axios
       .get("http://localhost:3001/api/users")
@@ -35,34 +37,34 @@ export default class LeaderboardScreen extends React.Component {
           users: response.data
         });
         console.warn(this.state.users, "RESPONSE.DATA");
-        // EW - got the data coming through but unable to set state
       })
       .catch(err => {
         console.warn(err);
       });
   }
 
+  getLeaders() {
+    axios.get(`http://localhost:3001/api/stats/leader/${1}`).then(res => {
+      let users = res.data.map(e => e.username);
+      let gamescore = res.data.map(e => [e.score]);
+      console.log(users, gamescore);
+      this.setState({
+        username: users,
+        score: gamescore
+      });
+    });
+  }
+
   render() {
     let { navigation } = this.props;
     return (
-      <View>
-        <ScrollView contentContainerStyle={styles.container}>
-          {/* EW - FIGURE OUT WHY SOME COMPONENTS HAVE THE WHITE HEADER PART */}
-          <Text> TOTALS: </Text>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.title}> LEADERBOARD </Text>
 
-          <TouchableOpacity style={styles.leaderboardsButton}>
-            <Button
-              icon={<Icon name="arrow-right" size={15} color="blue" />}
-              title="Leadboards"
-              onPress={() => navigation.navigate("Leadboards")}
-            />
-          </TouchableOpacity>
-
-          <Text>{this.state.users.username}</Text>
-
-          <SocialMedia />
+          <Text style={styles.leaderboardTitle}>Global Leaderboard</Text>
+          <LeaderboardTable stats={this.state} />
         </ScrollView>
-
         <Nav navigation={this.props.navigation} />
       </View>
     );
@@ -72,14 +74,30 @@ export default class LeaderboardScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#3783F5",
+    backgroundColor: "#474C5D",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    paddingTop: 70,
+    paddingBottom: 120
   },
-  leaderboardsButton: {
-    backgroundColor: "green",
-    maxHeight: 40,
-    borderRadius: 30,
-    width: 150
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: "#474C5D",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 50,
+    paddingBottom: 100
+  },
+  title: {
+    fontSize: 35,
+    marginTop: 50,
+    color: "white"
+  },
+  leaderboardTitle: {
+    fontSize: 20,
+    justifyContent: "center",
+    alignContent: "center",
+    marginVertical: 20,
+    color: "white"
   }
 });

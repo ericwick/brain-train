@@ -5,6 +5,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  TouchableHighlight,
   TextInput
 } from "react-native";
 import AppNavigator from "../navigation/AppNavigator";
@@ -18,7 +19,8 @@ class LoginScreen extends Component {
       username: "",
       password: "",
       users: [],
-      newUser: false
+      newUser: false,
+      theme: false
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
@@ -42,18 +44,8 @@ class LoginScreen extends Component {
 
   handleLogin() {
     let { users, username, password } = this.state;
-    var userCheck = () => {
-      if (!users.length) {
-        return null;
-      } else {
-        for (var i = 0; i < users.length; i++) {
-          users[i].uname === username && users[i].password === password
-            ? () => handleSubmit()
-            : () => handleNewUser(username, password);
-        }
-      }
-    };
-    var handleSubmit = async () => {
+
+    var handleSubmit = async (username, password) => {
       let id = 0;
       await users.map((e, i) => {
         if (username === e.uname) {
@@ -61,7 +53,7 @@ class LoginScreen extends Component {
         }
       });
       axios
-        .get(`http://localhost:3001/api/user/${id}`)
+        .get(`http://localhost:3001/api/user/username`, { username, password })
         .then(response => {
           console.log(response);
         })
@@ -70,9 +62,9 @@ class LoginScreen extends Component {
         });
     };
 
-    var handleNewUser = (uname, pword) => {
+    var handleNewUser = (username, password) => {
       axios
-        .post("http://localhost:3001/api/user", { uname, pword })
+        .post("http://localhost:3001/api/user", { username, password })
         .then(response => {
           console.log(response);
         })
@@ -80,7 +72,33 @@ class LoginScreen extends Component {
           console.log(err);
         });
     };
+
+    var userCheck = () => {
+      if (!users.length) {
+        return null;
+      } else {
+        for (var i = 0; i < users.length; i++) {
+          users[i].uname === username && users[i].password === password
+            ? () => handleSubmit(username, password)
+            : () => handleNewUser(username, password);
+        }
+      }
+    };
+
     userCheck();
+  }
+
+  colorChange() {
+    this.setState({
+      theme: !this.state.theme
+    });
+  }
+
+  _onHideUnderlay() {
+    this.setState({ theme: !this.state.theme });
+  }
+  _onShowUnderlay() {
+    this.setState({ theme: !this.state.theme });
   }
 
   render() {
@@ -88,49 +106,49 @@ class LoginScreen extends Component {
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.loginTitle}>Brain Train</Text>
 
-        <View>
+        <TouchableHighlight onPress={() => this.colorChange()}>
           <TextInput
             onChangeText={text => this.setState({ username: text })}
+            style={this.state.theme ? styles.input : styles.type}
             placeholder="USERNAME"
-            style={styles.input}
             autoCapitalize="none"
             underlineColorAndroid="transparent"
-            placeholderTextColor="black"
+            placeholderTextColor="white"
           />
-        </View>
-        <View>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => this.colorChange()}>
           <TextInput
             onChangeText={text => this.setState({ password: text })}
+            style={this.state.theme ? styles.input : styles.type}
             placeholder="PASSWORD"
-            style={styles.input}
             autoCapitalize="none"
             underlineColorAndroid="transparent"
-            placeholderTextColor="black"
+            placeholderTextColor="white"
           />
-        </View>
+        </TouchableHighlight>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.handleLogin()}>
           <Button
-            onPress={() => this.props.navigation.navigate("Landing")}
+            onPress={() => this.props.navigation.navigate("Home")}
             title="START"
             buttonStyle={{
-              backgroundColor: "#06439E",
+              backgroundColor: "transparent",
               width: 350,
-              height: 60,
+              height: 80,
               marginVertical: 10,
-              borderColor: "transparent",
-              borderWidth: 0,
+              borderColor: "white",
+              borderWidth: 5,
               borderRadius: 5
             }}
           />
         </TouchableOpacity>
 
         <View contentContainerStyle={styles.container}>
-          <Text>Forgot your username or password?</Text>
+          <Text style={styles.text}>Forgot your username or password?</Text>
           <TouchableOpacity
             onPress={() => console.warn("You've been reminded")}
           >
-            <Text>Yep, remind me.</Text>
+            <Text style={styles.text}>Yep, remind me.</Text>
           </TouchableOpacity>
         </View>
 
@@ -138,15 +156,15 @@ class LoginScreen extends Component {
 
         <TouchableOpacity>
           <Button
-            onPress={() => this.props.navigation.navigate("Home")}
+            onPress={() => this.props.navigation.navigate("Splash")}
             title="BACK"
             buttonStyle={{
-              backgroundColor: "#06439E",
+              backgroundColor: "transparent",
               width: 170,
-              height: 50,
-              marginTop: 70,
-              borderColor: "transparent",
-              borderWidth: 0,
+              height: 70,
+              marginTop: 50,
+              borderColor: "white",
+              borderWidth: 3,
               borderRadius: 5
             }}
           />
@@ -159,7 +177,7 @@ class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#3783F5",
+    backgroundColor: "#474C5D",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -173,21 +191,33 @@ const styles = StyleSheet.create({
     height: 60,
     paddingLeft: 15,
     marginVertical: 10,
-    backgroundColor: "#AECEF3",
-    color: "black",
-    borderRadius: 3,
-    borderColor: "transparent",
-    borderWidth: 0
+    color: "#474C5D",
+    backgroundColor: "white",
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: "white"
+  },
+  type: {
+    width: 350,
+    height: 60,
+    paddingLeft: 15,
+    marginVertical: 10,
+    color: "white",
+    backgroundColor: "#474C5D",
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: "white"
   },
   loginTitle: {
-    // fontFamily: "sans-serif-medium",
     fontSize: 42,
     textAlign: "center",
-    marginTop: 85,
-    marginBottom: 10
+    marginTop: 80,
+    marginBottom: 30,
+    color: "white"
   },
-  landing: {
-    display: "none"
+  text: {
+    color: "white",
+    fontSize: 12
   }
 });
 

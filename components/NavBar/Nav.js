@@ -25,13 +25,13 @@ export default class Nav extends React.Component {
     let { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Splash")}>
           <Image
             source={require("../../assets/images/home.png")}
             style={styles.image}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Landing")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <Image
             source={require("../../assets/images/trainIcon.png")}
             style={styles.image}
@@ -58,14 +58,15 @@ export default class Nav extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "blue",
+    backgroundColor: "#9CD3DE",
     flex: 1,
+    bottom: 0,
     flexDirection: "row",
     position: "absolute",
-    bottom: 0,
-    justifyContent: "center",
-    paddingLeft: 20,
-    paddingVertical: 17
+    alignItems: "center",
+    marginTop: 20,
+    paddingVertical: 17,
+    paddingLeft: 30
   },
   button: {
     padding: 0,

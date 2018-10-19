@@ -1,46 +1,110 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import React, { Component } from "react";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
+import {
+  Table,
+  TableWrapper,
+  Row,
+  Rows,
+  Col
+} from "react-native-table-component";
 
-
-export default class Leaderboards extends Component {
-  constructor(props) {
-    super(props);
+export default class LeaderboardTable extends React.Component {
+  constructor() {
+    super();
     this.state = {
-      tableHead: ['Username', 'Score'],
-      tableTitle: ['1', '2', '3', '4'],
+      tableHead: ["Username", "Score"],
       tableData: [
-        ['1', '2', '3'],
-        ['a', 'b', 'c'],
-        ['1', '2', '3'],
-        ['a', 'b', 'c']
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301],
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301],
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301],
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301],
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301],
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301],
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301],
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301],
+        ["player0", 5234],
+        ["player1", 4504],
+        ["player2", 4241],
+        ["player3", 3973],
+        ["player4", 2301]
       ]
-    }
+    };
   }
- 
+
   render() {
-    
-    const state = this.state;
     return (
-      <View style={styles.container}>
-      <Table>
-        <Row data={state.tableHead} flexArr={[1, 2, 1, 1]} style={styles.head} textStyle={styles.text}/>
-        <TableWrapper style={styles.wrapper}>
-          <Col data={this.props.stats.username} style={styles.title} heightArr={[28,28]} textStyle={styles.text}/>
-          <Rows data={this.props.stats.score} flexArr={[2, 1, 1]} style={styles.row} textStyle={styles.text}/>
-        </TableWrapper>
-      </Table>
-    </View>
-    )
+      <View contentContainerStyle={styles.container}>
+        <ScrollView style={styles.content}>
+          <Table
+            style={styles.table}
+            borderStyle={{ borderWidth: 2, borderColor: "white" }}
+          >
+            <Row
+              data={this.state.tableHead}
+              style={styles.head}
+              textStyle={{ color: "#474C5D", paddingLeft: 40 }}
+            />
+            <Rows data={this.state.tableData} textStyle={styles.text} />
+          </Table>
+        </ScrollView>
+      </View>
+    );
   }
 }
 
-
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  head: {  height: 40,  backgroundColor: '#f1f8ff'  },
-  wrapper: { flexDirection: 'row' },
-  title: { flex: 1, backgroundColor: '#f6f8fa', width: 5 },
-  row: {  height: 28  },
-  text: { textAlign: 'center' }
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 15
+  },
+  content: {
+    flex: 1
+  },
+  table: {
+    width: 320,
+    backgroundColor: "transparent"
+  },
+  head: {
+    height: 70,
+    backgroundColor: "white"
+  },
+  text: {
+    margin: 5,
+    color: "white",
+    paddingLeft: 35
+  }
 });

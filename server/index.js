@@ -1,6 +1,7 @@
 const express = require("express");
 const { json } = require("body-parser");
 const massive = require("massive");
+const session = require("express-session");
 require("dotenv").config();
 
 const port = process.env.SERVER_PORT || 3001;
@@ -8,6 +9,7 @@ const port = process.env.SERVER_PORT || 3001;
 const {
   getAllUsers,
   getUser,
+  currentUser,
   getUsersGameStats,
   getGameStats,
   addUser,
@@ -29,6 +31,16 @@ const {
 
 const app = express();
 app.use(json());
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 2 * 7 * 24 * 60 * 60 * 1000
+    }
+  })
+);
 
 //Connect Massive to Heroku
 massive(process.env.CONNECTION_STRING)
@@ -39,13 +51,14 @@ massive(process.env.CONNECTION_STRING)
 app.use(express.static(`${__dirname}/../build`));
 
 app.get("/api/users", getAllUsers);
-app.get("/api/user/:id", getUser);
+app.get("/api/user/current", currentUser);
+app.get("/api/user/username", getUser);
 app.post("/api/user", addUser); // Takes in { uname, pword } on req.body;
 app.put("/api/user/:id", editUserInfo); // Takes in { pword, pic } on req.body;
 
 app.get("/api/stats/:id", getUsersGameStats);
 app.get("/api/stats", getGameStats);
-app.get("/api/stats/leader/:gid", getLeaderboard)
+app.get("/api/stats/leader/:gid", getLeaderboard);
 app.post("/api/stats", addGameSessionResults); // Takes in { uid, gid, startTime, score } on req.body;
 
 app.get("/api/games", getGamesList);
