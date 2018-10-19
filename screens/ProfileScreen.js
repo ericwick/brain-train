@@ -47,17 +47,11 @@ export default class ProfileScreen extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:3001/api/time")
-      .then(response => {
-        console.log("response.data", response);
-      })
-      .catch(err => console.log("err", err));
-    axios
       .get("http://localhost:3001/api/user/current")
       .then(response => {
-        console.log(response, "CURRENT USER RESPONSE");
+        console.warn(response.data, "CURRENT USER RESPONSE");
         this.setState({
-          user: response
+          user: response.data
         });
       })
       .catch(err => console.log(err, "CURRENT USER ERR"));
@@ -67,13 +61,26 @@ export default class ProfileScreen extends Component {
     console.warn("All good.");
   }
 
+  // componentDidMount() {
+  //   axios.get(`http://localhost:3001/api/stats/${id}`).then(response => {
+  //     console.warn(response.data);
+  //     this.setState({
+  //       data: response.data
+  //     });
+  //   });
+  // }
+
   render() {
+    console.warn(this.state.user, "USER ARRAY");
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.profileTitle}>{this.state.users.username}</Text>
+          <Text style={styles.profileTitle}>
+            {/* {this.state.users.username} */}
+            USERNAME
+          </Text>
 
-          <Image source={this.state.users.profile_pic} style={styles.image} />
+          {/* <Image source={this.state.users.profile_pic} style={styles.image} /> */}
 
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("EditProfile")}

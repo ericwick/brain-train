@@ -36,6 +36,7 @@ class LoginScreen extends Component {
         this.setState({
           users: response.data
         });
+        console.warn(this.state.users);
       })
       .catch(err => {
         console.log(err);
@@ -45,60 +46,42 @@ class LoginScreen extends Component {
   handleLogin() {
     let { users, username, password } = this.state;
 
-    var handleSubmit = async (username, password) => {
-      let id = 0;
-      await users.map((e, i) => {
-        if (username === e.uname) {
-          id = e.id;
+    if (!users.length) {
+      return null;
+    } else {
+      users.map((e, i) => {
+        if (username === e.username) {
+          let { uid } = e;
+          axios
+            .get("http://localhost:3001/api/user/username", {
+              username,
+              password,
+              uid
+            })
+            .then(response => {
+              console.warn(response);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          axios
+            .post("http://localhost:3001/api/user", { username, password, uid })
+            .then(response => {
+              console.warn(response);
+            })
+            .catch(err => {
+              console.log(err);
+            });
         }
       });
-      axios
-        .get(`http://localhost:3001/api/user/username`, { username, password })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    };
-
-    var handleNewUser = (username, password) => {
-      axios
-        .post("http://localhost:3001/api/user", { username, password })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    };
-
-    var userCheck = () => {
-      if (!users.length) {
-        return null;
-      } else {
-        for (var i = 0; i < users.length; i++) {
-          users[i].uname === username && users[i].password === password
-            ? () => handleSubmit(username, password)
-            : () => handleNewUser(username, password);
-        }
-      }
-    };
-
-    userCheck();
+    }
   }
 
   colorChange() {
     this.setState({
       theme: !this.state.theme
     });
-  }
-
-  _onHideUnderlay() {
-    this.setState({ theme: !this.state.theme });
-  }
-  _onShowUnderlay() {
-    this.setState({ theme: !this.state.theme });
   }
 
   render() {

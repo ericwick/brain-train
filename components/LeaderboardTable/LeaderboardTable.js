@@ -7,63 +7,44 @@ import {
   Rows,
   Col
 } from "react-native-table-component";
+import axios from "axios";
 
 export default class LeaderboardTable extends React.Component {
   constructor() {
     super();
     this.state = {
-      tableHead: ["Username", "Score"],
-      tableData: [
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301],
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301],
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301],
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301],
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301],
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301],
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301],
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301],
-        ["player0", 5234],
-        ["player1", 4504],
-        ["player2", 4241],
-        ["player3", 3973],
-        ["player4", 2301]
-      ]
+      users: [],
+      stats: [],
+      tableHead: ["Username", "Score"]
     };
   }
 
+  componentDidMount() {
+    axios
+      .get("http://localhost:3001/api/users")
+      .then(response => {
+        this.setState({
+          users: response.data
+        });
+      })
+      .catch(err => console.warn(err));
+    axios
+      .get("http://localhost:3001/api/stats")
+      .then(response => {
+        this.setState({
+          stats: response.data
+        });
+      })
+      .catch(err => console.warn(err));
+  }
+
   render() {
+    let rank = [];
+
+    this.state.stats.map((e, i, arr) => {
+      rank.push([e.username, e.score]);
+    });
+
     return (
       <View contentContainerStyle={styles.container}>
         <ScrollView style={styles.content}>
@@ -76,7 +57,7 @@ export default class LeaderboardTable extends React.Component {
               style={styles.head}
               textStyle={{ color: "#474C5D", paddingLeft: 40 }}
             />
-            <Rows data={this.state.tableData} textStyle={styles.text} />
+            <Rows data={rank} textStyle={styles.text} />
           </Table>
         </ScrollView>
       </View>

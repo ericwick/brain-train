@@ -21,6 +21,7 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: [],
       users: []
     };
   }
@@ -28,6 +29,15 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+
+  componentDidMount() {
+    axios.get("http://localhost:3001/api/user/current").then(response => {
+      console.warn(response.data);
+      this.setState({
+        user: response.data
+      });
+    });
+  }
 
   render() {
     return (

@@ -3,40 +3,28 @@ const getAllUsers = (req, res, next) => {
   dbInst
     .get_users()
     .then(response => {
-      console.log(response);
       res.status(200).send(response);
     })
     .catch(err => console.log(`Error in get_users() - ${err}`));
 };
 
-// const getUser = (req, res, next) => {
-//   const dbInst = req.app.get("db");
-//   const { id } = req.params;
-//   dbInst
-//     .get_user(id)
-//     .then(response => res.status(200).send(response))
-//     .catch(err => console.log(`Error in get_user() - ${err}`));
-// };
-
 const getUser = (req, res, next) => {
   const dbInst = req.app.get("db");
-  const { username, password } = req.body;
-    if (req.session.user.username === username && req.session.user.password === password) {
-      dbInst
-      .get_user([username])
-      .then(response => res.status(200).json(req.session.user))
-      .catch(err => console.log(`Error in get_users() - ${err}`));
-    } 
-  };
+  const { username, password, uid } = req.body;
+  req.session.id = uid;
+  req.session.user = username;
+  req.session.password = password;
+  dbInst
+    .get_user([username])
+    .then(response => res.status(200).json(req.session.user))
+    .catch(err => console.log(`Error in get_users() - ${err}`));
+};
 
-    const currentUser = (req, res, next) => {
-    res.status(200).json(req.session.user);
-  };
-
-
-
-
-
+const currentUser = (req, res, next) => {
+  console.log(req.session, "req.session currentUser");
+  console.log(req.session.user, "req.session.user currentUser");
+  res.status(200).json(req.session.user);
+};
 
 const getUsersGameStats = (req, res, next) => {
   const dbInst = req.app.get("db");
@@ -49,7 +37,6 @@ const getUsersGameStats = (req, res, next) => {
 
 const getGameStats = (req, res, next) => {
   const dbInst = req.app.get("db");
-  const { id } = req.params;
   dbInst
     .get_global_stats()
     .then(response => res.status(200).send(response))
@@ -59,6 +46,7 @@ const getGameStats = (req, res, next) => {
 const getLeaderboard = (req, res, next) => {
   const dbInst = req.app.get("db");
   const { gid } = req.params;
+
   dbInst
     .get_leaderboard_stats([gid, 20])
     .then(response => res.status(200).send(response))
@@ -67,8 +55,10 @@ const getLeaderboard = (req, res, next) => {
 
 const addUser = (req, res, next) => {
   const dbInst = req.app.get("db");
-  const { username, password } = req.body;
-  req.session.user.username = username;
+  const { username, password, uid } = req.body;
+  req.session.id = uid;
+  req.session.user = username;
+  req.session.password = password;
   dbInst
     .add_user([username, password])
     .then(response => {
@@ -76,11 +66,6 @@ const addUser = (req, res, next) => {
     })
     .catch(err => console.log(`Error in add_user() - ${err}`));
 };
-
-
-
-
-
 
 const addGameSessionResults = (req, res, next) => {
   const dbInst = req.app.get("db");
@@ -131,9 +116,9 @@ const getServerTime = (req, res, next) => {
 };
 
 const logout = (req, res, next) => {
-    req.session.destroy();
-    res.status(200).json(req.session);
-  },
+  req.session.destroy();
+  res.status(200).json(req.session);
+};
 
 module.exports = {
   getAllUsers,
@@ -148,7 +133,7 @@ module.exports = {
   editUserScores,
   removeUser,
   removeUserStats,
-  getServerTime, 
+  getServerTime,
   getLeaderboard
 };
 
