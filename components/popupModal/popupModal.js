@@ -17,16 +17,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    height:20, 
-    width: 20
-
   },
   dialogContentView: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1
   },
   navigationBar: {
     borderBottomColor: '#b5b5b5',
@@ -49,7 +44,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Popup extends Component {
+export default class App extends Component {
   state = {
     dialogShow: false,
   };
@@ -58,20 +53,22 @@ export default class Popup extends Component {
     this.scaleAnimationDialog.show();
   }
 
-  
+//   showSlideAnimationDialog = () => {
+//     this.slideAnimationDialog.show();
+//   }
+
+  showFadeAnimationDialog = () => {
+    this.fadeAnimationDialog.show();
+  }
 
   render() {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
-          
-
           <DialogButton
-            text="Show Dialog - Scale Animation"
+            text="Game info"            
             onPress={this.showScaleAnimationDialog}
           />
-
-         
         </View>
 
         <PopupDialog
@@ -79,7 +76,7 @@ export default class Popup extends Component {
             this.scaleAnimationDialog = popupDialog;
           }}
           dialogAnimation={scaleAnimation}
-          dialogTitle={<DialogTitle title="Game Description" />}
+          dialogTitle={<DialogTitle title="Popup Dialog - Scale Animation" />}
           actions={[
             <DialogButton
               text="DISMISS"
@@ -92,11 +89,13 @@ export default class Popup extends Component {
         >
           <View style={styles.dialogContentView}>
             <DialogButton
-              text="THIS IS A DESCRIPTION OF OUR GAMES"
+              text="THIS IS OUR GAME INFORMATION/INSTRUCTIONS"
               onPress={this.showFadeAnimationDialog}
             />
           </View>
         </PopupDialog>
+
+       
       </View>
     );
   }

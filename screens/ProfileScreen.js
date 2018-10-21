@@ -17,6 +17,7 @@ import Nav from "../components/NavBar/Nav";
 
 import { MonoText } from "../components/StyledText";
 
+
 export default class ProfileScreen extends Component {
   constructor() {
     super();
@@ -56,8 +57,10 @@ export default class ProfileScreen extends Component {
             style={styles.image}
           />
 
-          <TouchableOpacity  onPress={() => this.props.navigation.navigate("editProfile")}
+          <TouchableOpacity  style={styles.settingsContainer}
+          onPress={() => this.props.navigation.navigate("editProfile")}
           >
+          {/* <Text> Edit Profile </Text> */}
             <Image
               style={styles.settings}
               source={{
@@ -110,10 +113,13 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: "center"
   },
+  settingsContainer:{
+
+  },
   settings: {
     width: 40,
     height: 40,
-    marginLeft: 185,
-    marginTop: 15
+    // marginLeft: 185,
+    // marginTop: 15
   }
 });
