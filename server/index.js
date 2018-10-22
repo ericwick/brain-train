@@ -25,7 +25,8 @@ const {
 const {
   getGamesList,
   addNewGame,
-  getGAMEDATA
+  getGAMEDATA,
+  getTrivia
 } = require("./controllers/gameController");
 
 const app = express();
@@ -59,5 +60,7 @@ app.get("/api/time", getServerTime);
 // app.put("/api/user/stats",    editUserScores);
 // app.delete("/api/user",       removeUser);
 // app.delete("/api/user/stats", removeUserStats);
+//--------Trivia Game--------------------
+app.get("/api/trivia", getTrivia);
 
 app.listen(port, () => console.log(`Listening for requests on port ${port}`));
