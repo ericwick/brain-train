@@ -37,12 +37,11 @@ class SplashScreen extends Component {
   render() {
     return (
       <ImageBackground
-        source={require("../assets/images/cloud-background.jpg")}
+        source={require("../assets/images/mobileGUI/sky_bg.png")}
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <Text style={styles.title}>Brain Train</Text>
-
           <TouchableOpacity>
             <Button
               onPress={() => this.props.navigation.navigate("Login")}
