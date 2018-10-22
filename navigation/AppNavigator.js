@@ -6,7 +6,7 @@ import HomeScreen from "../screens/HomeScreen";
 import Nav from "../components/NavBar/Nav";
 import ProfileScreen from "../screens/ProfileScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
-import editProfile from "../components/Profiles/editProfile";
+import EditProfile from "../components/Profiles/EditProfile";
 import Aftab from "../components/Games/Aftab";
 import riddlegame from "../components/Games/Eric/riddlegame";
 import Anthony from "../components/Games/Anthony";
@@ -22,7 +22,7 @@ export default (AppNavigator = createStackNavigator({
   Login: { screen: LoginScreen },
   Home: { screen: HomeScreen },
   NavBar: { screen: Nav },
-  EditProfile: { screen: editProfile },
+  EditProfile: { screen: EditProfile },
   Profile: { screen: ProfileScreen },
   Leaderboard: { screen: LeaderboardScreen },
   Eric: { screen: riddlegame },

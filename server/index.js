@@ -2,6 +2,7 @@ const express = require("express");
 const { json } = require("body-parser");
 const massive = require("massive");
 const session = require("express-session");
+const cors = require("cors");
 require("dotenv").config();
 
 const port = process.env.SERVER_PORT || 3001;
@@ -26,7 +27,8 @@ const {
 const {
   getGamesList,
   addNewGame,
-  getGAMEDATA
+  getGAMEDATA,
+  getTrivia
 } = require("./controllers/gameController");
 
 const app = express();
@@ -42,6 +44,7 @@ app.use(
     }
   })
 );
+app.use(cors());
 
 //Connect Massive to Heroku
 massive(process.env.CONNECTION_STRING)
@@ -70,5 +73,7 @@ app.get("/api/time", getServerTime);
 // app.put("/api/user/stats",    editUserScores);
 // app.delete("/api/user",       removeUser);
 // app.delete("/api/user/stats", removeUserStats);
+//--------Trivia Game--------------------
+app.get("/api/trivia", getTrivia);
 
 app.listen(port, () => console.log(`Listening for requests on port ${port}`));

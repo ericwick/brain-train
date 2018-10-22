@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -31,7 +32,7 @@ export default class LeaderboardScreen extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:3001/api/users")
+      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
       .then(response => {
         this.setState({
           users: response.data

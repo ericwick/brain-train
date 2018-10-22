@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Platform,
   StyleSheet,
   ScrollView,
   View,
@@ -30,7 +31,17 @@ class LoginScreen extends Component {
   };
 
   async componentDidMount() {
-    await fetch("http://localhost:3001/api/users")
+    await axios;
+    axios
+      .get(
+        `http://${
+          __DEV__
+            ? Platform.OS === "ios"
+              ? "localhost"
+              : "172.31.99.105"
+            : production.url
+        }:3001/api/users`
+      )
       .then(response => {
         // console.warn("ALL USERS", response);
         this.setState({
@@ -42,44 +53,57 @@ class LoginScreen extends Component {
       });
   }
 
-  handleLogin() {
-    let { users, username, password } = this.state;
+  // handleLogin() {
+  //   let { users, username, password } = this.state;
 
-    if (!users.length) {
-      return null;
-    } else {
-      users.map((e, i) => {
-        if (username === e.username) {
-          let { uid } = e;
-          axios
-            .get("http://localhost:3001/api/user/username", {
-              username
-            })
-            .then(response => {
-              console.warn(response);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        } else {
-          axios
-            .post("http://localhost:3001/api/user", { username, password })
-            .then(response => {
-              console.warn(response);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        }
-      });
-    }
-  }
+  //   if (!users.length) {
+  //     return null;
+  //   } else {
+  //     users.map((e, i) => {
+  //       if (username === e.username) {
+  //         let { uid } = e;
+  //         axios
+  //           .get("http://localhost:3001/api/user/username", {
+  //             username
+  //           })
+  //           .then(response => {
+  //             console.warn(response);
+  //           })
+  //           .catch(err => {
+  //             console.log(err);
+  //           });
+  //       } else {
+  //         axios
+  //           .post("http://localhost:3001/api/user", { username, password })
+  //           .then(response => {
+  //             console.warn(response);
+  //           })
+  //           .catch(err => {
+  //             console.log(err);
+  //           });
+  //       }
+  //     });
+  //     axios
+  //     axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user/${id}`)
+  //       .then(response => {
+  //         // console.log(response);
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       });
+  //   };
 
-  colorChange() {
-    this.setState({
-      theme: !this.state.theme
-    });
-  }
+  //   var handleNewUser = (uname, pword) => {
+  //     axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`, { uname, pword })
+  //       .then(response => {
+  //         // console.log(response);
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       });
+  //   };
+  //   userCheck();
+  // }
 
   render() {
     // console.warn("ALL USERS", this.state.users);
@@ -114,7 +138,7 @@ class LoginScreen extends Component {
         <TouchableOpacity>
           <Button
             onPress={() => {
-              this.handleLogin();
+              // this.handleLogin();
               this.props.navigation.navigate("Home");
             }}
             title="START"
@@ -147,7 +171,6 @@ class LoginScreen extends Component {
             <Text style={styles.text}>Yep, remind me.</Text>
           </TouchableOpacity>
         </View>
-
         <View style={styles.linebreak} />
 
         <TouchableOpacity>

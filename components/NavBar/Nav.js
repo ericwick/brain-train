@@ -33,7 +33,7 @@ export default class Nav extends React.Component {
           style={styles.shadow}
         >
           <Image
-            source={require("../../assets/images/home.png")}
+            source={require("../../assets/images/mobileGUI/misc/home.png")}
             style={styles.image}
           />
         </TouchableOpacity>
@@ -42,7 +42,7 @@ export default class Nav extends React.Component {
           style={styles.shadow}
         >
           <Image
-            source={require("../../assets/images/trainIcon.png")}
+            source={require("../../assets/images/mobileGUI/misc/trainIcon.png")}
             style={styles.image}
           />
         </TouchableOpacity>
@@ -52,7 +52,7 @@ export default class Nav extends React.Component {
           style={styles.shadow}
         >
           <Image
-            source={require("../../assets/images/trophy.png")}
+            source={require("../../assets/images/mobileGUI/misc/trophy.png")}
             style={styles.image}
           />
         </TouchableOpacity>
@@ -62,7 +62,7 @@ export default class Nav extends React.Component {
           style={styles.shadow}
         >
           <Image
-            source={require("../../assets/images/userIcon2.png")}
+            source={require("../../assets/images/mobileGUI/misc/userIcon2.png")}
             style={styles.image}
           />
         </TouchableOpacity>
