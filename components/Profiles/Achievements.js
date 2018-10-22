@@ -30,35 +30,17 @@ export default class Achievements extends React.Component {
             <Text style={styles.homeTitle}>Achievements</Text>
           </View>
 
-          <View>
-            <Button
-              title="DAILY CHALLENGE"
-              onPress={() => this.props.navigation.navigate("Home")}
-              buttonStyle={{
-                backgroundColor: "transparent",
-                height: 250,
-                width: 350,
-                marginLeft: 18,
-                borderColor: "white",
-                borderWidth: 2,
-                borderRadius: 3,
-                paddingTop: 18,
-                marginTop: 30,
-                marginBottom: 80
-              }}
-            />
-          </View>
-
           <View style={styles.container}>
-            <Image
-              source={require("../../assets/images/timeAchieve.png")}
-              style={styles.pic}
-            />
-          </View>
-
-          <View style={styles.container}>
-            <Text style={styles.achievement}>Brain Lather</Text>
-            <Text style={styles.description}>Two Total Hours Played</Text>
+            <View style={styles.achieveIcon}>
+              <Image
+                source={require("../../assets/images/timeAchieve.png")}
+                style={styles.pic}
+              />
+            </View>
+            <View style={styles.container}>
+              <Text style={styles.achievement}>Brain Lather</Text>
+              <Text style={styles.description}>Two Total Hours Played</Text>
+            </View>
           </View>
         </ScrollView>
         <Nav navigation={this.props.navigation} />
@@ -71,8 +53,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#474C5D",
+    flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center"
+  },
+  achieveIcon: {
+    width: 100,
+    height: 100,
+    backgroundColor: "#FCE1E0",
+    borderColor: "#FF7F7B",
+    borderRadius: 50,
+    paddingTop: 11,
+    paddingLeft: 13,
+    marginLeft: 20
   },
   contentContainer: {
     backgroundColor: "#474C5D",
@@ -85,64 +79,17 @@ const styles = StyleSheet.create({
     marginTop: 45,
     marginBottom: 15
   },
-  welcomeContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20
-  },
   pic: {
-    width: 80,
-    height: 80
+    width: 74,
+    height: 74
   },
-  dailyChallenge: {
-    borderColor: "black",
-    borderWidth: 1,
-    alignItems: "center",
-    height: 75,
-    width: 250,
-    marginBottom: 20
+  achievement: {
+    fontSize: 18,
+    color: "white",
+    paddingHorizontal: 10
   },
-  missionStatement: {
-    position: "relative",
-    borderColor: "black",
-    borderWidth: 1,
-    height: 75,
-    width: 250,
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    lineHeight: 24,
-    textAlign: "center",
-    marginBottom: 20
-  },
-  gamesTitle: {
-    fontSize: 35,
+  description: {
+    fontSize: 15,
     color: "white"
-  },
-  tilePic: {
-    marginTop: 10,
-    marginBottom: 70
   }
 });
-
-// <View contentContainerStyle={styles.container}>
-//   <ScrollView style={{ minHeight: 0, maxHeight: 5000 }}>
-//     <View contentContainerStyle={styles.container}>
-//       <Text style={styles.title}> ACHIEVEMENTS </Text>
-//     </View>
-
-//     {/* <TouchableOpacity style={styles.pic}>
-//       <Image source={require("../../assets/images/timeAchieve.png")} />
-//     </TouchableOpacity> */}
-
-//     <View contentContainerStyle={styles.container}>
-//       <Text style={styles.achievement}>Brain Lather</Text>
-//     </View>
-
-//     <View contentContainerStyle={styles.container}>
-//       <Text style={styles.description}>Two Total Hours Played</Text>
-//     </View>
-//   </ScrollView>
-//   <View style={styles.nav}>
-//     <Nav navigation={this.props.navigation} />
-//   </View>
-// </View>

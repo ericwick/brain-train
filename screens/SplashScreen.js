@@ -48,7 +48,10 @@ export default class SplashScreen extends Component {
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.title}>Brain Train</Text>
+          <Image
+            source={require("../assets/images/BT2.jpeg")}
+            style={styles.image}
+          />
 
           <TouchableOpacity>
             <Button
@@ -84,6 +87,11 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderStyle: "solid",
     backgroundColor: "white"
+  },
+  image: {
+    height: 380,
+    width: 350,
+    margin: 10
   },
   contentContainer: {
     flex: 1,

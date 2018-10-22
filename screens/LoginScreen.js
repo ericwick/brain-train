@@ -30,13 +30,12 @@ class LoginScreen extends Component {
   };
 
   async componentDidMount() {
-    await axios
-      .get("http://localhost:3001/api/users")
+    await fetch("http://localhost:3001/api/users")
       .then(response => {
+        // console.warn("ALL USERS", response);
         this.setState({
           users: response.data
         });
-        console.warn(this.state.users);
       })
       .catch(err => {
         console.log(err);
@@ -54,9 +53,7 @@ class LoginScreen extends Component {
           let { uid } = e;
           axios
             .get("http://localhost:3001/api/user/username", {
-              username,
-              password,
-              uid
+              username
             })
             .then(response => {
               console.warn(response);
@@ -66,7 +63,7 @@ class LoginScreen extends Component {
             });
         } else {
           axios
-            .post("http://localhost:3001/api/user", { username, password, uid })
+            .post("http://localhost:3001/api/user", { username, password })
             .then(response => {
               console.warn(response);
             })
@@ -85,6 +82,9 @@ class LoginScreen extends Component {
   }
 
   render() {
+    // console.warn("ALL USERS", this.state.users);
+    // console.warn("USERNAME", this.state.username);
+    // console.warn("PASSWORD", this.state.password);
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.loginTitle}>Brain Train</Text>
@@ -96,7 +96,8 @@ class LoginScreen extends Component {
             placeholder="USERNAME"
             autoCapitalize="none"
             underlineColorAndroid="transparent"
-            placeholderTextColor="white"
+            placeholderTextColor="#FF7F7B"
+            placeholderTextFontWeight="bold"
           />
         </TouchableHighlight>
         <TouchableHighlight onPress={() => this.colorChange()}>
@@ -106,22 +107,34 @@ class LoginScreen extends Component {
             placeholder="PASSWORD"
             autoCapitalize="none"
             underlineColorAndroid="transparent"
-            placeholderTextColor="white"
+            placeholderTextColor="#FF7F7B"
           />
         </TouchableHighlight>
 
-        <TouchableOpacity onPress={() => this.handleLogin()}>
+        <TouchableOpacity>
           <Button
-            onPress={() => this.props.navigation.navigate("Home")}
+            onPress={() => {
+              this.handleLogin();
+              this.props.navigation.navigate("Home");
+            }}
             title="START"
             buttonStyle={{
-              backgroundColor: "transparent",
+              backgroundColor: "#FCE1E0",
               width: 350,
-              height: 80,
+              height: 100,
               marginVertical: 10,
-              borderColor: "white",
+              borderColor: "#FF7F7B",
               borderWidth: 5,
-              borderRadius: 5
+              borderRadius: 7
+            }}
+            textStyle={{
+              color: "#FF7F7B",
+              fontSize: 25,
+              letterSpacing: 2,
+              textShadowColor: "white",
+              textShadowOffset: { width: 1.5, height: 2 },
+              textShadowRadius: 30,
+              fontWeight: "bold"
             }}
           />
         </TouchableOpacity>
@@ -142,14 +155,15 @@ class LoginScreen extends Component {
             onPress={() => this.props.navigation.navigate("Splash")}
             title="BACK"
             buttonStyle={{
-              backgroundColor: "transparent",
-              width: 170,
-              height: 70,
-              marginTop: 50,
-              borderColor: "white",
+              backgroundColor: "#FCE1E0",
+              width: 150,
+              height: 55,
+              marginTop: 10,
+              borderColor: "#FF7F7B",
               borderWidth: 3,
               borderRadius: 5
             }}
+            textStyle={{ color: "#FF7F7B", fontSize: 18, letterSpacing: 1 }}
           />
         </TouchableOpacity>
       </ScrollView>
@@ -167,40 +181,47 @@ const styles = StyleSheet.create({
   linebreak: {
     borderBottomColor: "black",
     borderBottomWidth: 2,
-    marginVertical: 40
+    marginVertical: 15
   },
   input: {
     width: 350,
-    height: 60,
+    height: 80,
     paddingLeft: 15,
     marginVertical: 10,
-    color: "#474C5D",
-    backgroundColor: "white",
+    color: "#FF7F7B",
+    backgroundColor: "#FCE1E0",
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: "white"
+    borderColor: "#FF7F7B"
   },
   type: {
     width: 350,
-    height: 60,
+    height: 80,
     paddingLeft: 15,
     marginVertical: 10,
-    color: "white",
-    backgroundColor: "#474C5D",
+    color: "#FF7F7B",
+    backgroundColor: "#FCE1E0",
     borderRadius: 4,
-    borderWidth: 2,
-    borderColor: "white"
+    borderWidth: 3,
+    borderColor: "#FF7F7B"
   },
   loginTitle: {
-    fontSize: 42,
+    fontSize: 52,
     textAlign: "center",
-    marginTop: 80,
+    marginTop: 60,
     marginBottom: 30,
-    color: "white"
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
   },
   text: {
     color: "white",
-    fontSize: 12
+    fontSize: 12,
+    textShadowColor: "#FF7F7B",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4
   }
 });
 

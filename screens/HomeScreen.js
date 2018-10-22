@@ -58,16 +58,25 @@ export default class HomeScreen extends React.Component {
               title="DAILY CHALLENGE"
               onPress={() => this.props.navigation.navigate("Home")}
               buttonStyle={{
-                backgroundColor: "transparent",
                 height: 250,
-                width: 350,
+                width: 300,
                 marginLeft: 18,
-                borderColor: "white",
                 borderWidth: 2,
                 borderRadius: 3,
                 paddingTop: 18,
                 marginTop: 30,
-                marginBottom: 80
+                marginBottom: 80,
+                backgroundColor: "#FCE1E0",
+                borderColor: "#FF7F7B"
+              }}
+              textStyle={{
+                color: "#FF7F7B",
+                fontSize: 25,
+                letterSpacing: 2,
+                textShadowColor: "white",
+                textShadowOffset: { width: 1.5, height: 2 },
+                textShadowRadius: 4,
+                fontWeight: "bold"
               }}
             />
           </View>
@@ -90,76 +99,40 @@ export default class HomeScreen extends React.Component {
               <Button
                 title="Anthony's Games"
                 onPress={() => this.props.navigation.navigate("Anthony")}
-                buttonStyle={{
-                  backgroundColor: "transparent",
-                  width: 280,
-                  height: 95,
-                  marginVertical: 30,
-                  borderColor: "white",
-                  borderWidth: 2,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.buttons}
+                textStyle={styles.buttonText}
               />
             </View>
             <View>
               <Button
                 title="Aftab's Games"
                 onPress={() => this.props.navigation.navigate("Aftab")}
-                buttonStyle={{
-                  backgroundColor: "transparent",
-                  width: 280,
-                  height: 95,
-                  marginVertical: 30,
-                  borderColor: "white",
-                  borderWidth: 2,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.buttons}
+                textStyle={styles.buttonText}
               />
             </View>
             <View>
               <Button
                 title="Eric's Games"
                 onPress={() => this.props.navigation.navigate("Eric")}
-                buttonStyle={{
-                  backgroundColor: "transparent",
-                  width: 280,
-                  height: 95,
-                  marginVertical: 30,
-                  borderColor: "white",
-                  borderWidth: 2,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.buttons}
+                textStyle={styles.buttonText}
               />
             </View>
             <View>
               <Button
                 title="SPEED"
                 onPress={() => this.props.navigation.navigate("Home")}
-                buttonStyle={{
-                  backgroundColor: "transparent",
-                  width: 280,
-                  height: 95,
-                  marginVertical: 30,
-                  borderColor: "white",
-                  borderWidth: 2,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.buttons}
+                textStyle={styles.buttonText}
               />
             </View>
             <View>
               <Button
                 title="MATH"
                 onPress={() => this.props.navigation.navigate("Home")}
-                buttonStyle={{
-                  backgroundColor: "transparent",
-                  width: 280,
-                  height: 95,
-                  marginTop: 30,
-                  marginBottom: 130,
-                  borderColor: "white",
-                  borderWidth: 2,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.lastButton}
+                textStyle={styles.buttonText}
               />
             </View>
           </View>
@@ -183,9 +156,14 @@ const styles = StyleSheet.create({
   },
   homeTitle: {
     fontSize: 52,
-    color: "white",
-    marginTop: 45,
-    marginBottom: 15
+    textAlign: "center",
+    marginTop: 50,
+    marginBottom: 15,
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
   },
   welcomeContainer: {
     alignItems: "center",
@@ -196,6 +174,25 @@ const styles = StyleSheet.create({
     width: 380,
     height: 320,
     resizeMode: "contain"
+  },
+  buttons: {
+    width: 280,
+    height: 95,
+    marginVertical: 30,
+    borderWidth: 2,
+    borderRadius: 5,
+    backgroundColor: "#FCE1E0",
+    borderColor: "#FF7F7B"
+  },
+  lastButton: {
+    backgroundColor: "#FCE1E0",
+    width: 280,
+    height: 95,
+    marginTop: 30,
+    marginBottom: 130,
+    borderColor: "#FF7F7B",
+    borderWidth: 2,
+    borderRadius: 5
   },
   dailyChallenge: {
     borderColor: "black",
@@ -218,11 +215,27 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   gamesTitle: {
-    fontSize: 35,
-    color: "white"
+    fontSize: 42,
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 15,
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
   },
   tilePic: {
     marginTop: 10,
     marginBottom: 70
+  },
+  buttonText: {
+    fontSize: 15,
+    color: "#FF7F7B",
+    letterSpacing: 1,
+    textShadowColor: "white",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
   }
 });

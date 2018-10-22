@@ -103,7 +103,11 @@ export default class ProfileScreen extends Component {
           <View contentContainerStyle={styles.tableContainer}>
             <Table
               style={styles.table}
-              borderStyle={{ borderWidth: 2, borderColor: "white" }}
+              borderStyle={{
+                borderWidth: 2,
+                borderColor: "#FF7F7B",
+                borderRadius: 3
+              }}
             >
               <Row
                 data={this.state.tableHead}
@@ -133,15 +137,25 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   profileTitle: {
-    marginTop: 50,
-    fontSize: 47,
-    color: "white",
-    textAlign: "center"
+    fontSize: 45,
+    textAlign: "center",
+    marginTop: 20,
+    marginBottom: 20,
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 2.8,
+    fontWeight: "bold"
   },
   achieve: {
     fontSize: 30,
     marginTop: 50,
-    color: "white"
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1, height: 1.4 },
+    textShadowRadius: 1
   },
   linebreak: {
     width: 280,
@@ -160,8 +174,11 @@ const styles = StyleSheet.create({
   },
   stats: {
     fontSize: 30,
-    color: "white",
-    marginBottom: 20
+    marginBottom: 20,
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1, height: 1.4 },
+    textShadowRadius: 1
   },
   settings: {
     width: 40,
@@ -172,26 +189,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
-    padding: 15
+    backgroundColor: "#FCE1E0"
+    // padding: 15
   },
   table: {
     width: 320,
     borderWidth: 3,
-    backgroundColor: "transparent"
+    backgroundColor: "#FCE1E0"
   },
   head: {
     height: 70,
-    backgroundColor: "white"
+    backgroundColor: "#FCCBC9"
   },
   text: {
     margin: 5,
-    color: "white",
+    color: "#FF7F7B",
     paddingLeft: 25,
-    margin: 5
+    margin: 5,
+    fontWeight: "bold"
   },
   textHead: {
-    color: "#474C5D",
-    paddingLeft: 30
+    color: "#FF7F7B",
+    paddingLeft: 30,
+    fontWeight: "bold"
   }
 });

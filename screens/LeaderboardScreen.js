@@ -89,15 +89,25 @@ const styles = StyleSheet.create({
     paddingBottom: 100
   },
   title: {
-    fontSize: 35,
-    marginTop: 50,
-    color: "white"
+    fontSize: 45,
+    textAlign: "center",
+    marginTop: 20,
+    marginBottom: 20,
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 2.8,
+    fontWeight: "bold"
   },
   leaderboardTitle: {
-    fontSize: 20,
-    justifyContent: "center",
-    alignContent: "center",
-    marginVertical: 20,
-    color: "white"
+    fontSize: 25,
+    textAlign: "center",
+    marginTop: 5,
+    marginBottom: 25,
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1, height: 1.2 },
+    textShadowRadius: 2.2,
+    fontWeight: "bold"
   }
 });

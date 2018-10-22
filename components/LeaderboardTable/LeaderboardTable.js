@@ -50,12 +50,16 @@ export default class LeaderboardTable extends React.Component {
         <ScrollView style={styles.content}>
           <Table
             style={styles.table}
-            borderStyle={{ borderWidth: 2, borderColor: "white" }}
+            borderStyle={{ borderWidth: 2, borderColor: "#FF7F7B" }}
           >
             <Row
               data={this.state.tableHead}
               style={styles.head}
-              textStyle={{ color: "#474C5D", paddingLeft: 40 }}
+              textStyle={{
+                color: "#FF7F7B",
+                paddingLeft: 45,
+                fontWeight: "bold"
+              }}
             />
             <Rows data={rank} textStyle={styles.text} />
           </Table>
@@ -77,15 +81,16 @@ const styles = StyleSheet.create({
   },
   table: {
     width: 320,
-    backgroundColor: "transparent"
+    backgroundColor: "#FCE1E0"
   },
   head: {
     height: 70,
-    backgroundColor: "white"
+    backgroundColor: "#FCCBC9"
   },
   text: {
     margin: 5,
-    color: "white",
-    paddingLeft: 35
+    color: "#FF7F7B",
+    paddingLeft: 35,
+    fontWeight: "bold"
   }
 });

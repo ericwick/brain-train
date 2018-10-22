@@ -3,26 +3,25 @@ const getAllUsers = (req, res, next) => {
   dbInst
     .get_users()
     .then(response => {
-      res.status(200).send(response);
+      // console.log(response);
+      res.status(200).json(response);
     })
     .catch(err => console.log(`Error in get_users() - ${err}`));
 };
 
 const getUser = (req, res, next) => {
   const dbInst = req.app.get("db");
-  const { username, password, uid } = req.body;
-  req.session.id = uid;
-  req.session.user = username;
-  req.session.password = password;
+  const { username } = req.body;
+  req.session.username = username;
   dbInst
-    .get_user([username])
+    .get_user(username)
     .then(response => res.status(200).json(req.session.user))
     .catch(err => console.log(`Error in get_users() - ${err}`));
 };
 
 const currentUser = (req, res, next) => {
-  console.log(req.session, "req.session currentUser");
-  console.log(req.session.user, "req.session.user currentUser");
+  // console.log(req.session, "req.session currentUser");
+  // console.log(req.session.user, "req.session.user currentUser");
   res.status(200).json(req.session.user);
 };
 
@@ -55,16 +54,17 @@ const getLeaderboard = (req, res, next) => {
 
 const addUser = (req, res, next) => {
   const dbInst = req.app.get("db");
-  const { username, password, uid } = req.body;
-  req.session.id = uid;
-  req.session.user = username;
-  req.session.password = password;
+  const { username, password } = req.body;
   dbInst
-    .add_user([username, password])
+    .add_user(username, password)
     .then(response => {
       res.status(200).send(response);
     })
-    .catch(err => console.log(`Error in add_user() - ${err}`));
+    .catch(err =>
+      dbInst
+        .get_user(username)
+        .then(response => res.status(200).json(req.session.user))
+    );
 };
 
 const addGameSessionResults = (req, res, next) => {
