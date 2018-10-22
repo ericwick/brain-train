@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   title: {
-    // fontFamily: "sans-serif-medium",
     marginTop: 40,
     fontSize: 65,
     color: "black",
