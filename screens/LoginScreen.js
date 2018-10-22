@@ -86,8 +86,7 @@ class LoginScreen extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.loginTitle}>Brain Train</Text>
-
+        <View><Text style={styles.loginTitle}>Brain Train</Text></View>
         <View>
           <TextInput
             onChangeText={text => this.setState({ username: text })}
@@ -100,7 +99,7 @@ class LoginScreen extends Component {
         </View>
         <View>
           <TextInput
-            onChangeText={text => this.setState({ password: text })}
+            // onChangeText={text => this.setState({ password: text })}
             placeholder="PASSWORD"
             style={styles.input}
             autoCapitalize="none"
@@ -108,7 +107,6 @@ class LoginScreen extends Component {
             placeholderTextColor="black"
           />
         </View>
-
         <TouchableOpacity>
           <Button
             onPress={() => this.props.navigation.navigate("Home")}
@@ -133,7 +131,6 @@ class LoginScreen extends Component {
             <Text>Yep, remind me.</Text>
           </TouchableOpacity>
         </View>
-
         <View style={styles.linebreak} />
 
         <TouchableOpacity>
@@ -180,7 +177,6 @@ const styles = StyleSheet.create({
     borderWidth: 0
   },
   loginTitle: {
-    // fontFamily: "sans-serif-medium",
     fontSize: 42,
     textAlign: "center",
     marginTop: 85,
