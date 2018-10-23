@@ -35,6 +35,7 @@ export default function reducer(state = initialState, action)
       console.log('Error - GET_STATS_REJECTED');
       break;
     case `${GET_TRIVIA}_FULFILLED`:
+      // console.log(action.payload.data);
       return {
         ...state,
         trivia: action.payload.data
