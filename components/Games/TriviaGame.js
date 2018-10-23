@@ -103,7 +103,7 @@ class TriviaGame extends Component {
             <Text style={styles.bodyText}>
               {this.props.trivia.length
                 ? this.props.trivia[cardIndex].question
-                : "Error: No questions on state."}
+                : "Loading... Please wait"}
             </Text>
           </ImageBackground>
           {cards.map((e, i) => {

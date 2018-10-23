@@ -23,5 +23,5 @@ export default (AppNavigator = createStackNavigator({
   Leadboards: { screen: LeaderboardsScreen },
   Eric: { screen: Eric },
   Aftab: { screen: Aftab },
-  Anthony: { screen: Anthony }
+  TriviaGame: { screen: TriviaGame }
 }));
