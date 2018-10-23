@@ -97,7 +97,7 @@ export default class HomeScreen extends React.Component {
             <View>
               <Button
                 title="Anthony's Games"
-                onPress={() => this.props.navigation.navigate("Anthony")}
+                onPress={() => this.props.navigation.navigate("TriviaGame")}
                 buttonStyle={styles.firstButton}
                 textStyle={styles.firstText}
               />

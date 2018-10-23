@@ -16,6 +16,8 @@ import questionTwo from "../components/Games/Eric/questionTwo";
 import questionThree from "../components/Games/Eric/questionThree";
 import questionFour from "../components/Games/Eric/questionFour";
 import Results from "../components/Games/Eric/Results";
+import Eric from "../components/Games/Eric";
+import TriviaGame from "../components/Games/TriviaGame";
 
 export default (AppNavigator = createStackNavigator({
   Splash: { screen: SplashScreen },
@@ -34,4 +36,5 @@ export default (AppNavigator = createStackNavigator({
   questionThree: { screen: questionThree },
   questionFour: { screen: questionFour },
   Results: { screen: Results }
+  TriviaGame: { screen: TriviaGame }
 }));
