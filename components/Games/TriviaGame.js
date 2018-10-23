@@ -17,6 +17,7 @@ import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { getTrivia } from "../../redux/reducer";
 import { MonoText } from "../StyledText";
+import BUTTON_BACK from "../../assets/images/mobileGUI/functionButtons/sm_btn_left.png";
 import MESSAGE_GREY from "../../assets/images/mobileGUI/coloredButtons/button_gry.png";
 import MESSAGE_RED from "../../assets/images/mobileGUI/coloredButtons/button_red.png";
 import MESSAGE_BLUE from "../../assets/images/mobileGUI/coloredButtons/button_blu.png";
@@ -75,9 +76,27 @@ class TriviaGame extends Component {
         isCorrect: true
       });
       this.shuffle(answerArr);
-      console.log(answerArr);
+      // console.log(answerArr);
     }
     return answerArr;
+  }
+
+  getTopBar(){
+    return (
+      <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 30, maxHeight: 70}}>
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+          <Image source={BUTTON_BACK}/>
+          <Text style={styles.emphasisText}>BACK</Text>
+        </View>
+        <Text style={styles.emphasisText}>{this.state.cardIndex+1}/{this.props.trivia.length}</Text>
+      </View>
+    );
+  }
+
+  nextQuestion(){
+    let currentquestion = this.state.cardIndex+1;
+    let questionsTotal = this.props.trivia.length;
+    questionsTotal > currentquestion ? this.setState({cardIndex: currentquestion}) : console.log('Reached end of questions');
   }
 
   render() {
@@ -96,6 +115,7 @@ class TriviaGame extends Component {
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.contentContainer}>
+          {this.getTopBar()}
           <ImageBackground
             source={MESSAGE_GREY}
             style={[styles.flashCard, { width: GAME_WIDTH }]}
@@ -113,7 +133,7 @@ class TriviaGame extends Component {
                 activeOpacity={0.7}
                 style={[styles.cell]}
                 key={"answerCard" + i}
-                onPress={() => console.log(e)}
+                onPress={() => this.nextQuestion()}
               >
                 <ImageBackground
                   source={cardBgArr[i]}
@@ -134,6 +154,14 @@ class TriviaGame extends Component {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1
+  },
+  emphasisText: {
+    fontFamily: 'CarterOne',
+    color: 'white',
+    fontSize: 30,
+    textShadowColor: 'rgba(0, 0, 0, 1)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 20
   },
   cell: {
     flex: 1,
@@ -164,15 +192,3 @@ export default connect(
   mapStateToProps,
   { getTrivia }
 )(TriviaGame);
-
-// {"May 4, 1776","June 4, 1776","July 4, 1776"}
-
-// [
-//   "1891",
-//   "March 4th",
-//   "October 19th",
-//   "1887",
-//   "December 27th",
-//   "September 23rd, 1889",
-//   "1894"
-// ]
