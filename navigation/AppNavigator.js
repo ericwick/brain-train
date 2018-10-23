@@ -10,7 +10,7 @@ import LeaderboardsScreen from "../screens/LeaderboardsScreen";
 import EditProfile from "../components/Profiles/EditProfile";
 import Aftab from "../components/Games/Aftab";
 import Eric from "../components/Games/Eric";
-import Anthony from "../components/Games/Anthony_backup";
+import TriviaGame from "../components/Games/TriviaGame";
 
 export default (AppNavigator = createStackNavigator({
   Splash: { screen: SplashScreen },
