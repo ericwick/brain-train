@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native'
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import LeaderboardTable from '../components/LeaderboardTable/LeaderboardTable'; 
 import axios from 'axios';
-import Victorybar from '../components/RadarChart/RadarChart'
+import Audio from '../components/Charts/media/audio';
 
 
 export default class Leaderboards extends Component {
@@ -43,7 +43,7 @@ componentDidMount(){
       <Text style={styles.leaderboardTitle}> Global Leaderboards: </Text>
       {/* <View>{soundObject}</View> */}
       {/* <LeaderboardTable  stats={state}/> */}
-        <Victorybar/>
+      {/* <Audio/> */}
     </View>
     )
   }
