@@ -33,7 +33,13 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
     "redux-promise-middleware": "^5.1.1",
+    "rnpm": "^1.9.0",
     "sessions": "0.0.2-7"
+  },
+  "rnpm": {
+    "assets": [
+        "fonts"
+    ]
   },
   "devDependencies": {
     "jest-expo": "30.0.0"
