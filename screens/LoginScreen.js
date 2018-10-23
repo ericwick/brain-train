@@ -26,99 +26,34 @@ class LoginScreen extends Component {
       newUser: false,
       theme: false
     };
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   static navigationOptions = {
     header: null
   };
 
-  async componentDidMount() {
-    AsyncStorage.getItem("username")
-      .then(value => {
-        this.setState({ username: value });
+  async handleLogin() {
+    var user = { username: this.state.username, password: this.state.password };
+    var existingUser = await AsyncStorage.getItem("user");
+
+    let newUser = JSON.parse(existingUser);
+    if (!newUser) {
+      newUser = [];
+    }
+
+    newUser.push(user);
+
+    await AsyncStorage.setItem("user", JSON.stringify(newUser))
+      .then(() => {
+        console.warn("New user added successfully");
       })
-      .done();
-    axios
-      .get(`http://localhost:3001/api/users`)
-      .then(response => {
-        console.warn("CDM ALL USERS", response.data);
-        this.setState({
-          users: response.data
-        });
-      })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
+        console.warn("Error adding new user");
       });
   }
 
-  saveUser() {
-    AsyncStorage.setItem("username", value);
-    this.setState({ username: value });
-  }
-
-  // handleLogin() {
-  //   let { users, username, password } = this.state;
-
-  //   if (!users.length) {
-  //     return null;
-  //   } else {
-  //     users.map((e, i) => {
-  //       if (username === e.username) {
-  //         let { uid } = e;
-  //         axios
-  //           .get("http://localhost:3001/api/user/username", {
-  //             username
-  //           })
-  //           .then(response => {
-  //             console.warn(response);
-  //           })
-  //           .catch(err => {
-  //             console.log(err);
-  //           });
-  //       } else {
-  //         axios
-  //           .post("http://localhost:3001/api/user", { username, password })
-  //           .then(response => {
-  //             console.warn(response);
-  //           })
-  //           .catch(err => {
-  //             console.log(err);
-  //           });
-  //       }
-  //     });
-  //     axios
-  //     axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user/${id}`)
-  //       .then(response => {
-  //         // console.log(response);
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   };
-
-  //   var handleNewUser = (uname, pword) => {
-  //     axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`, { uname, pword })
-  //       .then(response => {
-  //         // console.log(response);
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   userCheck();
-  // }
-
   render() {
-    // sets the value of whatever you want and stores it
-    AsyncStorage.setItem("username", this.state.username);
-
-    // gets the value or whatever you want from storage
-    AsyncStorage.getItem("username")
-      .then(value => {
-        this.setState({ username: value });
-      })
-      .done();
-
     return (
       <ImageBackground
         source={require("../assets/images/mobileGUI/sky_bg.png")}
@@ -150,17 +85,16 @@ class LoginScreen extends Component {
               placeholder="PASSWORD"
               autoCapitalize="none"
               underlineColorAndroid="transparent"
-              placeholderTextColor="#8E8E8A"
+              placeholderTextColor="#84802C"
             />
           </TouchableHighlight>
 
           <TouchableOpacity>
             <Button
-              onPress={
-                this.state.username && this.state.password
-                  ? this.componentWillMount
-                  : this.saveUser
-              }
+              onPress={() => {
+                this.handleLogin;
+                this.props.navigation.navigate("Home");
+              }}
               title="START"
               buttonStyle={{
                 backgroundColor: "#76FA4F",
@@ -258,7 +192,7 @@ const styles = StyleSheet.create({
     height: 80,
     paddingLeft: 15,
     marginVertical: 10,
-    color: "#E9F802",
+    color: "#84802C",
     backgroundColor: "#FEFE01",
     borderRadius: 4,
     borderWidth: 5,

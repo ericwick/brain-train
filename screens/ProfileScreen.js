@@ -21,6 +21,7 @@ import axios from "axios";
 import AppNavigator from "../navigation/AppNavigator";
 import { Button, Avatar } from "react-native-elements";
 import Nav from "../components/NavBar/Nav";
+import { AsyncStorage } from "react-native";
 
 import { MonoText } from "../components/StyledText";
 
@@ -30,6 +31,7 @@ export default class ProfileScreen extends Component {
     this.state = {
       user: [],
       data: [],
+      users: [],
       tableHead: ["Game", "Score"],
       tableData: [
         ["game0", 234],
@@ -45,46 +47,46 @@ export default class ProfileScreen extends Component {
     header: null
   };
 
-  componentDidMount() {
-    axios
-      .get("http://localhost:3001/api/user/current")
-      .then(response => {
-        console.warn(response.data, "CURRENT USER RESPONSE");
+  async componentDidMount() {
+    var currentUser = await AsyncStorage.getItem("user")
+      .then(value => {
         this.setState({
-          user: response.data
+          user: JSON.parse(value)
         });
       })
-      .catch(err => console.log(err, "CURRENT USER ERR"));
+      .catch(err => {
+        console.warn("Error loading current user");
+      });
+    axios
+      .get("http://localhost:3001/api/users")
+      .then(response => {
+        this.setState({
+          users: response.data
+        });
+      })
+      .catch(err => console.warn(err));
   }
-
-  buttonCheck() {
-    console.warn("All good.");
-  }
-
-  // componentDidMount() {
-  //   axios.get(`http://localhost:3001/api/stats/${id}`).then(response => {
-  //     console.warn(response.data);
-  //     this.setState({
-  //       data: response.data
-  //     });
-  //   });
-  // }
 
   render() {
-    console.warn(this.state.user, "USER ARRAY");
+    var currentUser = [];
+
+    for (var i = 0; i < this.state.users.length; i++) {
+      if (this.state.users[i].username === this.state.user[0].username) {
+        currentUser = this.state.users[i];
+        console.warn(this.state.user[0].username, "USER USERNAME");
+      }
+    }
+
     return (
       <ImageBackground
         source={require("../assets/images/mobileGUI/sky_bg.png")}
         style={styles.backgroundImage}
       >
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.profileTitle}>
-            {/* {this.state.users.username} */}
-            USERNAME
-          </Text>
+          <Text style={styles.profileTitle}>{currentUser.username}</Text>
 
           <Image
-            source={require("../assets/images/avatarIcon.png")}
+            source={{ uri: currentUser.profile_pic }}
             style={styles.image}
           />
 

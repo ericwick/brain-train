@@ -13,15 +13,54 @@ import { WebBrowser } from "expo";
 import AppNavigator from "../../navigation/AppNavigator";
 import axios from "axios";
 import Nav from "../NavBar/Nav";
+import { AsyncStorage } from "react-native";
 
 import { Button, Tile } from "react-native-elements";
 
 export default class Achievements extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      user: [],
+      users: []
+    };
+    this.buttonCheck = this.buttonCheck.bind(this);
+  }
+
   static navigationOptions = {
     header: null
   };
 
+  async componentDidMount() {
+    var currentUser = await AsyncStorage.getItem("user")
+      .then(value => {
+        this.setState({
+          user: JSON.parse(value)
+        });
+      })
+      .catch(err => {
+        console.warn("Error loading current user");
+      });
+    axios
+      .get("http://localhost:3001/api/users")
+      .then(response => {
+        this.setState({
+          users: response.data
+        });
+      })
+      .catch(err => console.warn(err));
+  }
+
   render() {
+    var currentUser = [];
+
+    for (var i = 0; i < this.state.users.length; i++) {
+      if (this.state.users[i].username === this.state.user[0].username) {
+        currentUser = this.state.users[i];
+        console.warn(this.state.user[0].username, "USER USERNAME");
+      }
+    }
+
     return (
       <ImageBackground
         source={require("../../assets/images/mobileGUI/sky_bg.png")}

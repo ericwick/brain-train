@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { WebBrowser } from "expo";
 import AppNavigator from "../navigation/AppNavigator";
+import { AsyncStorage } from "react-native";
 import axios from "axios";
 import Nav from "../components/NavBar/Nav";
 
@@ -31,13 +32,25 @@ export default class HomeScreen extends React.Component {
     header: null
   };
 
-  componentDidMount() {
-    axios.get("http://localhost:3001/api/user/current").then(response => {
-      console.warn(response.data);
-      this.setState({
-        user: response.data
+  async componentDidMount() {
+    var currentUser = await AsyncStorage.getItem("user")
+      .then(value => {
+        this.setState({
+          user: JSON.parse(value)
+        });
+        console.log(this.state.user);
+      })
+      .catch(err => {
+        console.warn("Error loading current user");
       });
-    });
+    axios
+      .get("http://localhost:3001/api/users")
+      .then(response => {
+        this.setState({
+          users: response.data
+        });
+      })
+      .catch(err => console.warn(err));
   }
 
   render() {
