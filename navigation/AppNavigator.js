@@ -1,22 +1,31 @@
 import React from "react";
 import { createStackNavigator } from "react-navigation";
-import HomeScreen from "../screens/HomeScreen";
+import SplashScreen from "../screens/SplashScreen";
 import LoginScreen from "../screens/LoginScreen";
-import LandingScreen from "../screens/LandingScreen";
+import HomeScreen from "../screens/HomeScreen";
 import Nav from "../components/NavBar/Nav";
 import ProfileScreen from "../screens/ProfileScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
-import LeaderboardsScreen from '../screens/LeaderboardsScreen';
-import editProfile from '../components/Profiles/editProfile';
-
+import LeaderboardsScreen from "../screens/LeaderboardsScreen";
+import EditProfile from "../components/Profiles/EditProfile";
+import Aftab from "../components/Games/Aftab";
+import Eric from "../components/Games/Eric";
+import TriviaGame from "../components/Games/TriviaGame";
+import UserStats from '../components/Profiles/UserStats';
+import game from '../components/Games/Tile_Tap/game';
 
 export default (AppNavigator = createStackNavigator({
-  Home: { screen: HomeScreen },
+  Splash: { screen: SplashScreen },
   Login: { screen: LoginScreen },
-  Landing: { screen: LandingScreen },
+  Home: { screen: HomeScreen },
   NavBar: { screen: Nav },
+  EditProfile: { screen: EditProfile },
   Profile: { screen: ProfileScreen },
   Leaderboard: { screen: LeaderboardScreen },
-  Leadboards:{screen: LeaderboardsScreen},
-  editProfile:{screen: editProfile }
+  Leadboards: { screen: LeaderboardsScreen },
+  Eric: { screen: Eric },
+  Aftab: { screen: Aftab },
+  TriviaGame: { screen: TriviaGame }, 
+  UserStats: {screen: UserStats}, 
+  TileGame: {screen: game }
 }));

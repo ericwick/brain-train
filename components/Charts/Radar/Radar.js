@@ -50,7 +50,7 @@ export default class RadarChar extends Component
           "flexibility": 30,
           "agility": 25,
           "endurance": 44
-        }]
+        }
       
         let options2 = { 
           width: 290,

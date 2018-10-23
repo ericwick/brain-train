@@ -30,15 +30,6 @@ export default class ProfileScreen extends Component {
     header: null
   };
 
-  componentDidMount() {
-    axios
-      .get("http://localhost:3001/api/time")
-      .then(response => {
-        console.log("response.data", response);
-      })
-      .catch(err => console.log("err", err));
-  }
-
   buttonCheck() {
     console.warn("All good.");
   }
@@ -57,14 +48,25 @@ export default class ProfileScreen extends Component {
             style={styles.image}
           />
 
-          <TouchableOpacity  style={styles.settingsContainer}
-          onPress={() => this.props.navigation.navigate("editProfile")}
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("EditProfile")}
           >
           {/* <Text> Edit Profile </Text> */}
             <Image
               style={styles.settings}
               source={{
                 uri: "https://d30y9cdsu7xlg0.cloudfront.net/png/6052-200.png"
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("UserStats")}
+          >
+          {/* <Text> Edit Profile </Text> */}
+            <Image
+              style={styles.settings}
+              source={{
+                uri: "https://cdn3.iconfinder.com/data/icons/e-commerce-8/91/stats-512.png"
               }}
             />
           </TouchableOpacity>
@@ -82,12 +84,12 @@ export default class ProfileScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignContent: "center",
     backgroundColor: "#3783F5"
   },
   contentContainer: {
-    paddingTop: 30
+    paddingTop: 30,
+    justifyContent: "center",
+    alignItems: "center"
   },
   profileTitle: {
     marginTop: 50,
@@ -105,7 +107,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginTop: 20,
-    marginLeft: 130,
     borderWidth: 0,
     borderRadius: 80
   },
@@ -119,7 +120,6 @@ const styles = StyleSheet.create({
   settings: {
     width: 40,
     height: 40,
-    // marginLeft: 185,
-    // marginTop: 15
+    marginTop: 15
   }
 });

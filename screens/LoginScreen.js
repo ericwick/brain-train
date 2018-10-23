@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Platform,
   StyleSheet,
   ScrollView,
   View,
@@ -9,9 +10,7 @@ import {
 } from "react-native";
 import AppNavigator from "../navigation/AppNavigator";
 import axios from "axios";
-// import LandingScreen from "./LandingScreen";
 import { Button } from "react-native-elements";
-// import Icon from "react-native-vector-icons";
 
 class LoginScreen extends Component {
   constructor() {
@@ -25,9 +24,13 @@ class LoginScreen extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
+  static navigationOptions = {
+    header: null
+  };
+
   async componentDidMount() {
     await axios
-      .get("http://localhost:3001/api/users")
+    axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
       .then(response => {
         this.setState({
           users: response.data
@@ -59,9 +62,9 @@ class LoginScreen extends Component {
         }
       });
       axios
-        .get(`http://localhost:3001/api/user/${id}`)
+      axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user/${id}`)
         .then(response => {
-          console.log(response);
+          // console.log(response);
         })
         .catch(err => {
           console.log(err);
@@ -69,10 +72,9 @@ class LoginScreen extends Component {
     };
 
     var handleNewUser = (uname, pword) => {
-      axios
-        .post("http://localhost:3001/api/user", { uname, pword })
+      axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`, { uname, pword })
         .then(response => {
-          console.log(response);
+          // console.log(response);
         })
         .catch(err => {
           console.log(err);
@@ -84,8 +86,7 @@ class LoginScreen extends Component {
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.loginTitle}>Brain Train</Text>
-
+        <View><Text style={styles.loginTitle}>Brain Train</Text></View>
         <View>
           <TextInput
             onChangeText={text => this.setState({ username: text })}
@@ -98,7 +99,7 @@ class LoginScreen extends Component {
         </View>
         <View>
           <TextInput
-            onChangeText={text => this.setState({ password: text })}
+            // onChangeText={text => this.setState({ password: text })}
             placeholder="PASSWORD"
             style={styles.input}
             autoCapitalize="none"
@@ -106,17 +107,15 @@ class LoginScreen extends Component {
             placeholderTextColor="black"
           />
         </View>
-
         <TouchableOpacity>
           <Button
-            onPress={() => this.props.navigation.navigate("Landing")}
+            onPress={() => this.props.navigation.navigate("Home")}
             title="START"
             buttonStyle={{
               backgroundColor: "#06439E",
               width: 350,
               height: 60,
               marginVertical: 10,
-              // marginLeft: 15,
               borderColor: "transparent",
               borderWidth: 0,
               borderRadius: 5
@@ -132,7 +131,6 @@ class LoginScreen extends Component {
             <Text>Yep, remind me.</Text>
           </TouchableOpacity>
         </View>
-
         <View style={styles.linebreak} />
 
         <TouchableOpacity>
@@ -179,7 +177,6 @@ const styles = StyleSheet.create({
     borderWidth: 0
   },
   loginTitle: {
-    // fontFamily: "sans-serif-medium",
     fontSize: 42,
     textAlign: "center",
     marginTop: 85,

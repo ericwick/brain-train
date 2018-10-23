@@ -17,7 +17,7 @@ export default class Leaderboards extends Component {
       ]
     }
   }
- 
+
   render() {
     
     const state = this.state;
