@@ -11,6 +11,8 @@ import EditProfile from "../components/Profiles/EditProfile";
 import Aftab from "../components/Games/Aftab";
 import Eric from "../components/Games/Eric";
 import TriviaGame from "../components/Games/TriviaGame";
+import UserStats from '../components/Profiles/UserStats';
+import game from '../components/Games/Tile_Tap/game';
 
 export default (AppNavigator = createStackNavigator({
   Splash: { screen: SplashScreen },
@@ -23,5 +25,7 @@ export default (AppNavigator = createStackNavigator({
   Leadboards: { screen: LeaderboardsScreen },
   Eric: { screen: Eric },
   Aftab: { screen: Aftab },
-  TriviaGame: { screen: TriviaGame }
+  TriviaGame: { screen: TriviaGame }, 
+  UserStats: {screen: UserStats}, 
+  TileGame: {screen: game }
 }));

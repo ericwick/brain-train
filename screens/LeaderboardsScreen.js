@@ -1,10 +1,12 @@
-import React, { Component } from "react";
-import { Platform, Text, View, StyleSheet } from "react-native";
-import { Table, TableWrapper, Row, Rows, Col } from "react-native-table-component";
-import LeaderboardTable from "../components/LeaderboardTable/LeaderboardTable";
-import axios from "axios";
+import React, { Component } from 'react'
+import { Text, View, StyleSheet } from 'react-native'
+import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import LeaderboardTable from '../components/LeaderboardTable/LeaderboardTable'; 
+import axios from 'axios';
+import Audio from '../components/Charts/media/audio';
 import AppNavigator from "../navigation/AppNavigator";
 import Nav from "../components/NavBar/Nav";
+
 
 export default class Leaderboards extends Component {
   constructor() {

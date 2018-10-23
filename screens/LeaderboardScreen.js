@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   Button,
-  View
+  View, 
+  ImageBackground
 } from "react-native";
 import { Icon } from "react-native-elements";
 import axios from "axios";
@@ -15,6 +16,7 @@ import SocialMedia from "../components/SocialMedia/SocialMedia";
 import AppNavigator from "../navigation/AppNavigator";
 import Nav from "../components/NavBar/Nav";
 
+
 export default class LeaderboardScreen extends React.Component {
   constructor() {
     super();
@@ -22,10 +24,6 @@ export default class LeaderboardScreen extends React.Component {
       users: []
     };
   }
-
-  static navigationOptions = {
-    header: null
-  };
 
   // EW - get all Users
   componentDidMount() {
@@ -60,7 +58,6 @@ export default class LeaderboardScreen extends React.Component {
           </TouchableOpacity>
 
           <Text>{this.state.users.username}</Text>
-
           <SocialMedia />
         </ScrollView>
 
@@ -75,12 +72,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#3783F5",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    paddingTop: 15,
   },
   leaderboardsButton: {
     backgroundColor: "green",
     maxHeight: 40,
     borderRadius: 30,
     width: 150
+  },
+  ImageBackground: {
+
   }
 });

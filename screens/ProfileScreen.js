@@ -17,6 +17,7 @@ import Nav from "../components/NavBar/Nav";
 
 import { MonoText } from "../components/StyledText";
 
+
 export default class ProfileScreen extends Component {
   constructor() {
     super();
@@ -50,10 +51,22 @@ export default class ProfileScreen extends Component {
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("EditProfile")}
           >
+          {/* <Text> Edit Profile </Text> */}
             <Image
               style={styles.settings}
               source={{
                 uri: "https://d30y9cdsu7xlg0.cloudfront.net/png/6052-200.png"
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("UserStats")}
+          >
+          {/* <Text> Edit Profile </Text> */}
+            <Image
+              style={styles.settings}
+              source={{
+                uri: "https://cdn3.iconfinder.com/data/icons/e-commerce-8/91/stats-512.png"
               }}
             />
           </TouchableOpacity>
@@ -100,6 +113,9 @@ const styles = StyleSheet.create({
   stats: {
     fontSize: 40,
     textAlign: "center"
+  },
+  settingsContainer:{
+
   },
   settings: {
     width: 40,
