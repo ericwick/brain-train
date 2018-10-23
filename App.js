@@ -2,8 +2,8 @@ import React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { AppLoading, Asset, Font, Icon } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
-import { Provider } from 'react-redux';
-import store from './redux/store';
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 export default class App extends React.Component {
   state = {
@@ -38,9 +38,9 @@ export default class App extends React.Component {
         require("./assets/images/robot-prod.png")
       ]),
       Font.loadAsync({
-        'Averia': require('./assets/fonts/AveriaSansLibre-Regular.ttf'),
-        'CarterOne': require('./assets/fonts/CarterOne.ttf'),
-        'Skranji': require('./assets/fonts/Skranji-Regular.ttf')
+        Averia: require("./assets/fonts/AveriaSansLibre-Regular.ttf"),
+        CarterOne: require("./assets/fonts/CarterOne.ttf"),
+        Skranji: require("./assets/fonts/Skranji-Regular.ttf")
       })
       // Font.loadAsync({
       //   // This is the font that we are using for our tab bar
@@ -69,39 +69,3 @@ const styles = StyleSheet.create({
     backgroundColor: "red"
   }
 });
-
-// IMPORT A LIBRARY to help create a component
-
-// import React from 'react';
-
-// import all of the elements you use in the component
-// import { Text, AppRegistry } from 'react-native';
-
-// CREATE A COMPONENT
-
-// const App = () => {
-//   return (
-//     <Text>Some Text</Text>
-//   )
-// };
-// Components are just about the same in Native as the are in React
-
-// RENDER IT to the device
-
-// AppRegistry.registerComponent('albums', () => App);
-// what is the 'albums' referencing?
-
-// NAVIGATION
-// react-native-router-flex
-
-// npm install --save react-native-router-flux@3.35.0
-
-// a scene is a component that we import from teh routing library
-
-// this is just like route.js and making your <Switch><Route/></Switch>
-{
-  /* <Scene key="login" component={LoginForm} /> */
-}
-
-// initial - this is the first screen to show
-// title="Login" - make a nav bar and give it a title of "Login"
