@@ -25,6 +25,7 @@ import { AsyncStorage } from "react-native";
 
 import { MonoText } from "../components/StyledText";
 
+
 export default class ProfileScreen extends Component {
   constructor() {
     super();
@@ -93,9 +94,21 @@ export default class ProfileScreen extends Component {
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("EditProfile")}
           >
+          {/* <Text> Edit Profile </Text> */}
             <Image
               style={styles.settings}
               source={require("../assets/images/edit.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("UserStats")}
+          >
+          {/* <Text> Edit Profile </Text> */}
+            <Image
+              style={styles.settings}
+              source={{
+                uri: "https://cdn3.iconfinder.com/data/icons/e-commerce-8/91/stats-512.png"
+              }}
             />
           </TouchableOpacity>
 
@@ -186,6 +199,9 @@ const styles = StyleSheet.create({
     textShadowColor: "white",
     textShadowOffset: { width: 1, height: 1.4 },
     textShadowRadius: 1
+  },
+  settingsContainer:{
+
   },
   settings: {
     width: 40,

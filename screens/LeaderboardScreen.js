@@ -7,7 +7,8 @@ import {
   Text,
   TouchableOpacity,
   Button,
-  View
+  View,
+  ImageBackground
 } from "react-native";
 import { Icon } from "react-native-elements";
 import axios from "axios";
@@ -17,51 +18,9 @@ import AppNavigator from "../navigation/AppNavigator";
 import Nav from "../components/NavBar/Nav";
 
 export default class LeaderboardScreen extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      users: [],
-      username: [],
-      score: []
-    };
-    this.getLeaders = this.getLeaders.bind(this);
-  }
-
   static navigationOptions = {
     header: null
   };
-
-  // componentDidMount() {
-  //   axios
-  //     .get(
-  //       `http://${
-  //         __DEV__
-  //           ? Platform.OS === "ios"
-  //             ? "localhost"
-  //             : "172.31.99.105"
-  //           : production.url
-  //       }:3001/api/users`
-  //     )
-  //     .then(response => {
-  //       this.setState({
-  //         users: response.data
-  //       });
-  //     })
-  //     .catch(err => {
-  //       console.warn(err);
-  //     });
-  // }
-
-  // getLeaders() {
-  //   axios.get(`http://localhost:3001/api/stats/leader/${1}`).then(res => {
-  //     let users = res.data.map(e => e.username);
-  //     let gamescore = res.data.map(e => [e.score]);
-  //     this.setState({
-  //       username: users,
-  //       score: gamescore
-  //     });
-  //   });
-  // }
 
   render() {
     let { navigation } = this.props;
