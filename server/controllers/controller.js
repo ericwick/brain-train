@@ -3,7 +3,6 @@ const getAllUsers = (req, res, next) => {
   dbInst
     .get_users()
     .then(response => {
-      // console.log(response);
       res.status(200).json(response);
     })
     .catch(err => console.log(`Error in get_users() - ${err}`));

@@ -6,16 +6,15 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  ImageBackground
 } from "react-native";
 import { WebBrowser } from "expo";
 import AppNavigator from "../../navigation/AppNavigator";
 import axios from "axios";
 import Nav from "../NavBar/Nav";
 
-// import { MonoText } from "../components/StyledText";
 import { Button, Tile } from "react-native-elements";
-// import PopupModal from "../components/popupModal/popupModal";
 
 export default class Achievements extends React.Component {
   static navigationOptions = {
@@ -24,7 +23,10 @@ export default class Achievements extends React.Component {
 
   render() {
     return (
-      <View contentContainerStyle={styles.container}>
+      <ImageBackground
+        source={require("../../assets/images/mobileGUI/sky_bg.png")}
+        style={styles.backgroundImage}
+      >
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.container}>
             <Text style={styles.homeTitle}>Achievements</Text>
@@ -42,18 +44,41 @@ export default class Achievements extends React.Component {
               <Text style={styles.description}>Two Total Hours Played</Text>
             </View>
           </View>
+
+          <View style={styles.container}>
+            <View style={styles.perfectIcon}>
+              <Image
+                source={require("../../assets/images/perfectScoreIcon.png")}
+                style={styles.pic}
+              />
+            </View>
+            <View style={styles.container}>
+              <Text style={styles.achievement}>Perfect Score</Text>
+              <Text style={styles.description}>Zero Errors in One Round</Text>
+            </View>
+          </View>
         </ScrollView>
         <Nav navigation={this.props.navigation} />
-      </View>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1
+  },
   container: {
     flex: 1,
-    backgroundColor: "#474C5D",
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 10
+  },
+  longContainer: {
+    flex: 1,
+    flexDirection: "column",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center"
@@ -61,35 +86,47 @@ const styles = StyleSheet.create({
   achieveIcon: {
     width: 100,
     height: 100,
-    backgroundColor: "#FCE1E0",
+    backgroundColor: "#FA5F4A",
     borderColor: "#FF7F7B",
     borderRadius: 50,
     paddingTop: 11,
     paddingLeft: 13,
     marginLeft: 20
   },
+  perfectIcon: {
+    width: 100,
+    height: 100,
+    backgroundColor: "#8EE4FB",
+    borderColor: "#FF7F7B",
+    borderRadius: 50,
+    paddingTop: 14,
+    paddingLeft: 11,
+    marginLeft: 20
+  },
   contentContainer: {
-    backgroundColor: "#474C5D",
     paddingTop: 30,
     paddingBottom: 300
   },
   homeTitle: {
     fontSize: 52,
-    color: "white",
+    color: "#FB1203",
     marginTop: 45,
-    marginBottom: 15
+    marginBottom: 32,
+    textShadowColor: "#FB948E",
+    textShadowRadius: 6,
+    textShadowOffset: { width: -2, height: 2 }
   },
   pic: {
     width: 74,
     height: 74
   },
   achievement: {
-    fontSize: 18,
-    color: "white",
-    paddingHorizontal: 10
+    fontSize: 30,
+    color: "black",
+    paddingHorizontal: 5
   },
   description: {
-    fontSize: 15,
-    color: "white"
+    fontSize: 12,
+    color: "black"
   }
 });

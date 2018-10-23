@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  ImageBackground,
   Platform,
   ScrollView,
   StyleSheet,
@@ -30,36 +31,46 @@ export default class LeaderboardScreen extends React.Component {
     header: null
   };
 
-  componentDidMount() {
-    axios
-      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
-      .then(response => {
-        this.setState({
-          users: response.data
-        });
-        console.warn(this.state.users, "RESPONSE.DATA");
-      })
-      .catch(err => {
-        console.warn(err);
-      });
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get(
+  //       `http://${
+  //         __DEV__
+  //           ? Platform.OS === "ios"
+  //             ? "localhost"
+  //             : "172.31.99.105"
+  //           : production.url
+  //       }:3001/api/users`
+  //     )
+  //     .then(response => {
+  //       this.setState({
+  //         users: response.data
+  //       });
+  //     })
+  //     .catch(err => {
+  //       console.warn(err);
+  //     });
+  // }
 
-  getLeaders() {
-    axios.get(`http://localhost:3001/api/stats/leader/${1}`).then(res => {
-      let users = res.data.map(e => e.username);
-      let gamescore = res.data.map(e => [e.score]);
-      console.log(users, gamescore);
-      this.setState({
-        username: users,
-        score: gamescore
-      });
-    });
-  }
+  // getLeaders() {
+  //   axios.get(`http://localhost:3001/api/stats/leader/${1}`).then(res => {
+  //     let users = res.data.map(e => e.username);
+  //     let gamescore = res.data.map(e => [e.score]);
+  //     this.setState({
+  //       username: users,
+  //       score: gamescore
+  //     });
+  //   });
+  // }
 
   render() {
     let { navigation } = this.props;
+    console.warn(this.state.users);
     return (
-      <View style={styles.container}>
+      <ImageBackground
+        source={require("../assets/images/mobileGUI/sky_bg.png")}
+        style={styles.backgroundImage}
+      >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Text style={styles.title}> LEADERBOARD </Text>
 
@@ -67,15 +78,14 @@ export default class LeaderboardScreen extends React.Component {
           <LeaderboardTable stats={this.state} />
         </ScrollView>
         <Nav navigation={this.props.navigation} />
-      </View>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: "#474C5D",
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 70,
@@ -83,7 +93,6 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    backgroundColor: "#474C5D",
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 50,
@@ -92,9 +101,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 45,
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 60,
     marginBottom: 20,
-    color: "#FF7F7B",
+    color: "#FC9902",
     textShadowColor: "white",
     textShadowOffset: { width: 1.5, height: 2 },
     textShadowRadius: 2.8,
@@ -104,8 +113,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
     marginTop: 5,
-    marginBottom: 25,
-    color: "#FF7F7B",
+    marginBottom: 40,
+    color: "#0FB801",
     textShadowColor: "white",
     textShadowOffset: { width: 1, height: 1.2 },
     textShadowRadius: 2.2,

@@ -30,7 +30,8 @@ export default class Nav extends React.Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Splash")}
-          style={styles.shadow}
+          style={styles.splash}
+          activeOpacity={0.97}
         >
           <Image
             source={require("../../assets/images/mobileGUI/misc/home.png")}
@@ -39,7 +40,8 @@ export default class Nav extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("Home")}
-          style={styles.shadow}
+          style={styles.home}
+          activeOpacity={0.97}
         >
           <Image
             source={require("../../assets/images/mobileGUI/misc/trainIcon.png")}
@@ -49,7 +51,8 @@ export default class Nav extends React.Component {
 
         <TouchableOpacity
           onPress={() => navigation.navigate("Leaderboard")}
-          style={styles.shadow}
+          style={styles.leaderboard}
+          activeOpacity={0.97}
         >
           <Image
             source={require("../../assets/images/mobileGUI/misc/trophy.png")}
@@ -59,7 +62,8 @@ export default class Nav extends React.Component {
 
         <TouchableOpacity
           onPress={() => navigation.navigate("Profile")}
-          style={styles.shadow}
+          style={styles.profile}
+          activeOpacity={0.97}
         >
           <Image
             source={require("../../assets/images/mobileGUI/misc/userIcon2.png")}
@@ -73,7 +77,6 @@ export default class Nav extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FCE1E0",
     flex: 1,
     bottom: 0,
     width: width,
@@ -83,9 +86,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     marginTop: 20,
-    paddingVertical: 17,
     borderTopWidth: 4,
-    borderTopColor: "#FF7F7B",
+    borderTopColor: "#FB3528",
+    borderBottomWidth: 4,
+    borderBottomColor: "#03BD08",
     elevation: 5
   },
   image: {
@@ -98,5 +102,25 @@ const styles = StyleSheet.create({
     shadowRadius: 25,
     shadowOpacity: 1,
     elevation: 2
+  },
+  home: {
+    backgroundColor: "#FB3528",
+    paddingHorizontal: width / 17,
+    paddingVertical: 17
+  },
+  splash: {
+    backgroundColor: "#1481FC",
+    paddingHorizontal: width / 17,
+    paddingVertical: 17
+  },
+  leaderboard: {
+    backgroundColor: "#03BD08",
+    paddingHorizontal: width / 17,
+    paddingVertical: 17
+  },
+  profile: {
+    backgroundColor: "#FDA707",
+    paddingHorizontal: width / 17,
+    paddingVertical: 17
   }
 });

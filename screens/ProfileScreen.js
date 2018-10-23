@@ -73,14 +73,20 @@ export default class ProfileScreen extends Component {
   render() {
     console.warn(this.state.user, "USER ARRAY");
     return (
-      <View style={styles.container}>
+      <ImageBackground
+        source={require("../assets/images/mobileGUI/sky_bg.png")}
+        style={styles.backgroundImage}
+      >
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <Text style={styles.profileTitle}>
             {/* {this.state.users.username} */}
             USERNAME
           </Text>
 
-          {/* <Image source={this.state.users.profile_pic} style={styles.image} /> */}
+          <Image
+            source={require("../assets/images/avatarIcon.png")}
+            style={styles.image}
+          />
 
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("EditProfile")}
@@ -105,7 +111,7 @@ export default class ProfileScreen extends Component {
               style={styles.table}
               borderStyle={{
                 borderWidth: 2,
-                borderColor: "#FF7F7B",
+                borderColor: "#FC0C01",
                 borderRadius: 3
               }}
             >
@@ -119,15 +125,14 @@ export default class ProfileScreen extends Component {
           </View>
         </ScrollView>
         <Nav navigation={this.props.navigation} />
-      </View>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#474C5D"
+  backgroundImage: {
+    flex: 1
   },
   contentContainer: {
     paddingTop: 30,
@@ -141,7 +146,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     marginBottom: 20,
-    color: "#FF7F7B",
+    color: "#5D02AD",
     textShadowColor: "white",
     textShadowOffset: { width: 1.5, height: 2 },
     textShadowRadius: 2.8,
@@ -153,13 +158,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
     color: "#FF7F7B",
-    textShadowColor: "white",
-    textShadowOffset: { width: 1, height: 1.4 },
-    textShadowRadius: 1
+    textShadowColor: "#AAAD02",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5
   },
   linebreak: {
     width: 280,
-    borderBottomColor: "white",
+    borderBottomColor: "red",
     borderBottomWidth: 2,
     marginHorizontal: 20,
     marginTop: 40,
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
   stats: {
     fontSize: 30,
     marginBottom: 20,
-    color: "#FF7F7B",
+    color: "#02B412",
     textShadowColor: "white",
     textShadowOffset: { width: 1, height: 1.4 },
     textShadowRadius: 1
@@ -190,7 +195,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FCE1E0"
-    // padding: 15
   },
   table: {
     width: 320,
@@ -209,7 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   textHead: {
-    color: "#FF7F7B",
+    color: "#0151FC",
     paddingLeft: 30,
     fontWeight: "bold"
   }
