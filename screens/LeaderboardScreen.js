@@ -7,8 +7,7 @@ import {
   Text,
   TouchableOpacity,
   Button,
-  View,
-  ImageBackground
+  View
 } from "react-native";
 import { Icon } from "react-native-elements";
 import axios from "axios";
