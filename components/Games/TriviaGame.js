@@ -8,7 +8,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Animated
 } from "react-native";
 import { WebBrowser } from "expo";
 import AppNavigator from "../../navigation/AppNavigator";
@@ -32,9 +33,10 @@ class TriviaGame extends Component {
   constructor() {
     super();
     this.state = {
-      score: 0,
+      score: 50,
       data: [],
       time: [],
+      animateModal: new Animated.Value(0),
       cardIndex: 0
     };
   }
@@ -43,7 +45,7 @@ class TriviaGame extends Component {
   };
 
   componentDidMount() {
-    this.props.getTrivia("History", 4, 2);
+    this.props.getTrivia("", 10, 1);
   }
 
   //longest question:         "'In 1967, a magazine published a story about extracting hallucinogenic chemicals from bananas to raise moral questions about banning drugs.'"
@@ -58,6 +60,23 @@ class TriviaGame extends Component {
       arr[i - 1] = arr[j];
       arr[j] = x;
     }
+  }
+
+  printScore(int, length=4){
+    // Get absolute value to account for negatives
+    absint = Math.abs(int);
+    // Round down, convert to string, take length, and subtract from desired zeroes. Return if greater than 0
+    let neededZeros = Math.max(0, length - Math.floor(absint).toString().length);
+    // Create a number with the required number of zeroes, convert it to a string, and split off the first digit
+    let zeroString = Math.pow(10, neededZeros).toString().substr(1);
+    if(int < 0) {
+      zeroString = '-' + zeroString;
+    }
+    return (
+      <View>
+        <Text style={[styles.emphasisText,{ marginLeft: 5 }]}>{zeroString + int}</Text>
+      </View>
+    );
   }
 
   initializeCards() {
@@ -85,17 +104,27 @@ class TriviaGame extends Component {
     return (
       <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', marginTop: 30, maxHeight: 70}}>
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-          <Image source={BUTTON_BACK}/>
-          <Text style={styles.emphasisText}>BACK</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
+            <Image source={BUTTON_BACK}/>
+          </TouchableOpacity>
+          <Text style={[styles.emphasisText,{ marginLeft: 5 }]}>BACK</Text>
         </View>
-        <Text style={styles.emphasisText}>{this.state.cardIndex+1}/{this.props.trivia.length}</Text>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <Text style={[styles.emphasisText,{ marginRight: 10 }]}>{this.state.cardIndex+1}/{this.props.trivia.length}</Text>
+          {this.printScore(this.state.score)}
+        </View>
       </View>
     );
   }
 
-  nextQuestion(){
+  userAnsweredQuestion(selectedIndex, questionArray){
     let currentquestion = this.state.cardIndex+1;
     let questionsTotal = this.props.trivia.length;
+    let { score } = this.state;
+    console.log(questionArray);
+    if(questionArray[selectedIndex].isCorrect) {
+      this.setState({score: score+50});
+    }
     questionsTotal > currentquestion ? this.setState({cardIndex: currentquestion}) : console.log('Reached end of questions');
   }
 
@@ -118,7 +147,7 @@ class TriviaGame extends Component {
           {this.getTopBar()}
           <ImageBackground
             source={MESSAGE_GREY}
-            style={[styles.flashCard, { width: GAME_WIDTH }]}
+            style={[styles.flashCard, { width: GAME_WIDTH, maxHeight: CARD_HEIGHT }]}
           >
             <Text style={styles.bodyText}>
               {this.props.trivia.length
@@ -126,14 +155,14 @@ class TriviaGame extends Component {
                 : "Loading... Please wait"}
             </Text>
           </ImageBackground>
-          {cards.map((e, i) => {
+          {cards.map((e, i, s) => {
             return (
               <TouchableOpacity
                 focusedOpacity={0.7}
                 activeOpacity={0.7}
                 style={[styles.cell]}
                 key={"answerCard" + i}
-                onPress={() => this.nextQuestion()}
+                onPress={() => this.userAnsweredQuestion(i, s)}
               >
                 <ImageBackground
                   source={cardBgArr[i]}
