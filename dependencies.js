@@ -37,3 +37,7 @@ react-native-material-ui ---> https://github.com/xotahal/react-native-material-u
 react-native-popup-dialog --> https://github.com/jacklam718/react-native-popup-dialog
 //the pop up modal 
 
+
+//push notifications 
+//keyboard pop up resizer 
+//react native collapsable --> react native pop ups when clicked on 

@@ -1,46 +1,96 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import React, { Component } from "react";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
+import {
+  Table,
+  TableWrapper,
+  Row,
+  Rows,
+  Col
+} from "react-native-table-component";
+import axios from "axios";
 
-
-export default class Leaderboards extends Component {
-  constructor(props) {
-    super(props);
+export default class LeaderboardTable extends React.Component {
+  constructor() {
+    super();
     this.state = {
-      tableHead: ['Username', 'Score'],
-      tableTitle: ['1', '2', '3', '4'],
-      tableData: [
-        ['1', '2', '3'],
-        ['a', 'b', 'c'],
-        ['1', '2', '3'],
-        ['a', 'b', 'c']
-      ]
-    }
+      users: [],
+      stats: [],
+      tableHead: ["Username", "Score"]
+    };
+  }
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:3001/api/users")
+      .then(response => {
+        this.setState({
+          users: response.data
+        });
+      })
+      .catch(err => console.warn(err));
+    axios
+      .get("http://localhost:3001/api/stats")
+      .then(response => {
+        this.setState({
+          stats: response.data
+        });
+      })
+      .catch(err => console.warn(err));
   }
 
   render() {
-    
-    const state = this.state;
+    let rank = [];
+
+    this.state.stats.map((e, i, arr) => {
+      rank.push([e.username, e.score]);
+    });
+
     return (
-      <View style={styles.container}>
-      <Table>
-        <Row data={state.tableHead} flexArr={[1, 2, 1, 1]} style={styles.head} textStyle={styles.text}/>
-        <TableWrapper style={styles.wrapper}>
-          <Col data={this.props.stats.username} style={styles.title} heightArr={[28,28]} textStyle={styles.text}/>
-          <Rows data={this.props.stats.score} flexArr={[2, 1, 1]} style={styles.row} textStyle={styles.text}/>
-        </TableWrapper>
-      </Table>
-    </View>
-    )
+      <View contentContainerStyle={styles.container}>
+        <ScrollView style={styles.content}>
+          <Table
+            style={styles.table}
+            borderStyle={{ borderWidth: 2, borderColor: "#FF7F7B" }}
+          >
+            <Row
+              data={this.state.tableHead}
+              style={styles.head}
+              textStyle={{
+                color: "#FF7F7B",
+                paddingLeft: 45,
+                fontWeight: "bold"
+              }}
+            />
+            <Rows data={rank} textStyle={styles.text} />
+          </Table>
+        </ScrollView>
+      </View>
+    );
   }
 }
 
-
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  head: {  height: 40,  backgroundColor: '#f1f8ff'  },
-  wrapper: { flexDirection: 'row' },
-  title: { flex: 1, backgroundColor: '#f6f8fa', width: 5 },
-  row: {  height: 28  },
-  text: { textAlign: 'center' }
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 15
+  },
+  content: {
+    flex: 1
+  },
+  table: {
+    width: 320,
+    backgroundColor: "#FCE1E0"
+  },
+  head: {
+    height: 70,
+    backgroundColor: "#FCCBC9"
+  },
+  text: {
+    margin: 5,
+    color: "#FF7F7B",
+    paddingLeft: 35,
+    fontWeight: "bold"
+  }
 });
