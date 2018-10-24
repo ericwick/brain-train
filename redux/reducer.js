@@ -10,7 +10,8 @@ const GET_TRIVIA = 'GET_TRIVIA';
 const initialState = {
   users: [],
   stats: [],
-  trivia: []
+  trivia: [], 
+  
 };
 
 //REDUCER

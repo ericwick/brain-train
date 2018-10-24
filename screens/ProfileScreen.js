@@ -70,6 +70,17 @@ export default class ProfileScreen extends Component {
               }}
             />
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("sequent")}
+          >
+          {/* <Text> Edit Profile </Text> */}
+            <Image
+              style={styles.settings}
+              source={{
+                uri: "https://cdn3.iconfinder.com/data/icons/pix-glyph-set/50/520626-gaming_remote-512.png"
+              }}
+            />
+          </TouchableOpacity>
 
           <View style={styles.linebreak} />
 
