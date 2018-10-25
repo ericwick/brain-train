@@ -42,7 +42,7 @@ export default class ProfileScreen extends Component {
         ["game4", 301]
       ]
     };
-    this.buttonCheck = this.buttonCheck.bind(this);
+    // this.buttonCheck = this.buttonCheck.bind(this);
   }
   static navigationOptions = {
     header: null
@@ -111,6 +111,8 @@ export default class ProfileScreen extends Component {
               }}
             />
           </TouchableOpacity>
+          
+          
 
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Achievements")}
