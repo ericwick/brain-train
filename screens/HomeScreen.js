@@ -44,7 +44,7 @@ export default class HomeScreen extends React.Component {
         console.warn("Error loading current user");
       });
     axios
-      .get("http://localhost:3001/api/users")
+      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
       .then(response => {
         this.setState({
           users: response.data
@@ -109,7 +109,7 @@ export default class HomeScreen extends React.Component {
           <View style={styles.container}>
             <View>
               <Button
-                title="Anthony's Games"
+                title="Trivia"
                 onPress={() => this.props.navigation.navigate("TriviaGame")}
                 buttonStyle={styles.firstButton}
                 textStyle={styles.firstText}

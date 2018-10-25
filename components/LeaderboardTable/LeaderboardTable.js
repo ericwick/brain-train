@@ -21,7 +21,7 @@ export default class LeaderboardTable extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:3001/api/users")
+      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
       .then(response => {
         this.setState({
           users: response.data
@@ -29,7 +29,7 @@ export default class LeaderboardTable extends React.Component {
       })
       .catch(err => console.warn(err));
     axios
-      .get("http://localhost:3001/api/stats")
+      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/stats`)
       .then(response => {
         this.setState({
           stats: response.data
