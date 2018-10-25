@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Image,
+  ImageBackground,
   Platform,
   ScrollView,
   StyleSheet,
@@ -10,12 +11,11 @@ import {
 } from "react-native";
 import { WebBrowser } from "expo";
 import AppNavigator from "../navigation/AppNavigator";
+import { AsyncStorage } from "react-native";
 import axios from "axios";
 import Nav from "../components/NavBar/Nav";
 
 import { MonoText } from "../components/StyledText";
-// import Icon from 'react-native-vector-icons/FontAwesome';
-// import { Input } from "react-native-elements";
 import { Button, Tile } from "react-native-elements";
 import PopupModal from "../components/popupModal/popupModal";
 
@@ -23,44 +23,72 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: [],
       users: []
     };
   }
-  // We'll grab all users from reducer once its set up
 
   static navigationOptions = {
     header: null
   };
 
+  async componentDidMount() {
+    var currentUser = await AsyncStorage.getItem("user")
+      .then(value => {
+        this.setState({
+          user: JSON.parse(value)
+        });
+        console.log(this.state.user);
+      })
+      .catch(err => {
+        console.warn("Error loading current user");
+      });
+    axios
+      .get("http://localhost:3001/api/users")
+      .then(response => {
+        this.setState({
+          users: response.data
+        });
+      })
+      .catch(err => console.warn(err));
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <View style={styles.welcomeContainer}>
+      <ImageBackground
+        source={require("../assets/images/mobileGUI/sky_bg.png")}
+        style={styles.backgroundImage}
+      >
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <View>
             <Image
               source={require("../assets/images/logo.png")}
-              style={styles.welcomeImage}
+              style={styles.image}
             />
           </View>
-
           <View>
             <Button
               title="DAILY CHALLENGE"
               onPress={() => this.props.navigation.navigate("Home")}
               buttonStyle={{
-                backgroundColor: "#06439E",
-                height: 150,
-                width: 350,
-                marginLeft: 18,
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 3,
+                height: 250,
+                width: 300,
+                borderWidth: 5,
+                borderRadius: 5,
                 paddingTop: 18,
                 marginTop: 30,
-                marginBottom: 80
+                marginBottom: 80,
+                backgroundColor: "#9FEFA1",
+                borderColor: "#03BD08"
+              }}
+              textStyle={{
+                color: "#03BD08",
+                fontSize: 25,
+                letterSpacing: 1.3,
+                textShadowColor: "#CFF7D0",
+                textShadowOffset: { width: 1.5, height: 2 },
+                textShadowRadius: 4,
+                fontWeight: "bold"
               }}
             />
           </View>
@@ -74,119 +102,211 @@ export default class HomeScreen extends React.Component {
             />
           </View>
 
-          <View style={styles.gamesContainer}>
+          <View style={styles.container}>
             <Text style={styles.gamesTitle}>GAMES </Text>
-            <View />
+          </View>
 
+          <View style={styles.container}>
             <View>
               <Button
                 title="Anthony's Games"
                 onPress={() => this.props.navigation.navigate("TriviaGame")}
-                buttonStyle={{
-                  backgroundColor: "#06439E",
-                  width: 280,
-                  height: 95,
-                  marginVertical: 30,
-                  marginLeft: 28,
-                  borderColor: "transparent",
-                  borderWidth: 0,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.firstButton}
+                textStyle={styles.firstText}
               />
             </View>
-            <View>
-              <Button
-                title="Aftab's Games"
-                onPress={() => this.props.navigation.navigate("TileGame")}
-                buttonStyle={{
-                  backgroundColor: "#06439E",
-                  width: 280,
-                  height: 95,
-                  marginVertical: 30,
-                  marginLeft: 28,
-                  borderColor: "transparent",
-                  borderWidth: 0,
-                  borderRadius: 5
-                }}
+
+
+            <View style={styles.container} >
+            <Button
+                title="Tile Count "
+                onPress={() => this.props.navigation.navigate("Aftab")}
+                buttonStyle={styles.secondButton}
+                textStyle={styles.secondText}
               />
+        
             </View>
             <View>
               <Button
                 title="Eric's Games"
                 onPress={() => this.props.navigation.navigate("Eric")}
-                buttonStyle={{
-                  backgroundColor: "#06439E",
-                  width: 280,
-                  height: 95,
-                  marginVertical: 30,
-                  marginLeft: 28,
-                  borderColor: "transparent",
-                  borderWidth: 0,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.thirdButton}
+                textStyle={styles.thirdText}
               />
             </View>
             <View>
               <Button
                 title="SPEED"
                 onPress={() => this.props.navigation.navigate("Home")}
-                buttonStyle={{
-                  backgroundColor: "#06439E",
-                  width: 280,
-                  height: 95,
-                  marginVertical: 30,
-                  marginLeft: 28,
-                  borderColor: "transparent",
-                  borderWidth: 0,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.fourthButton}
+                textStyle={styles.fourthText}
               />
             </View>
             <View>
               <Button
                 title="MATH"
                 onPress={() => this.props.navigation.navigate("Home")}
-                buttonStyle={{
-                  backgroundColor: "#06439E",
-                  width: 280,
-                  height: 95,
-                  marginTop: 30,
-                  marginBottom: 130,
-                  marginLeft: 28,
-                  borderColor: "transparent",
-                  borderWidth: 0,
-                  borderRadius: 5
-                }}
+                buttonStyle={styles.fifthButton}
+                textStyle={styles.fifthText}
               />
             </View>
           </View>
         </ScrollView>
         <Nav navigation={this.props.navigation} />
-      </View>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1
+  },
+  image: {
+    resizeMode: "contain",
+    width: 370,
+    height: 200,
+    transform: [{ rotate: "-2deg" }],
+    marginRight: 12,
+    top: 0,
+    marginVertical: 50
+  },
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#3783F5"
-  },
-  contentContainer: {
-    paddingTop: 30,
-    justifyContent: "center",
     alignItems: "center"
   },
-  welcomeContainer: {
+  contentContainer: {
     alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20
+    paddingBottom: 110
   },
-  welcomeImage: {
-    width: 380,
-    height: 320,
-    resizeMode: "contain"
+  homeTitle: {
+    fontSize: 52,
+    textAlign: "center",
+    marginBottom: 15,
+    color: "#FF7F7B",
+    textShadowColor: "white",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
+  },
+  firstButton: {
+    width: 300,
+    height: 100,
+    marginVertical: 40,
+    borderWidth: 5,
+    borderRadius: 5,
+    backgroundColor: "#FAA7A1",
+    borderColor: "#FC1102"
+  },
+  firstText: {
+    fontSize: 25,
+    color: "#FC1102",
+    letterSpacing: 1,
+    textShadowColor: "#66665F",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
+  },
+  gameContainer:{
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: "#FCCE82",
+    width: 300,
+    height:135,
+    marginVertical: 40,
+    borderColor: "#FC9D01",
+    borderWidth: 5,
+    borderRadius: 5,
+    paddingTop: 5, 
+    paddingBottom: 5, 
+    paddingLeft: 10
+  },
+  content:{
+    // alignItems: "center",
+   },
+  secondButton: {
+    width: 300,
+    height: 100,
+    marginVertical: 40,
+    borderWidth: 5,
+    borderRadius: 5,
+    backgroundColor: "#FCCE82",
+    borderColor: "#FC9D01"
+    // backgroundColor: "#FCCE82",
+    // width: 80,
+    // height:80,
+    // marginTop: 5,
+    // marginBottom: 5, 
+    // marginVertical: 5,
+    // marginRight: 10,
+    // // marginVertical: 40,
+    // borderColor: "#FC9D01",
+    // borderWidth: 5,
+    // borderRadius: 5, 
+  },
+  
+  secondText: {
+    fontSize: 25,
+    color: "#FC9D01",
+    letterSpacing: 1,
+    textShadowColor: "#66665F",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
+  },
+  thirdButton: {
+    backgroundColor: "#FDFD01",
+    width: 300,
+    height: 100,
+    marginVertical: 40,
+    borderColor: "#B1B102",
+    borderWidth: 5,
+    borderRadius: 5
+  },
+  thirdText: {
+    fontSize: 25,
+    color: "#B1B102",
+    letterSpacing: 1,
+    textShadowColor: "#66665F",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
+  },
+  fourthButton: {
+    backgroundColor: "#7DDE77",
+    width: 300,
+    height: 100,
+    marginVertical: 40,
+    borderColor: "#0EC203",
+    borderWidth: 5,
+    borderRadius: 5
+  },
+  fourthText: {
+    fontSize: 25,
+    color: "#0EC203",
+    letterSpacing: 1,
+    textShadowColor: "#66665F",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
+  },
+  fifthButton: {
+    backgroundColor: "#8997FA",
+    width: 300,
+    height: 100,
+    marginVertical: 40,
+    borderColor: "#0321FA",
+    borderWidth: 5,
+    borderRadius: 5
+  },
+  fifthText: {
+    fontSize: 25,
+    color: "#0321FA",
+    letterSpacing: 1,
+    textShadowColor: "#66665F",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
   },
   dailyChallenge: {
     borderColor: "black",
@@ -209,15 +329,27 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   gamesTitle: {
-    fontSize: 35,
+    fontSize: 42,
     textAlign: "center",
-    marginRight: 20
+    marginTop: 50,
+    marginBottom: 15,
+    color: "#FD9B03",
+    textShadowColor: "#F5D18C",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
   },
-  gamesContainer: {
-    marginLeft: 20
-  },
-  tilePic: {
-    marginTop: 10,
-    marginBottom: 70
-  }
+  buttonText: {
+    fontSize: 15,
+    color: "#FF7F7B",
+    letterSpacing: 1,
+    textShadowColor: "white",
+    textShadowOffset: { width: 1.5, height: 2 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
+  }, 
+  // gameIcon: { 
+  //   height: 40, 
+  //   width: 40
+  // }
 });

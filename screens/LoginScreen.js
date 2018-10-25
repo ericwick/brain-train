@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import {
+  Image,
   Platform,
   StyleSheet,
   ScrollView,
   View,
   Text,
   TouchableOpacity,
-  TextInput
+  TouchableHighlight,
+  TextInput,
+  ImageBackground
 } from "react-native";
+import { AsyncStorage } from "react-native";
 import AppNavigator from "../navigation/AppNavigator";
 import axios from "axios";
 import { Button } from "react-native-elements";
@@ -19,7 +23,8 @@ class LoginScreen extends Component {
       username: "",
       password: "",
       users: [],
-      newUser: false
+      newUser: false,
+      theme: false
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
@@ -28,162 +33,189 @@ class LoginScreen extends Component {
     header: null
   };
 
-  async componentDidMount() {
-    await axios
-    axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
-      .then(response => {
-        this.setState({
-          users: response.data
-        });
+  async handleLogin() {
+    var user = { username: this.state.username, password: this.state.password };
+    var existingUser = await AsyncStorage.getItem("user");
+
+    let newUser = JSON.parse(existingUser);
+    if (!newUser) {
+      newUser = [];
+    }
+
+    newUser.push(user);
+
+    await AsyncStorage.setItem("user", JSON.stringify(newUser))
+      .then(() => {
+        console.warn("New user added successfully");
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
+        console.warn("Error adding new user");
       });
-  }
-
-  handleLogin() {
-    let { users, username, password } = this.state;
-    var userCheck = () => {
-      if (!users.length) {
-        return null;
-      } else {
-        for (var i = 0; i < users.length; i++) {
-          users[i].uname === username && users[i].password === password
-            ? () => handleSubmit()
-            : () => handleNewUser(username, password);
-        }
-      }
-    };
-    var handleSubmit = async () => {
-      let id = 0;
-      await users.map((e, i) => {
-        if (username === e.uname) {
-          id = e.id;
-        }
-      });
-      axios
-      axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user/${id}`)
-        .then(response => {
-          // console.log(response);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    };
-
-    var handleNewUser = (uname, pword) => {
-      axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`, { uname, pword })
-        .then(response => {
-          // console.log(response);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    };
-    userCheck();
   }
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        <View><Text style={styles.loginTitle}>Brain Train</Text></View>
-        <View>
-          <TextInput
-            onChangeText={text => this.setState({ username: text })}
-            placeholder="USERNAME"
-            style={styles.input}
-            autoCapitalize="none"
-            underlineColorAndroid="transparent"
-            placeholderTextColor="black"
+      <ImageBackground
+        source={require("../assets/images/mobileGUI/sky_bg.png")}
+        style={styles.backgroundImage}
+      >
+        <ScrollView contentContainerStyle={styles.container}>
+          <Image
+            source={require("../assets/images/logo.png")}
+            style={styles.image}
           />
-        </View>
-        <View>
-          <TextInput
-            // onChangeText={text => this.setState({ password: text })}
-            placeholder="PASSWORD"
-            style={styles.input}
-            autoCapitalize="none"
-            underlineColorAndroid="transparent"
-            placeholderTextColor="black"
-          />
-        </View>
-        <TouchableOpacity>
-          <Button
-            onPress={() => this.props.navigation.navigate("Home")}
-            title="START"
-            buttonStyle={{
-              backgroundColor: "#06439E",
-              width: 350,
-              height: 60,
-              marginVertical: 10,
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 5
-            }}
-          />
-        </TouchableOpacity>
 
-        <View contentContainerStyle={styles.container}>
-          <Text>Forgot your username or password?</Text>
-          <TouchableOpacity
-            onPress={() => console.warn("You've been reminded")}
-          >
-            <Text>Yep, remind me.</Text>
+          <TouchableHighlight onPress={() => this.colorChange()}>
+            <TextInput
+              onChangeText={text => this.setState({ username: text })}
+              style={styles.username}
+              value={!this.state.username ? null : this.state.username}
+              placeholder="USERNAME"
+              autoCapitalize="none"
+              underlineColorAndroid="transparent"
+              placeholderTextColor="#077FDD"
+              placeholderTextFontWeight="bold"
+            />
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => this.colorChange()}>
+            <TextInput
+              onChangeText={text => this.setState({ password: text })}
+              style={styles.password}
+              value={!this.state.password ? null : this.state.password}
+              placeholder="PASSWORD"
+              autoCapitalize="none"
+              underlineColorAndroid="transparent"
+              placeholderTextColor="#84802C"
+            />
+          </TouchableHighlight>
+
+          <TouchableOpacity>
+            <Button
+              onPress={() => {
+                this.handleLogin;
+                this.props.navigation.navigate("Home");
+              }}
+              title="START"
+              buttonStyle={{
+                backgroundColor: "#76FA4F",
+                width: 350,
+                height: 100,
+                marginVertical: 10,
+                borderColor: "#2BB502",
+                borderWidth: 5,
+                borderRadius: 7
+              }}
+              textStyle={{
+                color: "white",
+                fontSize: 35,
+                letterSpacing: 2,
+                fontWeight: "bold",
+                textShadowColor: "#30C804",
+                textShadowRadius: 6,
+                textShadowOffset: { width: -3, height: 3 }
+              }}
+            />
           </TouchableOpacity>
-        </View>
-        <View style={styles.linebreak} />
 
-        <TouchableOpacity>
-          <Button
-            onPress={() => this.props.navigation.navigate("Home")}
-            title="BACK"
-            buttonStyle={{
-              backgroundColor: "#06439E",
-              width: 170,
-              height: 50,
-              marginTop: 70,
-              borderColor: "transparent",
-              borderWidth: 0,
-              borderRadius: 5
-            }}
-          />
-        </TouchableOpacity>
-      </ScrollView>
+          <View contentContainerStyle={styles.container}>
+            <Text style={styles.text}>Forgot your username or password?</Text>
+            <TouchableOpacity
+              onPress={() => console.warn("You've been reminded")}
+            >
+              <Text style={styles.text}>Yep, remind me.</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.linebreak} />
+
+          <TouchableOpacity>
+            <Button
+              onPress={() => this.props.navigation.navigate("Splash")}
+              title="BACK"
+              buttonStyle={{
+                backgroundColor: "#F9D49B",
+                width: 150,
+                height: 55,
+                marginTop: 10,
+                borderColor: "#FD9B03",
+                borderWidth: 3,
+                borderRadius: 5
+              }}
+              textStyle={{
+                color: "#FD9B03",
+                fontSize: 18,
+                letterSpacing: 1,
+                fontWeight: "bold"
+              }}
+            />
+          </TouchableOpacity>
+        </ScrollView>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1
+  },
   container: {
     flex: 1,
-    backgroundColor: "#3783F5",
-    justifyContent: "center",
     alignItems: "center"
   },
   linebreak: {
     borderBottomColor: "black",
     borderBottomWidth: 2,
-    marginVertical: 40
+    marginVertical: 15
   },
-  input: {
+  image: {
+    resizeMode: "contain",
+    width: 370,
+    height: 200,
+    transform: [{ rotate: "-2deg" }],
+    marginRight: 12,
+    marginVertical: 50
+  },
+  username: {
     width: 350,
-    height: 60,
+    height: 80,
     paddingLeft: 15,
     marginVertical: 10,
-    backgroundColor: "#AECEF3",
-    color: "black",
-    borderRadius: 3,
-    borderColor: "transparent",
-    borderWidth: 0
+    color: "#077FDD",
+    backgroundColor: "#91E1F8",
+    borderRadius: 4,
+    borderWidth: 5,
+    borderColor: "#077FDD",
+    textDecorationLine: "none"
+  },
+  password: {
+    width: 350,
+    height: 80,
+    paddingLeft: 15,
+    marginVertical: 10,
+    color: "#84802C",
+    backgroundColor: "#FEFE01",
+    borderRadius: 4,
+    borderWidth: 5,
+    borderColor: "#ADAD01",
+    textDecorationLine: "none"
   },
   loginTitle: {
-    fontSize: 42,
+    fontSize: 52,
     textAlign: "center",
-    marginTop: 85,
-    marginBottom: 10
+    marginTop: 60,
+    marginBottom: 30,
+    color: "#5ADB3A",
+    textShadowColor: "#D8F1FA",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    fontWeight: "bold"
   },
-  landing: {
-    display: "none"
+  text: {
+    color: "#077FDD",
+    fontSize: 12,
+    textShadowColor: "#D8F1FA",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4
   }
 });
 
