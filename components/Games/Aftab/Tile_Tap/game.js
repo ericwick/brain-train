@@ -13,16 +13,16 @@ import {
   LayoutAnimation     //
 } from 'react-native';
 import CountdownTimer from './Timer';
-import BTN_NORMAL from '../../../assets/btn_normal.png';
-import BTN_NORMAL2 from '../../../assets/btn_normal2.png';
-import BTN_SUCCESS from '../../../assets/btn_success_logan.png';
-import BTN_ERROR from '../../../assets/btn_error.png';
-import STAR_NORMAL from '../../../assets/star_normal.png';
-import STAR_ACTIVE from '../../../assets/star_active.png';
-import SUCCESS_BG from '../../../assets/level_cleared_notext.png';
-import FAILURE_BG from '../../../assets/level_failed_notext.png';
-import RELOAD_BTN from '../../../assets/reload_btn.png';
-import GAME_BG from '../../../assets/game_bg_devm.png';
+import BTN_NORMAL from '../../../../assets/btn_normal.png';
+import BTN_NORMAL2 from '../../../../assets/btn_normal2.png';
+import BTN_SUCCESS from '../../../../assets/btn_success_logan.png';
+import BTN_ERROR from '../../../../assets/btn_error.png';
+import STAR_NORMAL from '../../../../assets/star_normal.png';
+import STAR_ACTIVE from '../../../../assets/star_active.png';
+import SUCCESS_BG from '../../../../assets/level_cleared_notext.png';
+import FAILURE_BG from '../../../../assets/level_failed_notext.png';
+import RELOAD_BTN from '../../../../assets/reload_btn.png';
+import GAME_BG from '../../../../assets/game_bg_devm.png';
 
 const { width, height } = Dimensions.get('window');
 const CELL_HEIGHT = 100;
@@ -75,16 +75,16 @@ export default class TapTile extends Component {
     //imageAssets is an array of promises that must be fulfilled or resolved before settingState. 
       //its function is to cache Images using the cacheImages function defined above
     const imageAssets = cacheImages([
-      require('../../../assets/btn_normal.png'),
-      require('../../../assets/btn_normal2.png'), 
-      require('../../../assets/btn_error.png'),
-      require('../../../assets/btn_success_logan.png'),
-      require('../../../assets/game_bg_devm.png'),
-      require('../../../assets/level_cleared_notext.png'),
-      require('../../../assets/level_failed_notext.png'),
-      require('../../../assets/reload_btn.png'),
-      require('../../../assets/star_normal.png'),
-      require('../../../assets/star_active.png')
+      require('../../../../assets/btn_normal.png'),
+      require('../../../../assets/btn_normal2.png'), 
+      require('../../../../assets/btn_error.png'),
+      require('../../../../assets/btn_success_logan.png'),
+      require('../../../../assets/game_bg_devm.png'),
+      require('../../../../assets/level_cleared_notext.png'),
+      require('../../../../assets/level_failed_notext.png'),
+      require('../../../../assets/reload_btn.png'),
+      require('../../../../assets/star_normal.png'),
+      require('../../../../assets/star_active.png')
     ]);
 
     await Promise.all([...imageAssets]);

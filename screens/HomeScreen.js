@@ -115,13 +115,25 @@ export default class HomeScreen extends React.Component {
                 textStyle={styles.firstText}
               />
             </View>
-            <View>
-              <Button
-                title="Aftab's Games"
-                onPress={() => this.props.navigation.navigate("TileGame")}
+
+
+            <View style={styles.container} >
+            <Button
+                title="Tile Count "
+                onPress={() => this.props.navigation.navigate("Aftab")}
                 buttonStyle={styles.secondButton}
                 textStyle={styles.secondText}
               />
+        
+            </View>
+            <View style={styles.container} >
+            <Button
+                title="Memory Tiles "
+                onPress={() => this.props.navigation.navigate("MemoryTiles")}
+                buttonStyle={styles.secondButton}
+                textStyle={styles.secondText}
+              />
+        
             </View>
             <View>
               <Button
@@ -204,15 +216,44 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontWeight: "bold"
   },
-  secondButton: {
+  gameContainer:{
+    flex: 1,
+    flexDirection: 'row',
     backgroundColor: "#FCCE82",
     width: 300,
-    height: 100,
+    height:135,
     marginVertical: 40,
     borderColor: "#FC9D01",
     borderWidth: 5,
-    borderRadius: 5
+    borderRadius: 5,
+    paddingTop: 5, 
+    paddingBottom: 5, 
+    paddingLeft: 10
   },
+  content:{
+    // alignItems: "center",
+   },
+  secondButton: {
+    width: 300,
+    height: 100,
+    marginVertical: 40,
+    borderWidth: 5,
+    borderRadius: 5,
+    backgroundColor: "#FCCE82",
+    borderColor: "#FC9D01"
+    // backgroundColor: "#FCCE82",
+    // width: 80,
+    // height:80,
+    // marginTop: 5,
+    // marginBottom: 5, 
+    // marginVertical: 5,
+    // marginRight: 10,
+    // // marginVertical: 40,
+    // borderColor: "#FC9D01",
+    // borderWidth: 5,
+    // borderRadius: 5, 
+  },
+  
   secondText: {
     fontSize: 25,
     color: "#FC9D01",
@@ -315,5 +356,9 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1.5, height: 2 },
     textShadowRadius: 3,
     fontWeight: "bold"
-  }
+  }, 
+  // gameIcon: { 
+  //   height: 40, 
+  //   width: 40
+  // }
 });

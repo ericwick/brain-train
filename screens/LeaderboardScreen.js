@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Button,
   View,
-  ImageBackground
 } from "react-native";
 import { Icon } from "react-native-elements";
 import axios from "axios";
@@ -24,7 +23,7 @@ export default class LeaderboardScreen extends React.Component {
 
   render() {
     let { navigation } = this.props;
-    console.warn(this.state.users);
+    // console.warn(this.state.users);
     return (
       <ImageBackground
         source={require("../assets/images/mobileGUI/sky_bg.png")}

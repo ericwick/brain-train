@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View , StyleSheet} from 'react-native'
+import ProgressTimer from '../Games/ProgressTimer';
 
 
             //Different Charts to bring in 
@@ -17,6 +18,7 @@ export default class UserStats extends Component {
     return (
       <View>
         <Pure/>
+        <ProgressTimer/> 
       </View>
     )
   }
