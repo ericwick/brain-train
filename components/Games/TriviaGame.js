@@ -76,6 +76,7 @@ class TriviaGame extends Component {
       "Just stop.",
       "Try again"
     ];
+    // Return a random string in ALL CAPS
     return messages[
       Math.floor(Math.random() * messages.length)
     ].toLocaleUpperCase();
