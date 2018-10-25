@@ -184,14 +184,9 @@ class TriviaGame extends Component {
     // Get absolute value to account for negatives
     absint = Math.abs(int);
     // Round down, convert to string, take length, and subtract from desired zeroes. Return if greater than 0
-    let neededZeros = Math.max(
-      0,
-      length - Math.floor(absint).toString().length
-    );
+    let neededZeros = Math.max(0, length - Math.floor(absint).toString().length);
     // Create a number with the required number of zeroes, convert it to a string, and split off the first digit
-    let zeroString = Math.pow(10, neededZeros)
-      .toString()
-      .substr(1);
+    let zeroString = Math.pow(10, neededZeros).toString().substr(1);
     if (int < 0) {
       zeroString = "-" + zeroString;
     }
