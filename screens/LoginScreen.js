@@ -17,7 +17,7 @@ import axios from "axios";
 import { Button } from "react-native-elements";
 // import { CLIENT_RENEG_LIMIT } from "tls";
 import { connect } from "react-redux";
-import { attemptLogin } from "../redux/reducer";
+import { attemptLogin, attemptRegister } from "../redux/reducer";
 
 class LoginScreen extends Component {
   constructor() {
@@ -46,7 +46,6 @@ class LoginScreen extends Component {
       userOnDeviceParsed = [];
     } else {
       let { username, password } = userOnDeviceParsed;
-      console.log(`stored username: ${username}\nstored password: ${password}`);
       this.setState({ username, password });
     }
   }
@@ -63,7 +62,7 @@ class LoginScreen extends Component {
       AsyncStorage.setItem("user", JSON.stringify(credentials))
         .then(() => {
           // User has logged in successfully
-          console.warn(`New user "${this.state.username}" added successfully`);
+          console.warn(`User "${this.state.username}" registered to device`);
           this.props.navigation.navigate("Home");
         })
         .catch(() => {
@@ -75,6 +74,9 @@ class LoginScreen extends Component {
   }
 
   handleRegister() {
+    axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`)
+    .then(response => console.log(response.data))
+    .catch(err => `Error in handleRegister() - ${err}`);
     return;
   }
 
@@ -83,10 +85,7 @@ class LoginScreen extends Component {
       return (
         <TouchableOpacity>
           <Button
-            onPress={() => { 
-              this.setState({renderLogin: !this.state.renderLogin})
-              // this.handleLogin() 
-            }}
+            onPress={() => this.handleLogin()}
             title="LOGIN"
             buttonStyle={{
               backgroundColor: "#76FA4F",
@@ -113,10 +112,7 @@ class LoginScreen extends Component {
       return(
         <TouchableOpacity>
           <Button
-            onPress={() => { 
-              this.setState({renderLogin: !this.state.renderLogin})
-              // this.handleRegister()
-            }}
+            onPress={() => this.handleRegister()}
             title="REGISTER"
             buttonStyle={{
               backgroundColor: "#F9524F",
@@ -154,7 +150,12 @@ class LoginScreen extends Component {
             style={styles.image}
           />
 
-          <TouchableHighlight onPress={() => this.colorChange()}>
+          <TouchableOpacity
+            onPress={() => this.setState({renderLogin: !this.state.renderLogin}) }>
+            <Text style={styles.text}>Register for a new account?</Text>
+          </TouchableOpacity>
+
+          <TouchableHighlight>
             <TextInput
               onChangeText={text => this.setState({ username: text })}
               style={styles.username}
@@ -166,7 +167,7 @@ class LoginScreen extends Component {
               placeholderTextFontWeight="bold"
             />
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.colorChange()}>
+          <TouchableHighlight>
             <TextInput
               onChangeText={text => this.setState({ password: text })}
               style={styles.password}
@@ -285,5 +286,5 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => state;
 export default connect(
   mapStateToProps,
-  { attemptLogin }
+  { attemptLogin, attemptRegister }
 )(LoginScreen);

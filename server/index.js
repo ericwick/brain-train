@@ -58,7 +58,7 @@ app.use(express.static(`${__dirname}/../build`));
 app.get("/api/users", getAllUsers);
 app.get("/api/user/current", currentUser);
 app.get("/api/user/username", getUser);
-app.post("/api/user", addUser); // Takes in { uname, pword } on req.body;
+app.post("/api/user", addUser); // Takes in { username, password } on req.body;
 app.put("/api/user/:id", editUserInfo); // Takes in { pword, pic } on req.body;
 
 app.post("/api/login", attemptLogin) // Takes in { username, password } on req.body
