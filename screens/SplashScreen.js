@@ -3,6 +3,7 @@ import {
   Image,
   ImageBackground,
   Platform,
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -17,6 +18,8 @@ import { Button } from "react-native-elements";
 // import { getUsers } from "../redux/reducer";
 
 import { MonoText } from "../components/StyledText";
+
+const { height, width } = Dimensions.get("window");
 
 class SplashScreen extends Component {
   constructor() {
@@ -74,7 +77,7 @@ class SplashScreen extends Component {
 
           <TouchableOpacity
             style={styles.content}
-            onPress={() => this.props.navigation.navigate("Login")}
+            onPress={() => this.props.navigation.navigate("About")}
             activeOpacity={0.82}
           >
             <ImageBackground
@@ -105,12 +108,12 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
-    width: 370,
-    height: 250,
+    width: width - 65,
+    height: height - height / 1.4,
     transform: [{ rotate: "-2deg" }],
-    marginRight: 12,
-    marginTop: 80,
-    marginBottom: 40
+    marginRight: (width / width) * 25,
+    marginTop: (width / width) * 75,
+    marginBottom: (width / width) * 25
   },
   contentContainer: {
     flex: 1,
@@ -120,24 +123,25 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   button: {
-    width: 300,
-    height: 95,
+    width: width - width / 4.5,
+    height: height - height / 1.15,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 50
+    marginBottom: (width / width) * 35
   },
   settingsButton: {
-    width: 200,
-    height: 62,
+    width: width - width / 2.5,
+    height: height - height / 1.1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 50
+    marginBottom: (width / width) * 35
   },
   aboutButton: {
-    width: 200,
-    height: 62,
+    width: width - width / 2.5,
+    height: height - height / 1.1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: (width / width) * 25
   },
   settings: {
     fontSize: 22,

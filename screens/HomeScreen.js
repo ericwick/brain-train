@@ -3,6 +3,7 @@ import {
   Image,
   ImageBackground,
   Platform,
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +19,8 @@ import Nav from "../components/NavBar/Nav";
 import { MonoText } from "../components/StyledText";
 import { Button, Tile } from "react-native-elements";
 import PopupModal from "../components/popupModal/popupModal";
+
+const { height, width } = Dimensions.get("window");
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -38,13 +41,28 @@ export default class HomeScreen extends React.Component {
         this.setState({
           user: JSON.parse(value)
         });
-        console.log('Homescreen currentUser', this.state.user);
+        console.log("Homescreen currentUser", this.state.user);
       })
       .catch(err => {
         console.warn("Error loading current user");
       });
+    let point = `http://${
+      __DEV__
+        ? Platform.OS === "ios"
+          ? "localhost"
+          : "172.31.99.105"
+        : production.url
+    }:3001/api/users`;
     axios
-      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
+      .get(
+        `http://${
+          __DEV__
+            ? Platform.OS === "ios"
+              ? "localhost"
+              : "172.31.99.105"
+            : production.url
+        }:3001/api/users`
+      )
       .then(response => {
         this.setState({
           users: response.data
@@ -115,10 +133,19 @@ export default class HomeScreen extends React.Component {
                 textStyle={styles.firstText}
               />
             </View>
-            <View>
+
+            <View style={styles.container}>
               <Button
-                title="Aftab's Games"
-                onPress={() => this.props.navigation.navigate("TileGame")}
+                title="Tile Counts "
+                onPress={() => this.props.navigation.navigate("Aftab")}
+                buttonStyle={styles.secondButton}
+                textStyle={styles.secondText}
+              />
+            </View>
+            <View style={styles.container}>
+              <Button
+                title="Memory Tiles "
+                onPress={() => this.props.navigation.navigate("MemoryTiles")}
                 buttonStyle={styles.secondButton}
                 textStyle={styles.secondText}
               />
@@ -204,15 +231,44 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontWeight: "bold"
   },
-  secondButton: {
+  gameContainer: {
+    flex: 1,
+    flexDirection: "row",
     backgroundColor: "#FCCE82",
     width: 300,
-    height: 100,
+    height: 135,
     marginVertical: 40,
     borderColor: "#FC9D01",
     borderWidth: 5,
-    borderRadius: 5
+    borderRadius: 5,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10
   },
+  content: {
+    // alignItems: "center",
+  },
+  secondButton: {
+    width: 300,
+    height: 100,
+    marginVertical: 40,
+    borderWidth: 5,
+    borderRadius: 5,
+    backgroundColor: "#FCCE82",
+    borderColor: "#FC9D01"
+    // backgroundColor: "#FCCE82",
+    // width: 80,
+    // height:80,
+    // marginTop: 5,
+    // marginBottom: 5,
+    // marginVertical: 5,
+    // marginRight: 10,
+    // // marginVertical: 40,
+    // borderColor: "#FC9D01",
+    // borderWidth: 5,
+    // borderRadius: 5,
+  },
+
   secondText: {
     fontSize: 25,
     color: "#FC9D01",
@@ -316,4 +372,8 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontWeight: "bold"
   }
+  // gameIcon: {
+  //   height: 40,
+  //   width: 40
+  // }
 });

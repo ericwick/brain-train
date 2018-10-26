@@ -5,6 +5,7 @@ const attemptLogin = (req,res,next) => {
   dbInst
     .login([username, password])
     .then(response => {
+      console.log("response",response)
       res.status(200).json(response);
     })
     .catch(err => console.log(`Error in login() - ${err}`));
@@ -22,11 +23,11 @@ const getAllUsers = (req, res, next) => {
 
 const getUser = (req, res, next) => {
   const dbInst = req.app.get("db");
-  const { username } = req.body;
-  req.session.username = username;
+  const { id } = req.params;
+  // req.session.username = username;
   dbInst
-    .get_user(username)
-    .then(response => res.status(200).json(req.session.user))
+    .get_user(id)
+    .then(response => res.status(200).json(response))
     .catch(err => console.log(`Error in get_users() - ${err}`));
 };
 

@@ -46,16 +46,18 @@ export default function reducer(state = initialState, action)
       console.log('Error - GET_TRIVIA_REJECTED');
       break;
     case `${ATTEMPT_LOGIN}_FULFILLED`:
-      if(!action.payload.data.length){
-        return {
-          ...state,
-          currentUser: -1
-        };
-      }
+    if(!action.payload.data.length){
       return {
         ...state,
-        currentUser: action.payload.data[0].uid
+        currentUser: -1
       };
+    } else {
+      console.log('setting currentUser to', action.payload.data[0].uid);
+      return {
+          ...state,
+          currentUser: action.payload.data[0].uid
+        };
+      }
     case `${ATTEMPT_LOGIN}_REJECTED`:
       console.log('Error - ATTEMPT_LOGIN_REJECTED');
       break;

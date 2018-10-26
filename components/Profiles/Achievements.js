@@ -24,7 +24,7 @@ export default class Achievements extends React.Component {
       user: [],
       users: []
     };
-    this.buttonCheck = this.buttonCheck.bind(this);
+    // this.buttonCheck = this.buttonCheck.bind(this);
   }
 
   static navigationOptions = {
