@@ -125,7 +125,7 @@ export default class HomeScreen extends React.Component {
                 textStyle={styles.secondText}
               />
         
-            </View>
+            </View>de 
             <View style={styles.container} >
             <Button
                 title="Memory Tiles "
