@@ -42,7 +42,7 @@ export default class Achievements extends React.Component {
         console.warn("Error loading current user");
       });
     axios
-      .get("http://localhost:3001/api/users")
+      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
       .then(response => {
         this.setState({
           users: response.data

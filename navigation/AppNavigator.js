@@ -40,7 +40,6 @@ export default (AppNavigator = createStackNavigator({
   questionThree: { screen: questionThree },
   questionFour: { screen: questionFour },
   Results: { screen: Results },
-  // TriviaGame: { screen: TriviaGame }
   TriviaGame: { screen: TriviaGame }, 
   UserStats: {screen: UserStats}, 
   TileGame: {screen: game },
