@@ -1,3 +1,16 @@
+const attemptLogin = (req,res,next) => {
+  const dbInst = req.app.get("db");
+  const { username, password } = req.body;
+  console.log('received', username, 'and', password);
+  dbInst
+    .login([username, password])
+    .then(response => {
+      console.log("response",response)
+      res.status(200).json(response);
+    })
+    .catch(err => console.log(`Error in login() - ${err}`));
+}
+
 const getAllUsers = (req, res, next) => {
   const dbInst = req.app.get("db");
   dbInst
@@ -118,6 +131,7 @@ const logout = (req, res, next) => {
 };
 
 module.exports = {
+  attemptLogin,
   getAllUsers,
   getUser,
   currentUser,
