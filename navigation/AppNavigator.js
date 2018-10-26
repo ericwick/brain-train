@@ -17,14 +17,13 @@ import questionThree from "../components/Games/Eric/questionThree";
 import questionFour from "../components/Games/Eric/questionFour";
 import Results from "../components/Games/Eric/Results";
 import TriviaGame from "../components/Games/TriviaGame";
-import UserStats from "../components/Profiles/UserStats";
 import TapNumber from "../components/Games/Eric/TapNumber";
 import TapNumberGame from "../components/Games/Eric/TapNumberGame";
 import AboutScreen from "../screens/AboutScreen";
-import UserStats from '../components/Profiles/UserStats';
-import game from '../components/Games/Aftab/Tile_Tap/game';
-import ElasticStack from '../components/Games/Aftab/ImagePicker/ElasticStack'; 
-import MemoryTiles from '../components/Games/Aftab/MemoryTiles/MemoryTiles'; 
+import UserStats from "../components/Profiles/UserStats";
+// import game from "../components/Games/Aftab/Tile_Tap/game";
+// import ElasticStack from "../components/Games/Aftab/ImagePicker/ElasticStack";
+// import MemoryTiles from "../components/Games/Aftab/MemoryTiles/MemoryTiles";
 // import sequent from '../components/Games/src2/sequent';
 
 export default (AppNavigator = createStackNavigator({
@@ -46,10 +45,10 @@ export default (AppNavigator = createStackNavigator({
   questionFour: { screen: questionFour },
   Results: { screen: Results },
   TriviaGame: { screen: TriviaGame },
-  About: { screen: AboutScreen }
-  UserStats: {screen: UserStats}, 
-  TileGame: {screen: game },
-  MemoryTiles: {screen: MemoryTiles},
-  ElasticStack: {screen: ElasticStack}
+  About: { screen: AboutScreen },
+  UserStats: { screen: UserStats }
+  // TileGame: { screen: game },
+  // MemoryTiles: { screen: MemoryTiles },
+  // ElasticStack: { screen: ElasticStack }
   // Sequent: {screen: sequent}
 }));
