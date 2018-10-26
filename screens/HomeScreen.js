@@ -188,12 +188,12 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
-    width: 370,
-    height: 200,
+    width: width - 65,
+    height: height - height / 1.4,
     transform: [{ rotate: "-2deg" }],
     marginRight: 12,
-    top: 0,
-    marginVertical: 50
+    // top: 0,
+    marginTop: (width / width) * 75
   },
   container: {
     flex: 1,
