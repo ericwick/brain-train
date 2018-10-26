@@ -8,6 +8,7 @@ require("dotenv").config();
 const port = process.env.SERVER_PORT || 3001;
 
 const {
+  attemptLogin,
   getAllUsers,
   getUser,
   currentUser,
@@ -59,6 +60,8 @@ app.get("/api/user/current", currentUser);
 app.get("/api/user/username", getUser);
 app.post("/api/user", addUser); // Takes in { uname, pword } on req.body;
 app.put("/api/user/:id", editUserInfo); // Takes in { pword, pic } on req.body;
+
+app.post("/api/login", attemptLogin) // Takes in { username, password } on req.body
 
 app.get("/api/stats/:id", getUsersGameStats);
 app.get("/api/stats", getGameStats);

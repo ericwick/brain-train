@@ -4,11 +4,13 @@ import { Platform } from 'react-native';
 // CONSTANTS
 const GET_USERS = 'GET_USERS';
 const GET_STATS = 'GET_STATS';
+const ATTEMPT_LOGIN = 'ATTEMPT_LOGIN';
 const GET_TRIVIA = 'GET_TRIVIA';
 
 // INITIAL STATE
 const initialState = {
   users: [],
+  currentUser: -1,
   stats: [],
   trivia: []
 };
@@ -43,6 +45,20 @@ export default function reducer(state = initialState, action)
     case `${GET_TRIVIA}_REJECTED`:
       console.log('Error - GET_TRIVIA_REJECTED');
       break;
+    case `${ATTEMPT_LOGIN}_FULFILLED`:
+      if(!action.payload.data.length){
+        return {
+          ...state,
+          currentUser: -1
+        };
+      }
+      return {
+        ...state,
+        currentUser: action.payload.data[0].uid
+      };
+    case `${ATTEMPT_LOGIN}_REJECTED`:
+      console.log('Error - ATTEMPT_LOGIN_REJECTED');
+      break;
     default:
       return state;
   }
@@ -65,9 +81,16 @@ export function getStats(){
   };
 }
 
+export function attemptLogin(credentials){
+  let point = `http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/login`;
+  return {
+    type: ATTEMPT_LOGIN,
+    payload: axios.post(point, credentials)
+  };
+}
+
 export function getTrivia(category, num, difficulty){
   let point = `http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/trivia?category=${category}&num=${num}&difficulty=${difficulty}`;
-  console.log('point', point);
   return {
     type: GET_TRIVIA,
     payload: axios.get(point)

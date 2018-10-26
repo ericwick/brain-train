@@ -15,6 +15,9 @@ import { AsyncStorage } from "react-native";
 import AppNavigator from "../navigation/AppNavigator";
 import axios from "axios";
 import { Button } from "react-native-elements";
+// import { CLIENT_RENEG_LIMIT } from "tls";
+import { connect } from "react-redux";
+import { attemptLogin } from "../redux/reducer";
 
 class LoginScreen extends Component {
   constructor() {
@@ -22,35 +25,121 @@ class LoginScreen extends Component {
     this.state = {
       username: "",
       password: "",
-      users: [],
-      newUser: false,
+      theme: false,
+      renderLogin: true,
       theme: false
     };
     this.handleLogin = this.handleLogin.bind(this);
+    this.renderButton = this.renderButton.bind(this);
   }
 
   static navigationOptions = {
     header: null
   };
 
-  async handleLogin() {
-    var user = { username: this.state.username, password: this.state.password };
-    var existingUser = await AsyncStorage.getItem("user");
-
-    let newUser = JSON.parse(existingUser);
-    if (!newUser) {
-      newUser = [];
+  async componentDidMount() {
+    // on mount, pull up stored user and put them on state if it exists
+    var userOnDevice = await AsyncStorage.getItem("user");
+    var userOnDeviceParsed = JSON.parse(userOnDevice);
+    // if there is no "user" in storage, the parsed users will be null. Set it to an empty array
+    if (!userOnDeviceParsed) {
+      userOnDeviceParsed = [];
+    } else {
+      let { username, password } = userOnDeviceParsed;
+      console.log(`stored username: ${username}\nstored password: ${password}`);
+      this.setState({ username, password });
     }
+  }
 
-    newUser.push(user);
+  async handleLogin() {
+    var credentials = {
+      username: this.state.username,
+      password: this.state.password
+    };
 
-    await AsyncStorage.setItem("user", JSON.stringify(newUser))
-      .then(() => {
-        console.warn("New user added successfully");
-      })
-      .catch(() => {
-        console.warn("Error adding new user");
-      });
+    await this.props.attemptLogin(credentials);
+
+    if (this.props.currentUser > 0) {
+      AsyncStorage.setItem("user", JSON.stringify(credentials))
+        .then(() => {
+          // User has logged in successfully
+          console.warn(`New user "${this.state.username}" added successfully`);
+          this.props.navigation.navigate("Home");
+        })
+        .catch(() => {
+          console.warn("Error adding new user");
+        });
+    } else {
+      console.warn("Incorrect credentials");
+    }
+  }
+
+  handleRegister() {
+    return;
+  }
+
+  renderButton() {
+    if (this.state.renderLogin) {
+      return (
+        <TouchableOpacity>
+          <Button
+            onPress={() => { 
+              this.setState({renderLogin: !this.state.renderLogin})
+              // this.handleLogin() 
+            }}
+            title="LOGIN"
+            buttonStyle={{
+              backgroundColor: "#76FA4F",
+              width: 350,
+              height: 100,
+              marginVertical: 10,
+              borderColor: "#2BB502",
+              borderWidth: 5,
+              borderRadius: 7
+            }}
+            textStyle={{
+              color: "white",
+              fontSize: 35,
+              letterSpacing: 2,
+              fontWeight: "bold",
+              textShadowColor: "#30C804",
+              textShadowRadius: 6,
+              textShadowOffset: { width: -3, height: 3 }
+            }}
+          />
+        </TouchableOpacity>
+      );
+    } else {
+      return(
+        <TouchableOpacity>
+          <Button
+            onPress={() => { 
+              this.setState({renderLogin: !this.state.renderLogin})
+              // this.handleRegister()
+            }}
+            title="REGISTER"
+            buttonStyle={{
+              backgroundColor: "#F9524F",
+              width: 350,
+              height: 100,
+              marginVertical: 10,
+              borderColor: "#B50D01",
+              borderWidth: 5,
+              borderRadius: 7
+            }}
+            textStyle={{
+              color: "white",
+              fontSize: 35,
+              letterSpacing: 2,
+              fontWeight: "bold",
+              textShadowColor: "#C60703",
+              textShadowRadius: 6,
+              textShadowOffset: { width: -3, height: 3 }
+            }}
+          />
+        </TouchableOpacity>
+      );
+    }
   }
 
   render() {
@@ -89,33 +178,7 @@ class LoginScreen extends Component {
             />
           </TouchableHighlight>
 
-          <TouchableOpacity>
-            <Button
-              onPress={() => {
-                this.handleLogin;
-                this.props.navigation.navigate("Home");
-              }}
-              title="START"
-              buttonStyle={{
-                backgroundColor: "#76FA4F",
-                width: 350,
-                height: 100,
-                marginVertical: 10,
-                borderColor: "#2BB502",
-                borderWidth: 5,
-                borderRadius: 7
-              }}
-              textStyle={{
-                color: "white",
-                fontSize: 35,
-                letterSpacing: 2,
-                fontWeight: "bold",
-                textShadowColor: "#30C804",
-                textShadowRadius: 6,
-                textShadowOffset: { width: -3, height: 3 }
-              }}
-            />
-          </TouchableOpacity>
+          {this.renderButton()}
 
           <View contentContainerStyle={styles.container}>
             <Text style={styles.text}>Forgot your username or password?</Text>
@@ -219,4 +282,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+const mapStateToProps = state => state;
+export default connect(
+  mapStateToProps,
+  { attemptLogin }
+)(LoginScreen);

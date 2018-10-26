@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
           user: JSON.parse(value)
         });
-        console.log(this.state.user);
+        console.log('Homescreen currentUser', this.state.user);
       })
       .catch(err => {
         console.warn("Error loading current user");
