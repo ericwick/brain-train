@@ -13,10 +13,10 @@ import {
   LayoutAnimation //
 } from "react-native";
 import CountdownTimer from "./Timer";
-import BTN_NORMAL from "../../../../assets/btn_normal.png";
-import BTN_NORMAL2 from "../../../../assets/btn_normal2.png";
-import BTN_SUCCESS from "../../../../assets/btn_success_logan.png";
-import BTN_ERROR from "../../../../assets/btn_error.png";
+import BTN_NORMAL from "../../../../assets/images/Memory_Tile.png";
+import BTN_NORMAL2 from "../../../../assets/images/Memory_Tile.png";
+import BTN_SUCCESS from "../../../../assets/images/Memory_Tile.png";
+import BTN_ERROR from "../../../../assets/images/Memory_Tile_Wrong.png";
 import STAR_NORMAL from "../../../../assets/star_normal.png";
 import STAR_ACTIVE from "../../../../assets/star_active.png";
 import SUCCESS_BG from "../../../../assets/level_cleared_notext.png";
@@ -55,7 +55,7 @@ export default class TapTile extends Component {
 
     this.state = {
       // level: 3,
-      game: this.makeMatrix(this.props.level, 5),
+      game: this.makeMatrix(this.props.level, 8),
       moveTo: 0,
       finished: false,
       position: new Animated.ValueXY(),
@@ -77,8 +77,8 @@ export default class TapTile extends Component {
     //its function is to cache Images using the cacheImages function defined above
     const imageAssets = cacheImages([
       require("../../../../assets/btn_normal.png"),
-      require("../../../../assets/btn_normal2.png"),
-      require("../../../../assets/btn_error.png"),
+      require("../../../../assets/images/Memory_Tile.png"),
+      require("../../../../assets/images/Memory_Tile_Wrong.png"),
       require("../../../../assets/btn_success_logan.png"),
       require("../../../../assets/Memory_Tiles_BG.jpg"),
       require("../../../../assets/level_cleared_notext.png"),
@@ -96,13 +96,13 @@ export default class TapTile extends Component {
     });
   }
 
-  makeMatrix(n = 4, t = 6) {
+  makeMatrix(n = 4, t = 10) {
     let arr = [];
     for (i = 1; i <= n * n; i++) {
       if (i <= t) {
-        arr.push(i);
-      } else {
-        arr.push(i);
+        arr.push({number:i, opacity: 1 });
+      } else if (i > t){
+        arr.push({number:i, opacity: 1 });
       }
     }
     function shuffle(a) {
@@ -146,7 +146,7 @@ export default class TapTile extends Component {
 
     Animated.timing(this.state.position, {
       duration: 200,
-      toValue: { x: 0, y: moveTo * (CELL_HEIGHT + PADDING) },
+      toValue: { x: 0, y: 0 },
       useNativeDriver: true
     }).start(() => {
       this.animateModal();
@@ -180,7 +180,7 @@ export default class TapTile extends Component {
         gameOver: false,
         level: 1,
         score: 0,
-        game: this.makeMatrix(3, 50)
+        game: this.makeMatrix(4, 8)
       },
       () => {
         const { gameOver, finished } = this.state;
@@ -407,7 +407,7 @@ export default class TapTile extends Component {
         <View style={styles.container}>
           {gameStarted && !gameOver ? (
             <CountdownTimer
-              initialTimeRemaining={100000}
+              initialTimeRemaining={8000}
               interval={60}
               completeCallback={() => this.gameoverResetState()}
               tickCallback={timeRemaining =>
@@ -462,7 +462,8 @@ export default class TapTile extends Component {
   gameoverResetState() {
     this.setState({
       gameOver: true,
-      gameStarted: false
+      gameStarted: false,
+      last: 0
     });
 
     setTimeout(() => this.animateGame(9.5), 500);
@@ -479,13 +480,15 @@ export default class TapTile extends Component {
           {this.reversedKeys().map(index => {
             return (
               <View style={styles.row} key={index}>
+              {/* {taking the matrix and mapping over each row array and producing cells with an index (i) attached to them} */}
                 {game[index].map((cell, i) => {
+                  //parsedIndex = row number -1
                   const parsedIndex = parseFloat(index);
                   const selectedStyle =
-                    (cell === this.state.last + 1 ) ||
+                    (cell.number === this.state.last + 1 ) ||
                     (this.state.finished &&
                       moveTo === parsedIndex &&
-                      moveTo + 1 === cell);
+                      moveTo + 1 === cell.number);
                   const gameOverStyle = this.state.gameOver;
 
                   let image = BTN_NORMAL;
@@ -507,16 +510,18 @@ export default class TapTile extends Component {
 
                   return (
                     <TouchableOpacity
+                    //how much tiles dissapear on click
                       focusedOpacity={0.7}
                       activeOpacity={0.7}
                       style={[styles.cell]}
                       key={index + cell + i}
                       onPress={() => {
+                        
                         console.log("Clicked");
                         this.setState({
                           gameStarted: true
                         });
-                        if (cell !== this.state.last + 1) {
+                        if (cell.number !== this.state.last + 1 ) {
                           console.log('GameOver: moveTo, parsedIndex', moveTo , parsedIndex);
                           this.gameoverResetState();
 
@@ -524,8 +529,11 @@ export default class TapTile extends Component {
                         }
                         this.setState({last: this.state.last+1})
                         this.animateGame(moveTo);
+                      if (this.state.gameStarted = true ){ 
+                        console.log('started');
+                      }
 
-                        if (moveTo === game.length - 1) {
+                        if (moveTo === 7) { //game.length-1 is 3 here
                           this.setState({
                             score:
                               (moveTo + 1) * MULTIPLIER + timeRemaining * 100,
@@ -559,7 +567,7 @@ export default class TapTile extends Component {
                       >
                         <ImageBackground
                           source={image}
-                          style={[styles.imageCell, { width: cellWidth }]}
+                          style={[styles.imageCell, { width: cellWidth, opacity: cell.opacity }]}
                         >
                           <Text
                             style={[
@@ -574,7 +582,7 @@ export default class TapTile extends Component {
                               }
                             ]}
                           >
-                            {cell}
+                            {!this.state.gameStarted && cell.number}
                           </Text>
                         </ImageBackground>
                       </View>
@@ -601,9 +609,16 @@ const styles = StyleSheet.create({
   cellText: {
     fontFamily: "Chalkboard SE",
     fontSize: 42,
-    color: "white"
+    color: "white", 
+    // opacity:0
   },
   cell: {
+    flex: 1,
+    height: CELL_HEIGHT,
+    marginBottom: PADDING
+  },
+  cell2: {
+    opacity: 0,
     flex: 1,
     height: CELL_HEIGHT,
     marginBottom: PADDING

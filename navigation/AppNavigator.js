@@ -21,7 +21,6 @@ import UserStats from "../components/Profiles/UserStats";
 import TapNumber from "../components/Games/Eric/TapNumber";
 import TapNumberGame from "../components/Games/Eric/TapNumberGame";
 import AboutScreen from "../screens/AboutScreen";
-import UserStats from '../components/Profiles/UserStats';
 import game from '../components/Games/Aftab/Tile_Tap/game';
 import ElasticStack from '../components/Games/Aftab/ImagePicker/ElasticStack'; 
 import MemoryTiles from '../components/Games/Aftab/MemoryTiles/MemoryTiles'; 
@@ -46,7 +45,7 @@ export default (AppNavigator = createStackNavigator({
   questionFour: { screen: questionFour },
   Results: { screen: Results },
   TriviaGame: { screen: TriviaGame },
-  About: { screen: AboutScreen }
+  About: { screen: AboutScreen },
   UserStats: {screen: UserStats}, 
   TileGame: {screen: game },
   MemoryTiles: {screen: MemoryTiles},

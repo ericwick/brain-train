@@ -129,13 +129,13 @@ export default class HomeScreen extends React.Component {
 
             <View style={styles.container} >
             <Button
-                title="Tile Count "
+                title="Tile Counts "
                 onPress={() => this.props.navigation.navigate("Aftab")}
                 buttonStyle={styles.secondButton}
                 textStyle={styles.secondText}
               />
         
-            </View>
+            </View>de 
             <View style={styles.container} >
             <Button
                 title="Memory Tiles "
