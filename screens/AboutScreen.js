@@ -90,9 +90,9 @@ export default class HomeScreen extends React.Component {
               nulla.</Text>
               
               <View>
-                <Image source={require("../assets/images/robot-dev.png")} style={styles.}/>
+                <Image source={require("../assets/images/robot-dev.png")} style={styles.image}/>
               </View>
-              
+              <Text>
               Sed shoulder rump brisket meatball eiusmod culpa. Non
               pancetta pariatur, frankfurter culpa ea excepteur buffalo
               hamburger ham hock dolore aute aliquip nulla. Non corned beef
