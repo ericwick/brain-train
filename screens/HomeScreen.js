@@ -3,6 +3,7 @@ import {
   Image,
   ImageBackground,
   Platform,
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +19,8 @@ import Nav from "../components/NavBar/Nav";
 import { MonoText } from "../components/StyledText";
 import { Button, Tile } from "react-native-elements";
 import PopupModal from "../components/popupModal/popupModal";
+
+const { height, width } = Dimensions.get("window");
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -43,6 +46,13 @@ export default class HomeScreen extends React.Component {
       .catch(err => {
         console.warn("Error loading current user");
       });
+    let point = `http://${
+      __DEV__
+        ? Platform.OS === "ios"
+          ? "localhost"
+          : "172.31.99.105"
+        : production.url
+    }:3001/api/users`;
     axios
       .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
       .then(response => {

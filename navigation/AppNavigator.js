@@ -17,6 +17,10 @@ import questionThree from "../components/Games/Eric/questionThree";
 import questionFour from "../components/Games/Eric/questionFour";
 import Results from "../components/Games/Eric/Results";
 import TriviaGame from "../components/Games/TriviaGame";
+import UserStats from "../components/Profiles/UserStats";
+import TapNumber from "../components/Games/Eric/TapNumber";
+import TapNumberGame from "../components/Games/Eric/TapNumberGame";
+import AboutScreen from "../screens/AboutScreen";
 import UserStats from '../components/Profiles/UserStats';
 import game from '../components/Games/Aftab/Tile_Tap/game';
 import ElasticStack from '../components/Games/Aftab/ImagePicker/ElasticStack'; 
@@ -31,7 +35,8 @@ export default (AppNavigator = createStackNavigator({
   EditProfile: { screen: EditProfile },
   Profile: { screen: ProfileScreen },
   Leaderboard: { screen: LeaderboardScreen },
-  Eric: { screen: riddlegame },
+  Eric: { screen: TapNumber },
+  TapNumberGame: { screen: TapNumberGame },
   Aftab: { screen: Aftab },
   Anthony: { screen: Anthony },
   Achievements: { screen: Achievements },
@@ -40,7 +45,8 @@ export default (AppNavigator = createStackNavigator({
   questionThree: { screen: questionThree },
   questionFour: { screen: questionFour },
   Results: { screen: Results },
-  TriviaGame: { screen: TriviaGame }, 
+  TriviaGame: { screen: TriviaGame },
+  About: { screen: AboutScreen }
   UserStats: {screen: UserStats}, 
   TileGame: {screen: game },
   MemoryTiles: {screen: MemoryTiles},
