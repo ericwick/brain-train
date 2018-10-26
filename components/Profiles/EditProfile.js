@@ -16,24 +16,9 @@ const fadeAnimation = new FadeAnimation({ animationDuration: 150 });
 export default class EditProfile extends Component {
 
 
-  state = {
-      dialogShow: false
-    };
-
   
 
 
-  showScaleAnimationDialog = () => {
-    this.scaleAnimationDialog.show();
-  };
-  
-  //   showSlideAnimationDialog = () => {
-  //     this.slideAnimationDialog.show();
-  //   }
-
-  showFadeAnimationDialog = () => {
-    this.fadeAnimationDialog.show();
-  } 
   
   render() {
       return (

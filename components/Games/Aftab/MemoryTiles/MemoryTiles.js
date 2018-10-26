@@ -102,7 +102,7 @@ export default class TapTile extends Component {
       if (i <= t) {
         arr.push({number:i, opacity: 1 });
       } else if (i > t){
-        arr.push({number:i, opacity: 0 });
+        arr.push({number:i, opacity: 1 });
       }
     }
     function shuffle(a) {
