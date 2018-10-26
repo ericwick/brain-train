@@ -21,6 +21,7 @@ import UserStats from "../components/Profiles/UserStats";
 import game from "../components/Games/Tile_Tap/game";
 import TapNumber from "../components/Games/Eric/TapNumber";
 import TapNumberGame from "../components/Games/Eric/TapNumberGame";
+import AboutScreen from "../screens/AboutScreen";
 
 export default (AppNavigator = createStackNavigator({
   Splash: { screen: SplashScreen },
@@ -43,5 +44,6 @@ export default (AppNavigator = createStackNavigator({
   TriviaGame: { screen: TriviaGame },
   TriviaGame: { screen: TriviaGame },
   UserStats: { screen: UserStats },
-  TileGame: { screen: game }
+  TileGame: { screen: game },
+  About: { screen: AboutScreen }
 }));

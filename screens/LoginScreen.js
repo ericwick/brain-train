@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   Image,
   Platform,
+  Dimensions,
   StyleSheet,
   ScrollView,
   View,
@@ -15,6 +16,8 @@ import { AsyncStorage } from "react-native";
 import AppNavigator from "../navigation/AppNavigator";
 import axios from "axios";
 import { Button } from "react-native-elements";
+
+const { height, width } = Dimensions.get("window");
 
 class LoginScreen extends Component {
   constructor() {
@@ -98,8 +101,8 @@ class LoginScreen extends Component {
               title="START"
               buttonStyle={{
                 backgroundColor: "#76FA4F",
-                width: 350,
-                height: 100,
+                width: width - 65,
+                height: height - height / 1.15,
                 marginVertical: 10,
                 borderColor: "#2BB502",
                 borderWidth: 5,
@@ -133,8 +136,8 @@ class LoginScreen extends Component {
               title="BACK"
               buttonStyle={{
                 backgroundColor: "#F9D49B",
-                width: 150,
-                height: 55,
+                width: width - 280,
+                height: height - height / 0.8,
                 marginTop: 10,
                 borderColor: "#FD9B03",
                 borderWidth: 3,
@@ -169,16 +172,16 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
-    width: 370,
-    height: 200,
+    width: width - 65,
+    height: height - height / 1.35,
     transform: [{ rotate: "-2deg" }],
-    marginRight: 12,
-    marginVertical: 50
+    marginTop: (width / width) * 40,
+    marginBottom: (width / width) * 20
   },
   username: {
-    width: 350,
-    height: 80,
-    paddingLeft: 15,
+    width: width - 65,
+    height: height - height / 1.12,
+    paddingLeft: 25,
     marginVertical: 10,
     color: "#077FDD",
     backgroundColor: "#91E1F8",
@@ -188,9 +191,9 @@ const styles = StyleSheet.create({
     textDecorationLine: "none"
   },
   password: {
-    width: 350,
-    height: 80,
-    paddingLeft: 15,
+    width: width - 65,
+    height: height - height / 1.12,
+    paddingLeft: 25,
     marginVertical: 10,
     color: "#84802C",
     backgroundColor: "#FEFE01",

@@ -40,8 +40,8 @@ const BOARD_HEIGHT = DEVICE_HEIGHT * 0.96;
 const BOARD_WIDTH = DEVICE_WIDTH;
 
 export default class TapNumberGame extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       board: [],
       tiles: [],
@@ -50,16 +50,17 @@ export default class TapNumberGame extends Component {
       isBoardValid: false,
       score: 0,
       timeLeft: 0,
+      level: 1,
       isTouched: false,
       hasBeenPressed: false,
       depth: TILE_SHADOW_DEPTH,
       borderRadius: TILE_BORDER_RADIUS,
       backgroundColor: "red",
       text: "1",
+      value: 0,
       isEnabled: true,
       singlePressOnly: true,
-      onPressIn: () => any,
-      onPressOut: () => any,
+      isVisible: true,
       animateValue: new Animated.Value(TIME_LIMIT),
       buttonColor: "green",
       hasPressedButton: false
@@ -80,15 +81,6 @@ export default class TapNumberGame extends Component {
     }).start();
   }
 
-  //   componentDidUpdate() {
-  //     if (!this.state.isGameRunning) {
-  //       this.props.navigation.navigate("Eric");
-  //     } else if (!this.state.isBoardValid) {
-  //       console.warn("BOARD ERROR");
-  //       this.props.navigation.navigate("Eric");
-  //     }
-  //   }
-
   tileRef = null;
   boardRef = null;
   containerRef = null;
@@ -108,15 +100,14 @@ export default class TapNumberGame extends Component {
 
   isBoardEmpty() {
     return (
-      this.state.tiles.slice().filter(tile => tile.isVisible === true)
-        .length === 0
+      this.state.board.slice().filter(e => e.isVisible === true).length === 0
     );
   }
 
   buildBoard = () => {
     let tiles = [];
     this.setState({ isBoardValid: true });
-    const numberOfTiles = this.getNumberOfTiles(this.state.level);
+    const numberOfTiles = this.getNumberOfTiles();
     const previousNumbers = [];
     times(numberOfTiles, num => {
       const id = uuid.v4();
@@ -130,26 +121,44 @@ export default class TapNumberGame extends Component {
       board: tiles
     });
   };
-
   async startTimer() {
     await this.handleDelay(TIME_LIMIT);
   }
 
-  handleTilePress = async tileId => {
-    const pressedTile = find(this.state.tiles, { id: tileId });
-    const activeTiles = filter(this.state.tiles, "isVisible");
-    const sortedActiveTiles = orderBy(activeTiles, "number");
-    if (pressedTile.number === sortedActiveTiles[0].number) {
-      pressedTile.isVisible = false;
-      score++;
-      if (this.state.isBoardEmpty) {
-        this.nextLevel();
+  handleTilePress = async id => {
+    let tileId = this.state.board.find(e => e === id);
+    let tileIdIndex = this.state.board.indexOf(tileId);
+    let activeTiles = this.state.board.filter((e, i) => {
+      if (e.isVisible === false) {
+        return null;
+      } else {
+        return e;
       }
-    } else {
-      isBoardValid = false;
-      await this.handleDelay(TIME_LIMIT);
-      this.buildBoard();
+    });
+
+    let sortedActiveTiles = this.state.board.map((e, i, arr) => {
+      return e.number;
+    });
+
+    sortedActiveTiles.sort(function(a, b) {
+      return a - b;
+    });
+
+    if (tileId.number === sortedActiveTiles[0]) {
+      this.setState({ board: this.state.board.splice(tileIdIndex, 1) });
+      //   tileId.isVisible = false;
+      this.state.score++;
+      if (this.isBoardEmpty && this.state.board.length === 0) {
+        console.warn("ALL RIGHT");
+        //   this.setState({ isBoardValid: false });
+      } else {
+        console.warn("ONE RIGHT");
+        // this.nextLevel();
+      }
     }
+    if (this.state.board.length === 0) {
+    }
+      this.nextLevel();
   };
 
   handleSelect = () => {
@@ -171,13 +180,13 @@ export default class TapNumberGame extends Component {
     return true;
   };
 
-  async handleUnSelect() {
+  handleUnSelect = async () => {
     this.handleTilePress();
     if (this.tileRef && this.tileRef.getContainerRef()) {
       await this.tileRef.getContainerRef().bounceOut(200);
     }
     this.setState({ isVisible: false });
-  }
+  };
 
   handleRestartPress = async () => {
     this.setState({ hasPressedButton: true });
@@ -187,6 +196,7 @@ export default class TapNumberGame extends Component {
 
   getRandomNumber = () => {
     let { level } = this.state;
+    // console.warn("Level", this.state.level);
     var randomNumber = 0;
     if (level === 1) {
       randomNumber = random(0, 49);
@@ -207,20 +217,24 @@ export default class TapNumberGame extends Component {
     const maximumNumberOfTiles = 7;
     const incrementFactor = this.state.level * 0.2;
     const numberOfTiles = Math.floor(minNumberOfTiles + incrementFactor);
-    return numberOfTiles < maximumNumberOfTiles
-      ? numberOfTiles
-      : maximumNumberOfTiles;
+    let total =
+      numberOfTiles < maximumNumberOfTiles
+        ? numberOfTiles
+        : maximumNumberOfTiles;
+    return total;
   };
 
   getRandomTilePosition = (board, x, y) => {
     const position = {};
-    const boardOriginX = BOARD_MARGIN;
-    const boardOriginY = BOARD_MARGIN;
-    const boardWidth = BOARD_WIDTH - BOARD_MARGIN;
-    const boardHeight = BOARD_HEIGHT - BOARD_MARGIN;
+    const boardOriginX = 20;
+    const boardOriginY = 20;
+    const boardWidth = BOARD_WIDTH - 20;
+    const boardHeight = BOARD_HEIGHT - 20;
     while (true) {
-      const randomX = random(boardOriginX, boardWidth - TILE_SIZE);
-      const randomY = random(boardOriginY, boardHeight - TILE_SIZE);
+      const randomX =
+        Math.floor(Math.random() * (boardWidth - TILE_SIZE)) + boardOriginX;
+      const randomY =
+        Math.floor(Math.random() * (boardHeight - TILE_SIZE)) + boardOriginY;
       if (this.isPositionAvailable(randomX, randomY, board)) {
         position.x = randomX;
         position.y = randomY;
@@ -249,8 +263,9 @@ export default class TapNumberGame extends Component {
   };
 
   handleDelay = () => {
+    let { navigation } = this.props;
     return setTimeout(function() {
-      this.props.navigation.navigate("Eric");
+      navigation.navigate("Eric");
     }, TIME_LIMIT);
   };
 
@@ -264,7 +279,8 @@ export default class TapNumberGame extends Component {
       borderRadius,
       buttonColor,
       hasPressedButton,
-      backgroundColor
+      backgroundColor,
+      isVisible
     } = this.state;
     const halfDepth = depth / 2;
     const size = DEVICE_HEIGHT * 1.3;
@@ -278,7 +294,7 @@ export default class TapNumberGame extends Component {
       justifyContent: "center",
       alignItems: "center"
     };
-    const titleStyle = {
+    const tileStyle = {
       marginTop: isTouched ? depth : halfDepth,
       backgroundColor,
       borderRadius
@@ -286,7 +302,7 @@ export default class TapNumberGame extends Component {
     const depthStyle = {
       marginTop: -borderRadius,
       height: isTouched ? halfDepth + borderRadius : depth + borderRadius,
-      backgroundColor: "blue",
+      backgroundColor: "lightgray",
       borderBottomLeftRadius: borderRadius,
       borderBottomRightRadius: borderRadius
     };
@@ -308,16 +324,16 @@ export default class TapNumberGame extends Component {
       height: TILE_SIZE
     };
 
-    // ERROR CAN'T FIND VARIABLE: tiles
+    // console.warn("BOARD", this.state.board);
 
     return (
       <ImageBackground
         style={styles.backgroundImage}
         source={require("../../../assets/images/mobileGUI/sky_bg.png")}
       >
-        <View style={styles.conatiner}>
+        {/* <View style={styles.conatiner}>
           <View style={[styles.content, { width, timerBackgroundColor }]} />
-        </View>
+        </View> */}
 
         <View style={styles.container} animation={"fadeIn"}>
           {isGameRunning && (
@@ -327,26 +343,35 @@ export default class TapNumberGame extends Component {
           )}
 
           <View style={styles.container}>
-            {board.map((tile, index) => (
-              <View style={containerStyle} key={index}>
-                <TouchableWithoutFeedback
-                  onPressIn={this.handlePressIn}
-                  onPressOut={this.handleUnSelect}
-                  delayPressIn={0}
-                >
+            {board.map(
+              (tile, index) =>
+                !tile.isVisible ? null : (
                   <View
-                    ref={ref => {
-                      this.containerRef = ref;
+                    style={{
+                      right: tile.x / 2,
+                      bottom: tile.y / 2
                     }}
+                    key={index}
+                    onPress={(tile.isVisible = false)}
                   >
-                    <View>
-                      <Text>Some Text Here</Text>
-                    </View>
-                    <View />
+                    <TouchableWithoutFeedback
+                      onPressIn={() => this.handleTilePress(tile)}
+                      delayPressIn={0}
+                    >
+                      <View
+                        ref={ref => {
+                          this.containerRef = ref;
+                        }}
+                      >
+                        <View style={[styles.tile, tileStyle]}>
+                          <Text style={styles.text}>{tile.number}</Text>
+                        </View>
+                        <View style={[styles.depth, depthStyle]} />
+                      </View>
+                    </TouchableWithoutFeedback>
                   </View>
-                </TouchableWithoutFeedback>
-              </View>
-            ))}
+                )
+            )}
           </View>
         </View>
       </ImageBackground>
@@ -362,7 +387,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     backgroundColor: "blue",
     height: TIME_BAR_HEIGHT,
-    borderColor: "purple",
+    // borderColor: "purple",
     borderWidth: 1
   },
   container: {
@@ -371,6 +396,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 100
+  },
+  tile: {
+    width: TILE_SIZE,
+    height: TILE_SIZE,
+    backgroundColor: "lightgray"
   },
   title: {
     marginTop: 40,
@@ -385,5 +415,60 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: 20,
     borderColor: "black"
+  },
+  title: {
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 2
+  },
+  depth: {
+    zIndex: 1
+  },
+  text: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 35
   }
 });
+
+// <BoardTile
+//             ref={ref => this._tileRefs[index] = ref}
+//             key={`board_tile_${tile.id}`}
+//             left={tile.x}
+//             bottom={tile.y}
+//             backgroundColor={tile.color}
+//             text={tile.number}
+//             onTilePress={() => this.props.onTilePress(tile.id)}
+//             isEnabled={this.props.isEnabled}
+//             isVisible={tile.isVisible}
+//           />
+
+/* <Tile
+  style={tileSize}
+  ref={ref => {
+    this.tileRef = ref;
+  }}
+  animation={"bounceIn"}
+  backgroundColor={backgroundColor}
+  text={text}
+  onPressOut={this.handlePressOut}
+  isEnabled={isEnabled}
+/>; */
+
+/* <TouchableWithoutFeedback
+                  onPressIn={this.handlePressIn}
+                  onPressOut={this.handleUnSelect}
+                  delayPressIn={0}
+                >
+                  <View
+                    ref={ref => {
+                      this.containerRef = ref;
+                    }}
+
+                  >
+                    <View style={[styles.tile, tileStyle, style]}>
+                      <Text style={[styles.text, textStyle]}>Some Text Here</Text>
+                    </View>
+                    <View style={[styles.depth, depthStyle]}>
+                  </View>
+                </TouchableWithoutFeedback> */
