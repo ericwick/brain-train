@@ -41,7 +41,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
           user: JSON.parse(value)
         });
-        console.log(this.state.user);
+        console.log("Homescreen currentUser", this.state.user);
       })
       .catch(err => {
         console.warn("Error loading current user");
@@ -136,7 +136,7 @@ export default class HomeScreen extends React.Component {
 
             <View style={styles.container}>
               <Button
-                title="Tile Count "
+                title="Tile Counts "
                 onPress={() => this.props.navigation.navigate("Aftab")}
                 buttonStyle={styles.secondButton}
                 textStyle={styles.secondText}

@@ -47,8 +47,8 @@ export default (AppNavigator = createStackNavigator({
   TriviaGame: { screen: TriviaGame },
   About: { screen: AboutScreen },
   UserStats: { screen: UserStats }
-  // TileGame: { screen: game },
-  // MemoryTiles: { screen: MemoryTiles },
-  // ElasticStack: { screen: ElasticStack }
+  // TileGame: {screen: game },
+  // MemoryTiles: {screen: MemoryTiles},
+  // ElasticStack: {screen: ElasticStack}
   // Sequent: {screen: sequent}
 }));

@@ -51,6 +51,8 @@ export default class ProfileScreen extends Component {
   async componentDidMount() {
     var currentUser = await AsyncStorage.getItem("user")
       .then(value => {
+        console.log('value', value);
+        console.log('JSON.parse(value)', JSON.parse(value));
         this.setState({
           user: JSON.parse(value)
         });
@@ -72,9 +74,9 @@ export default class ProfileScreen extends Component {
     var currentUser = [];
 
     for (var i = 0; i < this.state.users.length; i++) {
-      if (this.state.users[i].username === this.state.user[0].username) {
+      if (this.state.users.length && (this.state.users[i].username === this.state.user.username)) {
         currentUser = this.state.users[i];
-        console.warn(this.state.user[0].username, "USER USERNAME");
+        console.warn(this.state.user.username, "USER USERNAME");
       }
     }
 
