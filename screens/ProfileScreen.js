@@ -22,13 +22,11 @@ import AppNavigator from "../navigation/AppNavigator";
 import { Button, Avatar } from "react-native-elements";
 import Nav from "../components/NavBar/Nav";
 import { AsyncStorage } from "react-native";
-import {connect} from 'react-redux'; 
-// import {getUser} from 'react-redux'; 
 
 import { MonoText } from "../components/StyledText";
 
 
-class ProfileScreen extends Component {
+export default class ProfileScreen extends Component {
   constructor() {
     super();
     this.state = {
@@ -50,40 +48,36 @@ class ProfileScreen extends Component {
     header: null
   };
 
-   componentDidMount() {
-    // var currentUser = await AsyncStorage.getItem("user")
-    //   .then(value => {
-    //     console.log(value);
-    //     this.setState({
-    //       user: JSON.parse(value)
-          
-    //     });
-    //   })
-    //   .catch(err => {
-    //     console.warn("Error loading current user");
-    //   });
+  async componentDidMount() {
+    var currentUser = await AsyncStorage.getItem("user")
+      .then(value => {
+        this.setState({
+          user: JSON.parse(value)
+        });
+      })
+      .catch(err => {
+        console.warn("Error loading current user");
+      });
     axios
-      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user/1`)
+      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
       .then(response => {
-        console.log(response);
         this.setState({
           users: response.data
         });
       })
       .catch(err => console.warn(err));
-      
   }
 
   render() {
     var currentUser = [];
 
-    // for (var i = 0; i < this.state.users.length; i++) {
-    //   if (this.state.users[i].username === this.state.user[0].username) {
-    //     currentUser = this.state.users[i];
-    //     console.warn(this.state.users[0].username, "USER USERNAME");
-    //   }
-    // }
-    
+    for (var i = 0; i < this.state.users.length; i++) {
+      if (this.state.users[i].username === this.state.user[0].username) {
+        currentUser = this.state.users[i];
+        console.warn(this.state.user[0].username, "USER USERNAME");
+      }
+    }
+
     return (
       <ImageBackground
         source={require("../assets/images/mobileGUI/sky_bg.png")}
@@ -152,8 +146,6 @@ class ProfileScreen extends Component {
     );
   }
 }
-const mapStateToProps = state => state; 
-export default connect(mapStateToProps)(ProfileScreen); 
 
 const styles = StyleSheet.create({
   backgroundImage: {
