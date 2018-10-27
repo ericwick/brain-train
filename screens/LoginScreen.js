@@ -78,9 +78,21 @@ class LoginScreen extends Component {
   }
 
   handleRegister() {
-    axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`)
-    .then(response => console.log(response.data))
-    .catch(err => `Error in handleRegister() - ${err}`);
+    var credentials = {
+      username: this.state.username,
+      password: this.state.password
+    };
+    axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`, credentials)
+    .then(response => {
+      // If the user successfully registers, log them in and the login function will redirect to the Home page
+      this.handleLogin();
+    })
+    .catch(err => {
+      if(err.response.status == 409){
+        console.warn('A user already exists by this username');
+      }
+      console.log(`Error in handleRegister() - ${err.response.status}`)
+    });
     return;
   }
 
@@ -156,7 +168,7 @@ class LoginScreen extends Component {
 
           <TouchableOpacity
             onPress={() => this.setState({renderLogin: !this.state.renderLogin}) }>
-            <Text style={styles.text}>Register for a new account?</Text>
+            <Text style={[styles.text, {marginBottom: 10}]}>{this.state.renderLogin ? "Register for a new account?" : "Go back to login page"}</Text>
           </TouchableOpacity>
 
           <TouchableHighlight>
@@ -180,19 +192,23 @@ class LoginScreen extends Component {
               autoCapitalize="none"
               underlineColorAndroid="transparent"
               placeholderTextColor="#84802C"
+              secureTextEntry={true}
             />
           </TouchableHighlight>
 
           {this.renderButton()}
 
+          {!this.state.password.length ? 
+          // Render the clickable phrase only if the password field is empty?
           <View contentContainerStyle={styles.container}>
-            <Text style={styles.text}>Forgot your username or password?</Text>
             <TouchableOpacity
               onPress={() => console.warn("You've been reminded")}
             >
-              <Text style={styles.text}>Yep, remind me.</Text>
+              <Text style={styles.text}>What was my password again?</Text>
             </TouchableOpacity>
           </View>
+          : null}
+
           <View style={styles.linebreak} />
 
           <TouchableOpacity>

@@ -66,15 +66,17 @@ const addUser = (req, res, next) => {
   const dbInst = req.app.get("db");
   const { username, password } = req.body;
   dbInst
-    .add_user(username, password)
-    .then(response => {
-      res.status(200).send(response);
-    })
-    .catch(err =>
-      dbInst
-        .get_user(username)
-        .then(response => res.status(200).json(req.session.user))
-    );
+  .add_user([username, password])
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(err => {
+    if(err.code === "23505"){
+      res.sendStatus(409)
+    } else {
+      console.log(`Error in adduser() - ${err}`)
+    }
+    });
 };
 
 const addGameSessionResults = (req, res, next) => {
