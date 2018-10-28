@@ -41,10 +41,8 @@ class LoginScreen extends Component {
   };
 
   async componentDidMount() {
-    // on mount, pull up stored user and put them on state if it exists
     var userOnDevice = await AsyncStorage.getItem("user");
     var userOnDeviceParsed = JSON.parse(userOnDevice);
-    // if there is no "user" in storage, the parsed users will be null. Set it to an empty array
     if (!userOnDeviceParsed) {
       userOnDeviceParsed = [];
     } else {
@@ -60,13 +58,11 @@ class LoginScreen extends Component {
     };
 
     await this.props.attemptLogin(credentials);
-    console.log('this.props.currentUser', this.props.currentUser);
+    console.log("this.props.currentUser", this.props.currentUser);
 
     if (this.props.currentUser > 0) {
       AsyncStorage.setItem("user", JSON.stringify(credentials))
         .then(() => {
-          // User has logged in successfully
-          console.warn(`User "${this.state.username}" registered to device`);
           this.props.navigation.navigate("Home");
         })
         .catch(() => {
@@ -78,9 +74,18 @@ class LoginScreen extends Component {
   }
 
   handleRegister() {
-    axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`)
-    .then(response => console.log(response.data))
-    .catch(err => `Error in handleRegister() - ${err}`);
+    axios
+      .post(
+        `http://${
+          __DEV__
+            ? Platform.OS === "ios"
+              ? "localhost"
+              : "172.31.99.105"
+            : production.url
+        }:3001/api/user`
+      )
+      .then(response => console.log(response.data))
+      .catch(err => `Error in handleRegister() - ${err}`);
     return;
   }
 
@@ -89,7 +94,8 @@ class LoginScreen extends Component {
       return (
         <TouchableOpacity>
           <Button
-            onPress={() => this.handleLogin()}
+            onPress={() => this.props.navigation.navigate("Eric")}
+            // onPress={() => this.handleLogin()}
             title="LOGIN"
             buttonStyle={{
               backgroundColor: "#76FA4F",
@@ -113,7 +119,7 @@ class LoginScreen extends Component {
         </TouchableOpacity>
       );
     } else {
-      return(
+      return (
         <TouchableOpacity>
           <Button
             onPress={() => this.handleRegister()}
@@ -155,7 +161,10 @@ class LoginScreen extends Component {
           />
 
           <TouchableOpacity
-            onPress={() => this.setState({renderLogin: !this.state.renderLogin}) }>
+            onPress={() =>
+              this.setState({ renderLogin: !this.state.renderLogin })
+            }
+          >
             <Text style={styles.text}>Register for a new account?</Text>
           </TouchableOpacity>
 
@@ -288,4 +297,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps, { attemptLogin, attemptRegister })(LoginScreen);
+export default connect(
+  mapStateToProps,
+  { attemptLogin, attemptRegister }
+)(LoginScreen);
