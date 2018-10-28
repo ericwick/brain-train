@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Exponent, { Components, Asset } from "expo";
 import {
   Image,
   ImageBackground,
@@ -22,6 +23,7 @@ import AppNavigator from "../../../navigation/AppNavigator";
 import Nav from "../../NavBar/Nav";
 import uuid from "uuid";
 import SUCCESS_BG from "../../../assets/level_cleared_notext.png";
+import RELOAD_BTN from "../../../assets/reload_btn.png";
 
 const ANDROID = Platform.OS === "android";
 const { height, width } = Dimensions.get("window");
@@ -64,7 +66,8 @@ export default class TapNumberGame extends Component {
       animateValue: new Animated.Value(TIME_LIMIT),
       buttonColor: "green",
       hasPressedButton: false,
-      gameOver: false
+      gameOver: false,
+      animateModal: new Animated.Value(0)
     };
     this.handleUnSelect = this.handleUnSelect.bind(this);
   }
@@ -87,14 +90,29 @@ export default class TapNumberGame extends Component {
     await this._loadAssetsAsync();
   }
 
+  cacheImages(images) {
+    return images.map(image => Asset.fromModule(image).downloadAsync());
+  }
+
   async _loadAssetsAsync() {
     //imageAssets is an array of promises that must be fulfilled or resolved before settingState.
     //its function is to cache Images using the cacheImages function defined above
-    const imageAssets = cacheImages([
+    const imageAssets = this.cacheImages([
       require("../../../assets/level_cleared_notext.png"),
       require("../../../assets/reload_btn.png")
     ]);
     await Promise.all([...imageAssets]);
+  }
+
+  animateModal() {
+    const { gameOver } = this.state;
+
+    Animated.spring(this.state.animateModal, {
+      bounciness: 12,
+      speed: 3,
+      toValue: gameOver ? 1 : 0,
+      useNativeDriver: true
+    }).start();
   }
 
   tileRef = null;
@@ -200,16 +218,17 @@ export default class TapNumberGame extends Component {
   getRandomNumber = (level, usedNums) => {
     var randomNumber = 0;
     if (level === 1) {
-      randomNumber = random(0, 49);
+      randomNumber = random(0, 19);
     } else if (level <= 3) {
-      randomNumber = random(-9, 39);
+      randomNumber = random(-9, 29);
     } else if (level <= 4) {
-      randomNumber = random(-29, 49);
+      randomNumber = random(-29, 39);
     } else if (level >= 5) {
-      randomNumber = random(-69, 99);
+      randomNumber = random(-39, 59);
     }
+    console.warn(usedNums);
     return usedNums.includes(randomNumber)
-      ? this.getRandomNumber()
+      ? this.getRandomNumber(level, usedNums)
       : randomNumber;
   };
 
@@ -263,11 +282,93 @@ export default class TapNumberGame extends Component {
 
   handleDelay = () => {
     // let { navigation } = this.props;
-    return setTimeout(function() {
-      //   navigation.navigate("Eric");
-      this.setState({ gameOver: true });
-    }, TIME_LIMIT);
+    return setTimeout(
+      function() {
+        //   navigation.navigate("Eric");
+        this.setState({ gameOver: true });
+        return;
+      }.bind(this),
+      TIME_LIMIT
+    );
   };
+
+  renderGameOver() {
+    const scaleModal = this.state.animateModal.interpolate({
+      inputRange: [-1, 0, 1],
+      outputRange: [0, 0, 1]
+    });
+
+    var userScore = this.state.level * 1000;
+
+    return (
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          height: height,
+          width: width,
+          paddingHorizontal: 20,
+          backgroundColor: "rgba(0,0,0,0.7)",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Animated.View
+          style={{
+            position: "absolute",
+            top: 0,
+            height: height,
+            width: width,
+            paddingHorizontal: 20,
+            backgroundColor: "transparent",
+            justifyContent: "center",
+            alignItems: "center",
+            transform: [
+              {
+                scale: scaleModal
+              }
+            ]
+          }}
+        >
+          <ImageBackground
+            source={require("../../../assets/btn_success.png")}
+            style={{
+              width: width - 120,
+              height: height - 500
+              //   resizeMode: "contain"
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <Text style={styles.emphasisText}>Game over</Text>
+              <Text style={styles.emphasisText}>SCORE:</Text>
+              <Text style={styles.emphasisText}>{userScore}</Text>
+            </View>
+          </ImageBackground>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Eric")}
+          >
+            <Image
+              source={RELOAD_BTN}
+              style={{
+                width: width / 5,
+                height: width / 5,
+                resizeMode: "contain"
+                // position: 'absolute',
+                // top: -15 - SIZE / 2, //Uncomment these to render properly on iPhone
+                // left: -SIZE / 2
+              }}
+            />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
+    );
+  }
 
   render() {
     const {
@@ -347,6 +448,7 @@ export default class TapNumberGame extends Component {
               )
           )}
         </View>
+        {this.state.gameOver ? this.renderGameOver() : null}
       </ImageBackground>
     );
   }
@@ -390,5 +492,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 33
+  },
+  emphasisText: {
+    fontFamily: "CarterOne",
+    color: "white",
+    fontSize: 30,
+    textShadowColor: "rgba(0, 0, 0, 1)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 20
   }
 });
