@@ -26,6 +26,7 @@ import MESSAGE_BLUE from "../../assets/images/mobileGUI/coloredButtons/button_bl
 import MESSAGE_GREEN from "../../assets/images/mobileGUI/coloredButtons/button_grn.png";
 import MESSAGE_YELLOW from "../../assets/images/mobileGUI/coloredButtons/button_ylw.png";
 import MESSAGE_INFO from "../../assets/images/mobileGUI/messageBoxes/panel_info.png";
+import MESSAGE_GAMEOVER from "../../assets/level_failed_notext.png";
 
 const { width, height } = Dimensions.get("window");
 const GAME_WIDTH = width - 10;
@@ -35,7 +36,7 @@ class TriviaGame extends Component {
   constructor() {
     super();
     this.state = {
-      score: 50,
+      score: 0,
       data: [],
       time: [],
       animateModal: new Animated.Value(0),
@@ -72,7 +73,7 @@ class TriviaGame extends Component {
       "Do better!",
       "that's wrong!",
       "don't skip school",
-      "um...",
+      "no.",
       "Just stop.",
       "Try again"
     ];
@@ -80,6 +81,64 @@ class TriviaGame extends Component {
     return messages[
       Math.floor(Math.random() * messages.length)
     ].toLocaleUpperCase();
+  }
+
+  renderGameOver() {
+    const scaleModal = this.state.animateModal.interpolate({
+      inputRange: [-1, 0, 1],
+      outputRange: [0, 0, 1]
+    });
+    const { score } = this.state;
+    return (
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          height: height,
+          width: width,
+          paddingHorizontal: 20,
+          backgroundColor: "rgba(0,0,0,0.7)",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Animated.View
+          style={{
+            position: "absolute",
+            top: 0,
+            height: height,
+            width: width,
+            paddingHorizontal: 20,
+            backgroundColor: "transparent",
+            justifyContent: "center",
+            alignItems: "center",
+            transform: [
+              {
+                scale: scaleModal
+              }
+            ]
+          }}
+        >
+          <ImageBackground
+            source={MESSAGE_GAMEOVER}
+            style={{
+              width: width - 40,
+              height: width
+            }}
+          >
+            <View style={[styles.topContent]}>
+              <Text style={styles.emphasisText}>
+                GAME OVER!
+              </Text>
+              <Text style={{fontSize: 20}}>
+                Your final score was: {score}
+              </Text>
+            </View>
+          </ImageBackground>
+          {this.renderReload()}
+        </Animated.View>
+      </View>
+    );
   }
 
   renderWrongAnswer() {
@@ -148,7 +207,7 @@ class TriviaGame extends Component {
     return (
       <TouchableOpacity onPress={() => {
         this.setState({ wrongAnswer: false });
-        questionsTotal > nextquestion
+        questionsTotal >= nextquestion
         ? this.setState({ cardIndex: nextquestion })
         : console.log("Reached end of questions");
         }}>
@@ -317,10 +376,10 @@ class TriviaGame extends Component {
             );
           })}
         </ScrollView>
-        {this.state.gameOver
-          ? null
-          : this.state.wrongAnswer
-            ? this.renderWrongAnswer()
+        {this.state.wrongAnswer
+          ? this.renderWrongAnswer()
+          : this.state.gameOver
+          ? this.renderGameOver()
             : null}
       </ImageBackground>
     );
