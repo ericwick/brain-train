@@ -11,6 +11,7 @@ import {
   View,
   Animated
 } from "react-native";
+import axios from 'axios';
 import { WebBrowser } from "expo";
 import AppNavigator from "../../navigation/AppNavigator";
 import { Button } from "react-native-elements";
@@ -38,7 +39,7 @@ class TriviaGame extends Component {
     this.state = {
       score: 0,
       data: [],
-      time: [],
+      startTime: '',
       animateModal: new Animated.Value(0),
       cardIndex: 0,
       wrongAnswer: false,
@@ -51,6 +52,9 @@ class TriviaGame extends Component {
 
   componentDidMount() {
     this.props.getTrivia("Vehicles", 10, 1);
+    axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/time`)
+    .then(response => this.setState({startTime: response.data[0].now}))
+    .catch(err => console.log(`Error getting start time in TriviaGame: ${err}`));
   }
 
   animateModal() {
@@ -89,6 +93,7 @@ class TriviaGame extends Component {
       outputRange: [0, 0, 1]
     });
     const { score } = this.state;
+    let endTime = '';
     return (
       <View
         style={{
@@ -135,7 +140,7 @@ class TriviaGame extends Component {
               </Text>
             </View>
           </ImageBackground>
-          {this.renderReload()}
+          {this.renderRestartGame()}
         </Animated.View>
       </View>
     );
@@ -207,9 +212,52 @@ class TriviaGame extends Component {
     return (
       <TouchableOpacity onPress={() => {
         this.setState({ wrongAnswer: false });
-        questionsTotal >= nextquestion
+        questionsTotal > nextquestion
         ? this.setState({ cardIndex: nextquestion })
         : console.log("Reached end of questions");
+        }}>
+        <Image
+          source={BUTTON_REDO}
+          style={{
+            width: SIZE,
+            height: SIZE,
+            resizeMode: "contain",
+            // position: "absolute",
+            // top: -15 - SIZE / 2, //Uncomment this to maybe show on iPhones
+            // left: -SIZE / 2
+          }}
+        />
+      </TouchableOpacity>
+    );
+  }
+
+  renderRestartGame() {
+    const SIZE = width / 5;
+    let nextquestion = this.state.cardIndex + 1;
+    let questionsTotal = this.props.trivia.length;
+    let endTime;
+    axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/time`)
+      .then(response => endTime = response.data[0].now)
+      .catch(err => console.log(`Error getting end time in TriviaGame: ${err}`));
+    const resultsForDB = {
+      id: this.props.currentUser,
+      gameId: 34,
+      startTime: this.state.startTime
+    }
+      
+    return (
+      <TouchableOpacity onPress={() => {
+        // when the user presses the reset button, fetch more questions for the next round
+        this.props.getTrivia("Vehicles", 10, 1);
+        resultsForDB.endTime = endTime;
+        console.log('resultsForDB', resultsForDB);
+        // Send score and stats to server, Request a new round of questions, and reset variables
+        // this.props.sendResults()
+        this.setState({ 
+          score: 0,
+          wrongAnswer: false,
+          cardIndex: 0,
+          gameOver: false })
         }}>
         <Image
           source={BUTTON_REDO}
@@ -314,12 +362,15 @@ class TriviaGame extends Component {
     let questionsTotal = this.props.trivia.length;
     let { score } = this.state;
     const userAnsweredCorrectly = questionArray[selectedIndex].isCorrect;
+    if(nextquestion === questionsTotal) {
+      this.setState({gameOver: true});
+    }
     if (userAnsweredCorrectly) {
-      this.setState({ score: score + 50 });
+      this.setState({ score: score + 150 });
       // If user got the correct answer, move on to the next question.
       questionsTotal > nextquestion
         ? this.setState({ cardIndex: nextquestion })
-        : console.log("Reached end of questions");
+        : null;
     } else {
       // If the user got the wrong answer, wait for the modal to move on to the next question
       this.setState({ wrongAnswer: true });
