@@ -55,7 +55,7 @@ export default class TapTile extends Component {
 
     this.state = {
       // level: 3,
-      game: this.makeMatrix(this.props.level, 8),
+      game: this.makeMatrix(this.props.level, 4),
       moveTo: 0,
       finished: false,
       position: new Animated.ValueXY(),
@@ -137,7 +137,8 @@ export default class TapTile extends Component {
       bounciness: 12,
       speed: 3,
       toValue: finished || gameOver ? 1 : 0,
-      useNativeDriver: true
+      useNativeDriver: true,
+
     }).start();
   }
   //The animation for the cells moving down the screen --> moveTo * height of each cell
@@ -171,27 +172,30 @@ export default class TapTile extends Component {
   }
 
   restartGame() {
-    arr.map(item => this.animatedValue[item].setValue(0));
-    this.setState(
-      {
-        moveTo: 0,
-        gameStarted: false,
-        finished: false,
-        gameOver: false,
-        level: 1,
-        score: 0,
-        game: this.makeMatrix(4, 8)
-      },
-      () => {
-        const { gameOver, finished } = this.state;
-
-        Animated.spring(this.state.position, {
-          toValue: { x: 0, y: 0 },
-          useNativeDriver: true
-        }).start();
-      }
-    );
-  }
+      arr.map(item => this.animatedValue[item].setValue(0));
+      this.setState(
+        {
+          moveTo: 0,
+          gameStarted: false,
+          finished: false,
+          gameOver: false,
+          // level: 1,
+          score: 0,
+          game: this.makeMatrix(4, 4)
+        },
+        () => {
+          const { gameOver, finished } = this.state;
+  
+          Animated.spring(this.state.position, {
+            toValue: { x: 0, y: 0 },
+            useNativeDriver: true
+          }).start();
+        }
+      );
+    }
+    
+    
+  
 
   getStarsCount(time) {
     if (time >= 5) {
@@ -468,6 +472,15 @@ export default class TapTile extends Component {
 
     setTimeout(() => this.animateGame(9.5), 500);
   }
+  gameWonResetState() {
+    this.setState({
+      finished: true,
+      gameStarted: false,
+      last: 0
+    });
+
+    setTimeout(() => this.animateGame(9.5), 500);
+  }
 
   renderGame() {
     const { game, moveTo, timeRemaining } = this.state;
@@ -533,18 +546,53 @@ export default class TapTile extends Component {
                         console.log('started');
                       }
 
-                        if (moveTo === 7) { //game.length-1 is 3 here
+                        if (this.state.level === 1) { //game.length-1 is 3 here
                           this.setState({
                             score:
                               (moveTo + 1) * MULTIPLIER + timeRemaining * 100,
                             moveTo: moveTo + 1,
                             finished: true,
                             gameStarted: false,
+                            last: 0 ,     
+                            level: this.state.level + 1 ,              
+                            stars: this.getStarsCount(timeRemaining), 
+                            moveTo: 7
+                          });
+
+                          return ;
+                        }
+                        else if (this.state.level === 2 ){ 
+                          this.setState({
+                            score:
+                              (moveTo + 1) * MULTIPLIER + timeRemaining * 100,
+                            moveTo: moveTo + 1,
+                            finished: true,
+                            gameStarted: false,
+                            last: 0 ,     
+                            level: this.state.level + 1 ,              
+                            stars: this.getStarsCount(timeRemaining), 
+                            moveTo: 11
+                          });
+
+                          return ;
+                        }
+                        else if (this.state.level === 3){ 
+                          this.setState({
+                            score:
+                              (moveTo + 1) * MULTIPLIER + timeRemaining * 100,
+                            moveTo: moveTo + 1,
+                            finished: true,
+                            gameStarted: false,
+                            last: 0 ,     
+                            level: this.state.level + 1 ,              
                             stars: this.getStarsCount(timeRemaining)
                           });
 
-                          return;
+                          return ;
                         }
+
+
+
                         this.setState({
                           moveTo: moveTo + 1,
                           score: (moveTo + 1) * MULTIPLIER
