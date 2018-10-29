@@ -41,7 +41,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
           user: JSON.parse(value)
         });
-        console.log(this.state.user);
+        console.log("Homescreen currentUser", this.state.user);
       })
       .catch(err => {
         console.warn("Error loading current user");
@@ -54,7 +54,15 @@ export default class HomeScreen extends React.Component {
         : production.url
     }:3001/api/users`;
     axios
-      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
+      .get(
+        `http://${
+          __DEV__
+            ? Platform.OS === "ios"
+              ? "localhost"
+              : "172.31.99.105"
+            : production.url
+        }:3001/api/users`
+      )
       .then(response => {
         this.setState({
           users: response.data
@@ -126,24 +134,21 @@ export default class HomeScreen extends React.Component {
               />
             </View>
 
-
-            <View style={styles.container} >
-            <Button
+            <View style={styles.container}>
+              <Button
                 title="Tile Counts "
                 onPress={() => this.props.navigation.navigate("Aftab")}
                 buttonStyle={styles.secondButton}
                 textStyle={styles.secondText}
               />
-        
-            </View>de 
-            <View style={styles.container} >
-            <Button
+            </View>
+            <View style={styles.container}>
+              <Button
                 title="Memory Tiles "
                 onPress={() => this.props.navigation.navigate("MemoryTiles")}
                 buttonStyle={styles.secondButton}
                 textStyle={styles.secondText}
               />
-        
             </View>
             <View>
               <Button
@@ -183,12 +188,12 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
-    width: 370,
-    height: 200,
+    width: width - 65,
+    height: height - height / 1.4,
     transform: [{ rotate: "-2deg" }],
     marginRight: 12,
-    top: 0,
-    marginVertical: 50
+    // top: 0,
+    marginTop: (width / width) * 75
   },
   container: {
     flex: 1,
@@ -226,23 +231,23 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontWeight: "bold"
   },
-  gameContainer:{
+  gameContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: "#FCCE82",
     width: 300,
-    height:135,
+    height: 135,
     marginVertical: 40,
     borderColor: "#FC9D01",
     borderWidth: 5,
     borderRadius: 5,
-    paddingTop: 5, 
-    paddingBottom: 5, 
+    paddingTop: 5,
+    paddingBottom: 5,
     paddingLeft: 10
   },
-  content:{
+  content: {
     // alignItems: "center",
-   },
+  },
   secondButton: {
     width: 300,
     height: 100,
@@ -255,15 +260,15 @@ const styles = StyleSheet.create({
     // width: 80,
     // height:80,
     // marginTop: 5,
-    // marginBottom: 5, 
+    // marginBottom: 5,
     // marginVertical: 5,
     // marginRight: 10,
     // // marginVertical: 40,
     // borderColor: "#FC9D01",
     // borderWidth: 5,
-    // borderRadius: 5, 
+    // borderRadius: 5,
   },
-  
+
   secondText: {
     fontSize: 25,
     color: "#FC9D01",
@@ -366,9 +371,9 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1.5, height: 2 },
     textShadowRadius: 3,
     fontWeight: "bold"
-  }, 
-  // gameIcon: { 
-  //   height: 40, 
+  }
+  // gameIcon: {
+  //   height: 40,
   //   width: 40
   // }
 });

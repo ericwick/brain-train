@@ -382,9 +382,9 @@ export default class TapTile extends Component {
             width: SIZE,
             height: SIZE,
             resizeMode: "contain",
-            position: "absolute",
-            top: -15 - SIZE / 2,
-            left: -SIZE / 2
+            // position: "absolute",
+            // top: -15 - SIZE / 2, //uncomment this to render properly on iPhone
+            // left: -SIZE / 2
           }}
         />
       </TouchableOpacity>
@@ -655,7 +655,7 @@ const styles = StyleSheet.create({
     marginBottom: 42
   },
   cellText: {
-    fontFamily: "Chalkboard SE",
+    fontFamily: "CarterOne",
     fontSize: 42,
     color: "white", 
     // opacity:0

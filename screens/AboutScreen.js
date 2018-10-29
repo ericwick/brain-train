@@ -22,46 +22,10 @@ import PopupModal from "../components/popupModal/popupModal";
 
 const { height, width } = Dimensions.get("window");
 
-export default class HomeScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: [],
-      users: []
-    };
-  }
-
+export default class AboutScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
-
-  async componentDidMount() {
-    var currentUser = await AsyncStorage.getItem("user")
-      .then(value => {
-        this.setState({
-          user: JSON.parse(value)
-        });
-        console.log(this.state.user);
-      })
-      .catch(err => {
-        console.warn("Error loading current user");
-      });
-    let point = `http://${
-      __DEV__
-        ? Platform.OS === "ios"
-          ? "localhost"
-          : "172.31.99.105"
-        : production.url
-    }:3001/api/users`;
-    axios
-      .get(point)
-      .then(response => {
-        this.setState({
-          users: response.data
-        });
-      })
-      .catch(err => console.warn(err));
-  }
 
   render() {
     return (
@@ -80,36 +44,43 @@ export default class HomeScreen extends React.Component {
             <Text style={styles.title}>ABOUT</Text>
           </View>
 
-          <View>
-            <Text>
-              Spicy jalapeno bacon ipsum dolor amet sunt meatball boudin do
-              deserunt. Qui in tail pancetta, turkey porchetta short loin
-              picanha. Velit jerky occaecat turkey landjaeger kevin dolor
-              consectetur ham hock cow sint dolore fatback. Pancetta buffalo
-              occaecat boudin ut burgdoggen sunt cow non dolore in lorem esse
-              nulla.</Text>
-              
-              <View>
-                <Image source={require("../assets/images/robot-dev.png")} style={styles.image}/>
-              </View>
-              <Text>
-              Sed shoulder rump brisket meatball eiusmod culpa. Non
-              pancetta pariatur, frankfurter culpa ea excepteur buffalo
-              hamburger ham hock dolore aute aliquip nulla. Non corned beef
-              alcatra, ullamco biltong chuck porchetta burgdoggen ground round
-              deserunt boudin. Ut tempor anim, hamburger pancetta cow quis
-              dolore adipisicing ipsum. Shoulder tri-tip mollit ut enim nostrud.
-              Nisi jowl pastrami pig, voluptate culpa dolore. Swine t-bone pork
-              chicken tongue pork chop landjaeger. Quis jowl aliqua ribeye
-              chicken ut, officia kielbasa proident excepteur ham hock et. Bacon
-              in jowl id tenderloin, adipisicing minim cupim aute quis pariatur.
-              Doner pork loin et flank. Bresaola sint cow, officia pastrami
-              biltong reprehenderit incididunt. Capicola excepteur laborum filet
-              mignon nisi corned beef meatball do. Reprehenderit salami corned
-              beef, ad hamburger pig bacon enim cupidatat dolore mollit sausage
-              culpa. Ad salami t-bone kevin. Turkey frankfurter in pork chop
-              tongue, buffalo qui tail ham dolore tri-tip porchetta brisket
-              cupidatat kielbasa.
+          <View contentContainerStyle={styles.container}>
+            <Text style={styles.paragraph}>
+              Brain Train was developed by a team of highly skilled googlers
+              looking to provide people with a way to keep their minds sharp
+              while playing simple, entertaining games ranging from speed
+              challenges to mind boggling riddles. Consistent users will notice
+              the improvement to their core cognitive abilities through their
+              steady mindfulness, better sleep, and improved mental focus.
+            </Text>
+
+            <View style={styles.pic}>
+              <Image
+                source={require("../assets/images/robot-dev.png")}
+                style={styles.dev}
+              />
+            </View>
+
+            <Text style={styles.paragraph}>
+              After you login, you will be directed to the Home page where you
+              will first find the daily challenge which will provide you with
+              the problem of the day and could be any of the games available.
+              Below the daily challenge you will find the rest of the training
+              options within the application. These options include (but are not
+              limited to) speed games, memory games, multiple choice trivia and
+              riddles, and arithmetic!
+            </Text>
+
+            <View style={styles.pic}>
+              <Image
+                source={require("../assets/images/robot-prod.png")}
+                style={styles.prod}
+              />
+            </View>
+
+            <Text style={styles.paragraph}>
+              Begin by creating a new username and password and then you're all
+              set to go!
             </Text>
           </View>
 
@@ -121,7 +92,7 @@ export default class HomeScreen extends React.Component {
                 backgroundColor: "#F9D49B",
                 width: width - 280,
                 height: height - height / 0.8,
-                marginTop: 10,
+                marginTop: (height / height) * 50,
                 borderColor: "#FD9B03",
                 borderWidth: 3,
                 borderRadius: 5
@@ -146,22 +117,58 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
-    width: 370,
-    height: 200,
+    width: width - 65,
+    height: height - height / 1.4,
     transform: [{ rotate: "-2deg" }],
-    marginRight: 12,
     marginTop: (width / width) * 50
   },
   container: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center"
   },
   contentContainer: {
     alignItems: "center",
+    justifyContent: "center",
     paddingBottom: 110
   },
   title: {
+    fontFamily: "CarterOne",
     fontSize: 72,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "green",
+    textShadowColor: "#59A758",
+    textShadowOffset: { width: -2, height: 3 },
+    textShadowRadius: 6
+  },
+  pic: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  dev: {
+    width: width / 1.5,
+    height: (height / height) * 350,
+    borderColor: "#F92619",
+    borderWidth: 5,
+    borderRadius: 10,
+    marginVertical: (height / height) * 25
+  },
+  prod: {
+    width: width / 1.5,
+    height: (height / height) * 350,
+    borderColor: "#1927F9",
+    borderWidth: 5,
+    borderRadius: 10,
+    marginVertical: (height / height) * 25
+  },
+  paragraph: {
+    fontFamily: "CarterOne",
+    fontSize: 20,
+    marginHorizontal: (width / width) * 32,
+    marginVertical: (height / height) * 25,
+    justifyContent: "center",
+    lineHeight: 35,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });

@@ -1,0 +1,1 @@
+SELECT uid FROM users WHERE username = $1 AND password = $2 LIMIT 1;
