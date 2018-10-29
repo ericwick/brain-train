@@ -63,6 +63,7 @@ class LoginScreen extends Component {
     if (this.props.currentUser > 0) {
       AsyncStorage.setItem("user", JSON.stringify(credentials))
         .then(() => {
+          console.warn(`${this.state.username} registered to device`);
           this.props.navigation.navigate("Home");
         })
         .catch(() => {
@@ -74,6 +75,10 @@ class LoginScreen extends Component {
   }
 
   handleRegister() {
+    var credentials = {
+      username: this.state.username,
+      password: this.state.password
+    };
     axios
       .post(
         `http://${
@@ -82,10 +87,19 @@ class LoginScreen extends Component {
               ? "localhost"
               : "172.31.99.105"
             : production.url
-        }:3001/api/user`
+        }:3001/api/user`,
+        credentials
       )
-      .then(response => console.log(response.data))
-      .catch(err => `Error in handleRegister() - ${err}`);
+      .then(response => {
+        // If the user successfully registers, log them in and the login function will redirect to the Home page
+        this.handleLogin();
+      })
+      .catch(err => {
+        if (err.response.status == 409) {
+          console.warn("A user already exists by this username");
+        }
+        console.log(`Error in handleRegister() - ${err.response.status}`);
+      });
     return;
   }
 
@@ -94,7 +108,7 @@ class LoginScreen extends Component {
       return (
         <TouchableOpacity>
           <Button
-            onPress={() => this.props.navigation.navigate("Eric")}
+            onPress={() => this.handleLogin()}
             // onPress={() => this.handleLogin()}
             title="LOGIN"
             buttonStyle={{
@@ -165,7 +179,11 @@ class LoginScreen extends Component {
               this.setState({ renderLogin: !this.state.renderLogin })
             }
           >
-            <Text style={styles.text}>Register for a new account?</Text>
+            <Text style={[styles.text, { marginBottom: 10 }]}>
+              {this.state.renderLogin
+                ? "Register for a new account?"
+                : "Go back to login page"}
+            </Text>
           </TouchableOpacity>
 
           <TouchableHighlight>
@@ -189,19 +207,23 @@ class LoginScreen extends Component {
               autoCapitalize="none"
               underlineColorAndroid="transparent"
               placeholderTextColor="#84802C"
+              secureTextEntry={true}
             />
           </TouchableHighlight>
 
           {this.renderButton()}
 
-          <View contentContainerStyle={styles.container}>
-            <Text style={styles.text}>Forgot your username or password?</Text>
-            <TouchableOpacity
-              onPress={() => console.warn("You've been reminded")}
-            >
-              <Text style={styles.text}>Yep, remind me.</Text>
-            </TouchableOpacity>
-          </View>
+          {!this.state.password.length ? (
+            // Render the clickable phrase only if the password field is empty?
+            <View contentContainerStyle={styles.container}>
+              <TouchableOpacity
+                onPress={() => console.warn("You've been reminded")}
+              >
+                <Text style={styles.text}>What was my password again?</Text>
+              </TouchableOpacity>
+            </View>
+          ) : null}
+
           <View style={styles.linebreak} />
 
           <TouchableOpacity>

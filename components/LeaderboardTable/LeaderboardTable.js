@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, ScrollView, Platform} from "react-native";
+import { Text, View, StyleSheet, ScrollView, Platform } from "react-native";
 import {
   Table,
   TableWrapper,
@@ -21,7 +21,15 @@ export default class LeaderboardTable extends React.Component {
 
   componentDidMount() {
     axios
-      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
+      .get(
+        `http://${
+          __DEV__
+            ? Platform.OS === "ios"
+              ? "localhost"
+              : "172.31.99.105"
+            : production.url
+        }:3001/api/users`
+      )
       .then(response => {
         this.setState({
           users: response.data
@@ -29,7 +37,15 @@ export default class LeaderboardTable extends React.Component {
       })
       .catch(err => console.warn(err));
     axios
-      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/stats`)
+      .get(
+        `http://${
+          __DEV__
+            ? Platform.OS === "ios"
+              ? "localhost"
+              : "172.31.99.105"
+            : production.url
+        }:3001/api/stats`
+      )
       .then(response => {
         this.setState({
           stats: response.data
@@ -47,7 +63,7 @@ export default class LeaderboardTable extends React.Component {
 
     return (
       <View contentContainerStyle={styles.container}>
-        <ScrollView style={styles.content}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
           <Table
             style={styles.table}
             borderStyle={{ borderWidth: 2, borderColor: "#FF7F7B" }}
@@ -76,8 +92,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15
   },
-  content: {
-    flex: 1
+  contentContainer: {
+    alignItems: "center",
+    paddingBottom: 15
   },
   table: {
     width: 320,
