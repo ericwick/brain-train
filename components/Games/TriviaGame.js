@@ -238,7 +238,7 @@ class TriviaGame extends Component {
     const resultsForDB = {
       score: this.state.score,
       uid: this.props.currentUser,
-      gid: 34,
+      gid: 38,
       startTime: this.state.startTime
     }
       
