@@ -170,6 +170,11 @@ class LoginScreen extends Component {
             onPress={() => this.setState({renderLogin: !this.state.renderLogin}) }>
             <Text style={[styles.text, {marginBottom: 10}]}>{this.state.renderLogin ? "Register for a new account?" : "Go back to login page"}</Text>
           </TouchableOpacity>
+          
+          <TouchableOpacity
+            onPress={() => this.setState({renderLogin: !this.state.renderLogin}) }>
+            <Text style={[styles.text, {marginBottom: 10}]}>{this.state.renderLogin ? "Forgot Password" : "Go back to login page"}</Text>
+          </TouchableOpacity>
 
           <TouchableHighlight>
             <TextInput

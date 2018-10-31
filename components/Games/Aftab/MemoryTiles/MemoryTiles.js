@@ -411,7 +411,7 @@ export default class TapTile extends Component {
         <View style={styles.container}>
           {gameStarted && !gameOver ? (
             <CountdownTimer
-              initialTimeRemaining={8000}
+              initialTimeRemaining={10000}
               interval={60}
               completeCallback={() => this.gameoverResetState()}
               tickCallback={timeRemaining =>
@@ -425,7 +425,7 @@ export default class TapTile extends Component {
             <Text
               style={[
                 {
-                  fontSize: 42,
+                  fontSize: 33,
                   color: "#fff",
                   fontWeight: "700",
                   shadowColor: "#000",
@@ -442,7 +442,7 @@ export default class TapTile extends Component {
         
               {this.state.finished || this.state.gameOver
                 ? this.state.timeRemaining
-                : "Ten Seconds"}
+                : "You Have 10 Seconds\n Press 1 to Start" }
                 
             </Text>
          

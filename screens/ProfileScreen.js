@@ -22,11 +22,11 @@ import AppNavigator from "../navigation/AppNavigator";
 import { Button, Avatar } from "react-native-elements";
 import Nav from "../components/NavBar/Nav";
 import { AsyncStorage } from "react-native";
-
+import { connect} from 'react-redux'; 
 import { MonoText } from "../components/StyledText";
+import {getUsers} from '../redux/reducer'
 
-
-export default class ProfileScreen extends Component {
+export class ProfileScreen extends Component {
   constructor() {
     super();
     this.state = {
@@ -68,6 +68,14 @@ export default class ProfileScreen extends Component {
         });
       })
       .catch(err => console.warn(err));
+      axios
+      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/stats/${this.props.currentUser}`)
+      .then(response => {
+        this.setState({
+          data: response.data
+        });
+      })
+      .catch(err => console.warn(err));
   }
 
   render() {
@@ -77,8 +85,20 @@ export default class ProfileScreen extends Component {
       if (this.state.users.length && (this.state.users[i].username === this.state.user.username)) {
         currentUser = this.state.users[i];
         console.warn(this.state.user.username, "USER USERNAME");
+        console.log(currentUser); 
+        console.log('STATS', this.state.data);
       }
     }
+const table = this.state.data.map((e, i , arr) => {
+  return [e.game_name, e.score]
+  
+})
+let sanitizedInput = table.filter((e, i, self) => (i === self.indexOf(e)));
+console.log(table);
+   const tabledata = [
+      ["gid", 234],
+      ["game1", 604],
+    ];
 
     return (
       <ImageBackground
@@ -123,8 +143,8 @@ export default class ProfileScreen extends Component {
           </TouchableOpacity>
 
           <View style={styles.linebreak} />
-
-          <Text style={styles.stats}>Best Scores</Text>
+        {/* <View style={styles.UserScoresContainer} > */}
+          <Text style={styles.stats}>Best Scores for {currentUser.username} </Text>
           <View contentContainerStyle={styles.tableContainer}>
             <Table
               style={styles.table}
@@ -139,15 +159,18 @@ export default class ProfileScreen extends Component {
                 style={styles.head}
                 textStyle={styles.textHead}
               />
-              <Rows data={this.state.tableData} textStyle={styles.text} />
+              <Rows data={sanitizedInput} textStyle={styles.text} />
             </Table>
           </View>
+        {/* </View> */}
         </ScrollView>
         <Nav navigation={this.props.navigation} />
       </ImageBackground>
     );
   }
 }
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, { getUsers})(ProfileScreen);
 
 const styles = StyleSheet.create({
   backgroundImage: {
@@ -196,8 +219,13 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 80
   },
+  UserScoresContainer: {
+    borderBottomWidth: 2,
+
+  },
   stats: {
-    fontSize: 30,
+    fontFamily: 'Skranji', 
+    fontSize: 22,
     marginBottom: 20,
     color: "#02B412",
     textShadowColor: "white",

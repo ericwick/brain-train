@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import PopupDialog, {
   DialogTitle,
   DialogButton,
@@ -7,25 +7,22 @@ import PopupDialog, {
   ScaleAnimation,
   FadeAnimation
 } from "react-native-popup-dialog";
+import { Input } from "react-native-elements";
 
 const slideAnimation = new SlideAnimation({ slideFrom: "bottom" });
 const scaleAnimation = new ScaleAnimation();
 const fadeAnimation = new FadeAnimation({ animationDuration: 150 });
 
-
 export default class EditProfile extends Component {
-
-
-  
-
-
-  
   render() {
-      return (
-        <View style={{ flex: 1 }}>
-        
-       </View>
-    )
+    return (
+      <View style={{ flex: 1 }}>
+        <TextInput
+          placeholder="INPUT WITH ICON"
+          // leftIcon={{ type: "font-awesome", name: "chevron-left" }}
+        />
+      </View>
+    );
   }
 }
 
