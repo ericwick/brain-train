@@ -1,53 +1,34 @@
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import React, { Component } from 'react';
 import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph
-  } from 'react-native-chart-kit'
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+import Echarts from 'native-echarts';
 
-export default class RadarChart extends Component {
+export default class app extends Component {
   render() {
+    const option = {
+      title: {
+          text: 'Brain Train Progress'
+      },
+      tooltip: {},
+      legend: {
+          data:['Games']
+      },
+      xAxis: {
+          data: ['Tap Tile', 'Memory Tiles', 'Trivia', 'Tap Number']
+      },
+      yAxis: {},
+      series: [{
+          name: '销量',
+          type: 'bar',
+          data: [5, 20, 36, 10]
+      }]
+    };
     return (
-        <View>
-        <Text>
-          Bezier Line Chart
-        </Text>
-        <LineChart
-          data={{
-            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-            datasets: [{
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100
-              ]
-            }]
-          }}
-          width={370} // from react-native
-          height={220}
-          chartConfig={{
-            backgroundColor: '#e26a00',
-            backgroundGradientFrom: '#ffffff',
-            backgroundGradientTo: '#ffffff',
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255, 167, 38, ${opacity})`,
-            style: {
-              borderRadius: 16
-            }
-          }}
-          bezier
-          style={{
-            marginVertical: 8,
-            borderRadius: 16
-          }}
-        />
-      </View>
-    )
+      <Echarts option={option} height={300} />
+    );
   }
 }

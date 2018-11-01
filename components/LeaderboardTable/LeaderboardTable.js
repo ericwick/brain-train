@@ -15,7 +15,7 @@ export default class LeaderboardTable extends React.Component {
     this.state = {
       users: [],
       stats: [],
-      tableHead: ["Username", "Score"]
+      tableHead: ["Username",'Game Name', "Score"]
     };
   }
 
@@ -42,7 +42,7 @@ export default class LeaderboardTable extends React.Component {
     let rank = [];
 
     this.state.stats.map((e, i, arr) => {
-      rank.push([e.username, e.score]);
+      rank.push([e.username,e.game_name, e.score]);
     });
 
     return (
@@ -57,7 +57,7 @@ export default class LeaderboardTable extends React.Component {
               style={styles.head}
               textStyle={{
                 color: "#FF7F7B",
-                paddingLeft: 45,
+                // paddingLeft: 45,
                 fontWeight: "bold"
               }}
             />
@@ -90,7 +90,9 @@ const styles = StyleSheet.create({
   text: {
     margin: 5,
     color: "#FF7F7B",
-    paddingLeft: 35,
-    fontWeight: "bold"
+    // paddingLeft: 35,
+    fontWeight: "bold", 
+    textAlign: 'left', 
+
   }
 });

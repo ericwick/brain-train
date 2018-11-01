@@ -241,7 +241,7 @@ class TriviaGame extends Component {
       .catch(err => console.log(`Error getting end time in TriviaGame: ${err}`));
     const resultsForDB = {
       id: this.props.currentUser,
-      gameId: 34,
+      gameId: 3,
       startTime: this.state.startTime
     }
       

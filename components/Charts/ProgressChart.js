@@ -15,12 +15,12 @@ export default class Progress extends Component {
             backgroundGradientFrom: '#ffffffff',
             backgroundGradientTo: '#ffffffff',
             decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 2.0) => `rgb(204, 102, 0, ${opacity})`,
+            color: (opacity = 2.0) => `rgb(255, 0, 0, ${opacity})`,
             style: {
               borderRadius: 16
             }
     };
-    const data = [.9 , 0.6, 0.8, 0.3];
+    const data = [.9 , 0.6, 0.8];
     return (
       <View>
         <Text>Progress Chart</Text>
