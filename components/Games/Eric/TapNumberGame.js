@@ -226,7 +226,7 @@ export default class TapNumberGame extends Component {
     } else if (level >= 5) {
       randomNumber = random(-39, 59);
     }
-    console.warn(usedNums);
+    // console.warn(usedNums);
     return usedNums.includes(randomNumber)
       ? this.getRandomNumber(level, usedNums)
       : randomNumber;
@@ -502,3 +502,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 20
   }
 });
+
+module.exports = {
+  isBoardEmpty
+};
