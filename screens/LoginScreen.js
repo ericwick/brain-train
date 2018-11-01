@@ -56,6 +56,7 @@ class LoginScreen extends Component {
       username: this.state.username,
       password: this.state.password
     };
+    console.log('credentials', credentials);
 
     await this.props.attemptLogin(credentials);
     console.log("this.props.currentUser", this.props.currentUser);
@@ -63,7 +64,7 @@ class LoginScreen extends Component {
     if (this.props.currentUser > 0) {
       AsyncStorage.setItem("user", JSON.stringify(credentials))
         .then(() => {
-          console.warn(`${this.state.user} registered to device`);
+          console.warn(`${this.state.username} registered to device`);
           this.props.navigation.navigate("Home");
         })
         .catch(() => {
@@ -108,8 +109,7 @@ class LoginScreen extends Component {
       return (
         <TouchableOpacity>
           <Button
-            onPress={() => this.props.navigation.navigate("Eric")}
-            // onPress={() => this.handleLogin()}
+            onPress={() => this.handleLogin()}
             title="LOGIN"
             buttonStyle={{
               backgroundColor: "#76FA4F",
