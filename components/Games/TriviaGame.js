@@ -235,13 +235,10 @@ class TriviaGame extends Component {
     const SIZE = width / 5;
     let nextquestion = this.state.cardIndex + 1;
     let questionsTotal = this.props.trivia.length;
-    let endTime;
-    axios.get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/time`)
-      .then(response => endTime = response.data[0].now)
-      .catch(err => console.log(`Error getting end time in TriviaGame: ${err}`));
     const resultsForDB = {
-      id: this.props.currentUser,
-      gameId: 34,
+      score: this.state.score,
+      uid: this.props.currentUser,
+      gid: 38,
       startTime: this.state.startTime
     }
       
@@ -249,10 +246,11 @@ class TriviaGame extends Component {
       <TouchableOpacity onPress={() => {
         // when the user presses the reset button, fetch more questions for the next round
         this.props.getTrivia("Vehicles", 10, 1);
-        resultsForDB.endTime = endTime;
-        console.log('resultsForDB', resultsForDB);
-        // Send score and stats to server, Request a new round of questions, and reset variables
-        // this.props.sendResults()
+        // Send score and stats to server and reset variables
+        const point = `http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/stats`;
+        axios.post(point, resultsForDB)
+          .then(response => null)
+          .catch(err => console.log(`Error in renderRestartGame onPress function: ${err}`));
         this.setState({ 
           score: 0,
           wrongAnswer: false,

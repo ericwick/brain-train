@@ -15,7 +15,6 @@ const {
   getUsersGameStats,
   getGameStats,
   addUser,
-  addGameSessionResults,
   editUserInfo,
   editUserAchievements,
   editUserScores,
@@ -29,6 +28,7 @@ const {
   getGamesList,
   addNewGame,
   getGAMEDATA,
+  addGameSessionResults,
   getTrivia
 } = require("./controllers/gameController");
 

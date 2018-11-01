@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     width: width - width / 6,
     height: height - height / 1.4,
     marginVertical: height / 15,
-    resizeMode: "contain",
+    // resizeMode: "contain",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
