@@ -37,7 +37,7 @@ export default class TapNumber extends Component {
                 backgroundColor: "#76FA4F",
                 width: 350,
                 height: 100,
-                marginVertical: 10,
+                marginVertical: 25,
                 borderColor: "#2BB502",
                 borderWidth: 5,
                 borderRadius: 7
@@ -84,9 +84,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   container: {
+    flex: 1,
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
+    paddingBottom: 50
   },
   scrollContainer: {
     justifyContent: "center",
@@ -94,16 +97,22 @@ const styles = StyleSheet.create({
     paddingVertical: 100
   },
   objective: {
-    color: "blue",
-    marginVertical: 15,
-    fontSize: 28,
-    fontWeight: "bold",
-    textShadowColor: "#6F95E5",
-    textShadowOffset: { width: -3, height: 3 },
-    textShadowRadius: 5
+    fontSize: 40,
+    marginVertical: 25,
+    fontFamily: "CarterOne",
+    color: "white",
+    textShadowColor: "black",
+    textShadowRadius: 12,
+    textShadowOffset: { width: -1, height: 1 }
   },
   text: {
-    marginVertical: 10
+    fontSize: 20,
+    marginVertical: 10,
+    fontFamily: "CarterOne",
+    color: "white",
+    textShadowColor: "black",
+    textShadowRadius: 10,
+    textShadowOffset: { width: 1, height: 0 }
   },
   title: {
     color: "white",
@@ -112,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 1,
     textShadowColor: "#69AB38",
-    textShadowOffset: { width: -3, height: 6 },
-    textShadowRadius: 6
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 20
   }
 });

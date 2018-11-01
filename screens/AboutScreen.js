@@ -44,6 +44,13 @@ export default class AboutScreen extends React.Component {
             <Text style={styles.title}>ABOUT</Text>
           </View>
 
+          <View>
+            <Image
+              source={require("../assets/images/railroadTracks.png")}
+              style={styles.break}
+            />
+          </View>
+
           <View contentContainerStyle={styles.container}>
             <Text style={styles.paragraph}>
               Brain Train was developed by a team of highly skilled googlers
@@ -56,7 +63,7 @@ export default class AboutScreen extends React.Component {
 
             <View style={styles.pic}>
               <Image
-                source={require("../assets/images/robot-dev.png")}
+                source={require("../assets/images/TapGame2.jpeg")}
                 style={styles.dev}
               />
             </View>
@@ -73,15 +80,26 @@ export default class AboutScreen extends React.Component {
 
             <View style={styles.pic}>
               <Image
-                source={require("../assets/images/robot-prod.png")}
+                source={require("../assets/images/TapGame4.jpeg")}
                 style={styles.prod}
               />
             </View>
-
-            <Text style={styles.paragraph}>
-              Begin by creating a new username and password and then you're all
-              set to go!
-            </Text>
+          </View>
+          <View>
+            <Image
+              source={require("../assets/images/railroadTracks.png")}
+              style={styles.break}
+            />
+          </View>
+          <Text style={styles.started}>
+            BEGIN BY CREATING A NEW USERNAME AND PASSWORD AND THEN YOU'RE ALL
+            SET TO GO!
+          </Text>
+          <View>
+            <Image
+              source={require("../assets/images/railroadTracks.png")}
+              style={styles.break}
+            />
           </View>
 
           <TouchableOpacity>
@@ -92,7 +110,7 @@ export default class AboutScreen extends React.Component {
                 backgroundColor: "#F9D49B",
                 width: width - 280,
                 height: height - height / 0.8,
-                marginTop: (height / height) * 50,
+                marginTop: (height / height) * 100,
                 borderColor: "#FD9B03",
                 borderWidth: 3,
                 borderRadius: 5
@@ -123,7 +141,7 @@ const styles = StyleSheet.create({
     marginTop: (width / width) * 50
   },
   container: {
-    flex: 1,
+    // flex: 1,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -132,43 +150,68 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingBottom: 110
   },
+  break: {
+    width: width - 100,
+    height: height / 40,
+    marginBottom: 10
+  },
   title: {
     fontFamily: "CarterOne",
     fontSize: 72,
     fontWeight: "bold",
-    color: "green",
+    color: "#12A855",
     textShadowColor: "#59A758",
     textShadowOffset: { width: -2, height: 3 },
-    textShadowRadius: 6
+    textShadowRadius: 6,
+    marginBottom: 25
   },
   pic: {
     alignItems: "center",
     justifyContent: "center"
   },
   dev: {
-    width: width / 1.5,
-    height: (height / height) * 350,
+    resizeMode: "cover",
+    width: width - width / 3,
+    height: (height / height) * 510,
     borderColor: "#F92619",
     borderWidth: 5,
     borderRadius: 10,
     marginVertical: (height / height) * 25
   },
   prod: {
-    width: width / 1.5,
-    height: (height / height) * 350,
+    resizeMode: "cover",
+    width: width - width / 3,
+    height: (height / height) * 510,
     borderColor: "#1927F9",
     borderWidth: 5,
     borderRadius: 10,
-    marginVertical: (height / height) * 25
+    marginTop: (height / height) * 25,
+    marginBottom: (height / height) * 100
+  },
+  started: {
+    alignItems: "center",
+    fontFamily: "CarterOne",
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "white",
+    textShadowColor: "black",
+    lineHeight: 50,
+    textShadowRadius: 10,
+    textShadowOffset: { width: 2, height: 2 },
+    marginHorizontal: (width / width) * 25,
+    marginVertical: (height / height) * 45
   },
   paragraph: {
     fontFamily: "CarterOne",
     fontSize: 20,
-    marginHorizontal: (width / width) * 32,
+    color: "white",
+    textShadowColor: "black",
+    textShadowRadius: 10,
+    textShadowOffset: { width: 1, height: 1 },
+    marginHorizontal: (width / width) * 25,
     marginVertical: (height / height) * 25,
     justifyContent: "center",
     lineHeight: 35,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: "center"
   }
 });

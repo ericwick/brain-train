@@ -3,6 +3,7 @@ import {
   Image,
   ImageBackground,
   Platform,
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -25,6 +26,7 @@ import { AsyncStorage } from "react-native";
 
 import { MonoText } from "../components/StyledText";
 
+const { height, width } = Dimensions.get("window");
 
 export default class ProfileScreen extends Component {
   constructor() {
@@ -51,8 +53,8 @@ export default class ProfileScreen extends Component {
   async componentDidMount() {
     var currentUser = await AsyncStorage.getItem("user")
       .then(value => {
-        console.log('value', value);
-        console.log('JSON.parse(value)', JSON.parse(value));
+        console.log("value", value);
+        console.log("JSON.parse(value)", JSON.parse(value));
         this.setState({
           user: JSON.parse(value)
         });
@@ -61,7 +63,15 @@ export default class ProfileScreen extends Component {
         console.warn("Error loading current user");
       });
     axios
-      .get(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/users`)
+      .get(
+        `http://${
+          __DEV__
+            ? Platform.OS === "ios"
+              ? "localhost"
+              : "172.31.99.105"
+            : production.url
+        }:3001/api/users`
+      )
       .then(response => {
         this.setState({
           users: response.data
@@ -74,7 +84,10 @@ export default class ProfileScreen extends Component {
     var currentUser = [];
 
     for (var i = 0; i < this.state.users.length; i++) {
-      if (this.state.users.length && (this.state.users[i].username === this.state.user.username)) {
+      if (
+        this.state.users.length &&
+        this.state.users[i].username === this.state.user.username
+      ) {
         currentUser = this.state.users[i];
         console.warn(this.state.user.username, "USER USERNAME");
       }
@@ -89,40 +102,37 @@ export default class ProfileScreen extends Component {
           <Text style={styles.profileTitle}>{currentUser.username}</Text>
 
           <Image
-            source={{ uri: currentUser.profile_pic }}
+            // source={{ uri: currentUser.profile_pic }}
+            source={require("../assets/images/avatarIcon.png")}
             style={styles.image}
           />
-
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("EditProfile")}
-          >
-          {/* <Text> Edit Profile </Text> */}
+          <View style={styles.icons}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("EditProfile")}
+            >
+              <Image
+                style={styles.edit}
+                source={require("../assets/images/edit.png")}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("UserStats")}
+            >
+              <Image
+                style={styles.settings}
+                source={{
+                  uri:
+                    "https://cdn3.iconfinder.com/data/icons/e-commerce-8/91/stats-512.png"
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View>
             <Image
-              style={styles.settings}
-              source={require("../assets/images/edit.png")}
+              source={require("../assets/images/railroadTracks.png")}
+              style={styles.linebreak}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("UserStats")}
-          >
-          {/* <Text> Edit Profile </Text> */}
-            <Image
-              style={styles.settings}
-              source={{
-                uri: "https://cdn3.iconfinder.com/data/icons/e-commerce-8/91/stats-512.png"
-              }}
-            />
-          </TouchableOpacity>
-          
-          
-
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Achievements")}
-          >
-            <Text style={styles.achieve}>Achievements</Text>
-          </TouchableOpacity>
-
-          <View style={styles.linebreak} />
+          </View>
 
           <Text style={styles.stats}>Best Scores</Text>
           <View contentContainerStyle={styles.tableContainer}>
@@ -141,6 +151,84 @@ export default class ProfileScreen extends Component {
               />
               <Rows data={this.state.tableData} textStyle={styles.text} />
             </Table>
+          </View>
+
+          <View>
+            <Image
+              source={require("../assets/images/railroadTracks.png")}
+              style={styles.linebreak}
+            />
+          </View>
+
+          <Text style={styles.achieve}>Achievements</Text>
+
+          <View style={styles.awards}>
+            <View style={styles.achieveIcon}>
+              <Image
+                source={require("../assets/images/hourglass.png")}
+                style={styles.pic}
+              />
+            </View>
+            <View style={styles.awards}>
+              <Text style={styles.achievement}>Brain Lather</Text>
+              <Text style={styles.description}>Two Total Hours Played</Text>
+            </View>
+          </View>
+
+          <View style={styles.awards}>
+            <View style={styles.perfectIcon}>
+              <Image
+                source={require("../assets/images/perfectScoreIcon.png")}
+                style={styles.pic}
+              />
+            </View>
+            <View style={styles.awards}>
+              <Text style={styles.achievement}>Perfect Score</Text>
+              <Text style={styles.description}>Zero Errors in One Round</Text>
+            </View>
+          </View>
+
+          <View style={styles.awards}>
+            <View style={styles.sixFigures}>
+              <Image
+                source={require("../assets/images/medal.png")}
+                style={styles.pic}
+              />
+            </View>
+            <View style={styles.awards}>
+              <Text style={styles.achievement}>Six Figures</Text>
+              <Text style={styles.description}>Reach 100,000 Total Points</Text>
+            </View>
+          </View>
+
+          <View style={styles.awards}>
+            <View style={styles.million}>
+              <Image
+                source={require("../assets/images/trophy.png")}
+                style={styles.pic}
+              />
+            </View>
+            <View style={styles.awards}>
+              <Text style={styles.achievement}>Two Commas</Text>
+              <Text style={styles.description}>
+                Reach 1,000,000 Total Points
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.awards}>
+            <View style={styles.gamer}>
+              <Image
+                source={require("../assets/images/joystick.png")}
+                style={styles.pic}
+              />
+            </View>
+            <View style={styles.awards}>
+              <Text style={styles.achievement}>Gamer</Text>
+              <Text style={styles.description}>
+                Play Every Brain Train Game
+              </Text>
+            </View>
           </View>
         </ScrollView>
         <Nav navigation={this.props.navigation} />
@@ -161,56 +249,159 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   profileTitle: {
-    fontSize: 45,
+    fontSize: 60,
     textAlign: "center",
-    marginTop: 20,
-    marginBottom: 20,
-    color: "#5D02AD",
-    textShadowColor: "white",
-    textShadowOffset: { width: 1.5, height: 2 },
-    textShadowRadius: 2.8,
-    fontWeight: "bold"
+    marginTop: height - height * 0.97,
+    marginBottom: width * 0.05,
+    textAlign: "center",
+    fontFamily: "CarterOne",
+    color: "white",
+    textShadowColor: "black",
+    textShadowRadius: 8,
+    textShadowOffset: { width: -1, height: 1 }
+  },
+  description: {
+    fontSize: 12,
+    fontFamily: "CarterOne",
+    color: "white",
+    textShadowColor: "black",
+    textShadowRadius: 8,
+    textShadowOffset: { width: -1, height: 1 }
   },
   achieve: {
-    fontSize: 30,
-    marginTop: 50,
-    marginBottom: 20,
+    fontSize: 45,
+    marginTop: width * 0.1,
+    marginBottom: width * 0.05,
     textAlign: "center",
-    color: "#FF7F7B",
-    textShadowColor: "#AAAD02",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5
+    fontFamily: "CarterOne",
+    color: "white",
+    textShadowColor: "black",
+    textShadowRadius: 8,
+    textShadowOffset: { width: -1, height: 1 }
+  },
+  awards: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: width * 0.05
+  },
+  achievement: {
+    fontSize: 30,
+    fontFamily: "CarterOne",
+    color: "white",
+    paddingHorizontal: 5,
+    textShadowColor: "black",
+    textShadowRadius: 8,
+    textShadowOffset: { width: -1, height: 1 }
+  },
+  pic: {
+    width: width * 0.15,
+    height: width * 0.15
+  },
+  achieveIcon: {
+    width: width * 0.25,
+    height: width * 0.25,
+    backgroundColor: "#DFABF8",
+    borderColor: "#9703DF",
+    borderWidth: 7,
+    borderRadius: 50,
+    paddingTop: width * 0.028,
+    paddingLeft: width * 0.033,
+    marginLeft: width * 0.05
+  },
+  perfectIcon: {
+    width: width * 0.25,
+    height: width * 0.25,
+    backgroundColor: "#8EE4FB",
+    borderColor: "#036EDF",
+    borderWidth: 7,
+    borderRadius: 50,
+    paddingTop: width * 0.037,
+    paddingLeft: width * 0.03,
+    marginLeft: width * 0.05
+  },
+  sixFigures: {
+    width: width * 0.25,
+    height: width * 0.25,
+    backgroundColor: "#F7B1B0",
+    borderColor: "#F70602",
+    borderWidth: 7,
+    borderRadius: 50,
+    paddingTop: width * 0.037,
+    paddingLeft: width * 0.033,
+    marginLeft: width * 0.05
+  },
+  million: {
+    width: width * 0.25,
+    height: width * 0.25,
+    backgroundColor: "#80CB6E",
+    borderColor: "#1F9902",
+    borderWidth: 7,
+    borderRadius: 50,
+    paddingTop: width * 0.037,
+    paddingLeft: width * 0.035,
+    marginLeft: width * 0.05
+  },
+  gamer: {
+    width: width * 0.25,
+    height: width * 0.25,
+    backgroundColor: "#F5C06F",
+    borderColor: "#F0960C",
+    borderWidth: 7,
+    borderRadius: 50,
+    paddingTop: width * 0.025,
+    paddingLeft: width * 0.035,
+    marginLeft: width * 0.05
   },
   linebreak: {
-    width: 280,
-    borderBottomColor: "red",
-    borderBottomWidth: 2,
-    marginHorizontal: 20,
-    marginTop: 40,
-    marginBottom: 50
+    width: width - 100,
+    height: height / 40
   },
   image: {
-    width: 150,
-    height: 150,
-    marginTop: 20,
+    width: width - width / 3,
+    height: width - width / 3,
+    marginTop: height - height * 0.97,
     borderWidth: 0,
-    borderRadius: 80
+    borderRadius: 200,
+    resizeMode: "contain"
   },
   stats: {
-    fontSize: 30,
-    marginBottom: 20,
-    color: "#02B412",
-    textShadowColor: "white",
-    textShadowOffset: { width: 1, height: 1.4 },
-    textShadowRadius: 1
-  },
-  settingsContainer:{
-
+    fontSize: 45,
+    marginTop: width * 0.1,
+    marginBottom: width * 0.05,
+    textAlign: "center",
+    fontFamily: "CarterOne",
+    color: "white",
+    textShadowColor: "black",
+    textShadowRadius: 8,
+    textShadowOffset: { width: -1, height: 1 }
   },
   settings: {
-    width: 40,
-    height: 40,
-    marginTop: 15
+    width: width - width * 0.8,
+    height: width - width * 0.8,
+    marginTop: 15,
+    marginBottom: width * 0.1
+  },
+  edit: {
+    width: width - width * 0.9,
+    height: width - width * 0.9,
+    marginTop: width * 0.1,
+    marginRight: width * 0.25
+  },
+  editProfileOne: {
+    fontSize: 18,
+    marginRight: width - width * 1.1
+  },
+  editProfileTwo: {
+    fontSize: 18,
+    marginRight: width * 0.1
+  },
+  goToStats: {
+    fontSize: 18,
+    marginTop: height - height * 1.02,
+    marginLeft: width * 0.03
   },
   tableContainer: {
     flex: 1,
@@ -221,7 +412,8 @@ const styles = StyleSheet.create({
   table: {
     width: 320,
     borderWidth: 3,
-    backgroundColor: "#FCE1E0"
+    backgroundColor: "#FCE1E0",
+    marginBottom: width * 0.1
   },
   head: {
     height: 70,
@@ -238,5 +430,9 @@ const styles = StyleSheet.create({
     color: "#0151FC",
     paddingLeft: 30,
     fontWeight: "bold"
+  },
+  icons: {
+    flex: 2,
+    flexDirection: "row"
   }
 });
