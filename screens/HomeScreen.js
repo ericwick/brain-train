@@ -85,9 +85,21 @@ export default class HomeScreen extends React.Component {
             />
           </View>
 
+          <View>
+            <Image
+              source={require("../assets/images/railroadTracks.png")}
+              style={styles.linebreak}
+            />
+          </View>
+
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Eric")}
-            style={{ flex: 2, alignItems: "center", justifyContent: "center" }}
+            style={{
+              flex: 2,
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: width * 0.1
+            }}
           >
             <ImageBackground
               source={require("../assets/images/Brain.jpg")}
@@ -96,6 +108,13 @@ export default class HomeScreen extends React.Component {
               <Text style={styles.challenge}>Daily Challenge</Text>
             </ImageBackground>
           </TouchableOpacity>
+
+          <View>
+            <Image
+              source={require("../assets/images/railroadTracks.png")}
+              style={styles.linebreak}
+            />
+          </View>
 
           <View style={styles.container}>
             <Text style={styles.gamesTitle}>GAMES </Text>
@@ -135,7 +154,7 @@ export default class HomeScreen extends React.Component {
                 textStyle={styles.fourthText}
               />
             </View>
-            <View>
+            {/* <View>
               <Button
                 title="SPEED"
                 onPress={() => this.props.navigation.navigate("Home")}
@@ -150,7 +169,7 @@ export default class HomeScreen extends React.Component {
                 buttonStyle={styles.sixthButton}
                 textStyle={styles.sixthText}
               />
-            </View>
+            </View> */}
           </View>
         </ScrollView>
         <Nav navigation={this.props.navigation} />
@@ -166,10 +185,10 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: "contain",
     width: width - 65,
-    height: height - height / 1.4,
+    height: height - height / 1.45,
     transform: [{ rotate: "-2deg" }],
-    marginRight: 12,
-    marginTop: 55
+    marginRight: width * 0.05,
+    marginVertical: width * 0.1
   },
   container: {
     flex: 1,
@@ -177,7 +196,11 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     alignItems: "center",
-    paddingBottom: 110
+    paddingBottom: 140
+  },
+  linebreak: {
+    width: width - 75,
+    height: height / 40
   },
   homeTitle: {
     fontSize: 52,
@@ -193,8 +216,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width - width / 6,
     height: height - height / 1.4,
-    marginVertical: height / 15,
-    resizeMode: "contain",
+    marginTop: height / 10,
+    marginBottom: height / 20,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
@@ -203,14 +226,12 @@ const styles = StyleSheet.create({
   },
   challenge: {
     fontSize: 35,
+    fontFamily: "CarterOne",
     color: "white",
     letterSpacing: 1,
     textShadowColor: "black",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-    fontWeight: "bold",
-    alignItems: "center",
-    justifyContent: "center"
+    textShadowRadius: 8,
+    textShadowOffset: { width: -1, height: 1 }
   },
   firstButton: {
     width: 300,
@@ -243,9 +264,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 10
-  },
-  content: {
-    // alignItems: "center",
   },
   sixthButton: {
     width: 300,
@@ -350,15 +368,15 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   gamesTitle: {
-    fontSize: 55,
+    fontSize: 68,
     textAlign: "center",
     marginTop: 50,
     marginBottom: 15,
-    color: "#FD9B03",
-    textShadowColor: "#F5D18C",
-    textShadowOffset: { width: 1.5, height: 2 },
-    textShadowRadius: 3,
-    fontWeight: "bold"
+    fontFamily: "CarterOne",
+    color: "white",
+    textShadowColor: "black",
+    textShadowRadius: 8,
+    textShadowOffset: { width: -1, height: 1 }
   },
   buttonText: {
     fontSize: 15,

@@ -502,7 +502,3 @@ const styles = StyleSheet.create({
     textShadowRadius: 20
   }
 });
-
-module.exports = {
-  isBoardEmpty
-};

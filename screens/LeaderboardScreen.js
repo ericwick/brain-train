@@ -2,6 +2,7 @@ import React from "react";
 import {
   ImageBackground,
   Platform,
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,6 +16,8 @@ import { ExpoLinksView } from "@expo/samples";
 import LeaderboardTable from "../components/LeaderboardTable/LeaderboardTable";
 import AppNavigator from "../navigation/AppNavigator";
 import Nav from "../components/NavBar/Nav";
+
+const { width, height } = Dimensions.get("window");
 
 export default class LeaderboardScreen extends React.Component {
   static navigationOptions = {
@@ -59,23 +62,25 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 45,
     textAlign: "center",
-    marginTop: 60,
-    marginBottom: 20,
-    color: "#FC9902",
-    textShadowColor: "white",
-    textShadowOffset: { width: 1.5, height: 2 },
-    textShadowRadius: 2.8,
-    fontWeight: "bold"
+    marginTop: width * 0.3,
+    marginBottom: width * 0.04,
+    fontFamily: "CarterOne",
+    color: "white",
+    letterSpacing: 1,
+    textShadowColor: "black",
+    textShadowRadius: 5,
+    textShadowOffset: { width: -2, height: 2 }
   },
   leaderboardTitle: {
     fontSize: 25,
     textAlign: "center",
     marginTop: 5,
     marginBottom: 40,
-    color: "#0FB801",
-    textShadowColor: "white",
-    textShadowOffset: { width: 1, height: 1.2 },
-    textShadowRadius: 2.2,
-    fontWeight: "bold"
+    fontFamily: "CarterOne",
+    color: "white",
+    letterSpacing: 1,
+    textShadowColor: "black",
+    textShadowRadius: 8,
+    textShadowOffset: { width: -1, height: 1 }
   }
 });

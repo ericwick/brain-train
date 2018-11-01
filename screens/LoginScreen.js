@@ -63,7 +63,7 @@ class LoginScreen extends Component {
     if (this.props.currentUser > 0) {
       AsyncStorage.setItem("user", JSON.stringify(credentials))
         .then(() => {
-          console.warn(`${this.state.user} registered to device`);
+          // console.warn(`${this.state.user} registered to device`);
           this.props.navigation.navigate("Home");
         })
         .catch(() => {
@@ -108,7 +108,7 @@ class LoginScreen extends Component {
       return (
         <TouchableOpacity>
           <Button
-            onPress={() => this.props.navigation.navigate("Eric")}
+            onPress={() => this.props.navigation.navigate("Home")}
             // onPress={() => this.handleLogin()}
             title="LOGIN"
             buttonStyle={{
