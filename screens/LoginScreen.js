@@ -41,10 +41,8 @@ class LoginScreen extends Component {
   };
 
   async componentDidMount() {
-    // on mount, pull up stored user and put them on state if it exists
     var userOnDevice = await AsyncStorage.getItem("user");
     var userOnDeviceParsed = JSON.parse(userOnDevice);
-    // if there is no "user" in storage, the parsed users will be null. Set it to an empty array
     if (!userOnDeviceParsed) {
       userOnDeviceParsed = [];
     } else {
@@ -60,13 +58,12 @@ class LoginScreen extends Component {
     };
 
     await this.props.attemptLogin(credentials);
-    console.log('this.props.currentUser', this.props.currentUser);
+    console.log("this.props.currentUser", this.props.currentUser);
 
     if (this.props.currentUser > 0) {
       AsyncStorage.setItem("user", JSON.stringify(credentials))
         .then(() => {
-          // User has logged in successfully
-          console.warn(`User "${this.state.username}" registered to device`);
+          console.warn(`${this.state.user} registered to device`);
           this.props.navigation.navigate("Home");
         })
         .catch(() => {
@@ -82,17 +79,27 @@ class LoginScreen extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    axios.post(`http://${__DEV__ ? (Platform.OS === 'ios' ? 'localhost' : '172.31.99.105') : production.url}:3001/api/user`, credentials)
-    .then(response => {
-      // If the user successfully registers, log them in and the login function will redirect to the Home page
-      this.handleLogin();
-    })
-    .catch(err => {
-      if(err.response.status == 409){
-        console.warn('A user already exists by this username');
-      }
-      console.log(`Error in handleRegister() - ${err.response.status}`)
-    });
+    axios
+      .post(
+        `http://${
+          __DEV__
+            ? Platform.OS === "ios"
+              ? "localhost"
+              : "172.31.99.105"
+            : production.url
+        }:3001/api/user`,
+        credentials
+      )
+      .then(response => {
+        // If the user successfully registers, log them in and the login function will redirect to the Home page
+        this.handleLogin();
+      })
+      .catch(err => {
+        if (err.response.status == 409) {
+          console.warn("A user already exists by this username");
+        }
+        console.log(`Error in handleRegister() - ${err.response.status}`);
+      });
     return;
   }
 
@@ -101,7 +108,8 @@ class LoginScreen extends Component {
       return (
         <TouchableOpacity>
           <Button
-            onPress={() => this.handleLogin()}
+            onPress={() => this.props.navigation.navigate("Eric")}
+            // onPress={() => this.handleLogin()}
             title="LOGIN"
             buttonStyle={{
               backgroundColor: "#76FA4F",
@@ -125,7 +133,7 @@ class LoginScreen extends Component {
         </TouchableOpacity>
       );
     } else {
-      return(
+      return (
         <TouchableOpacity>
           <Button
             onPress={() => this.handleRegister()}
@@ -167,8 +175,15 @@ class LoginScreen extends Component {
           />
 
           <TouchableOpacity
-            onPress={() => this.setState({renderLogin: !this.state.renderLogin}) }>
-            <Text style={[styles.text, {marginBottom: 10}]}>{this.state.renderLogin ? "Register for a new account?" : "Go back to login page"}</Text>
+            onPress={() =>
+              this.setState({ renderLogin: !this.state.renderLogin })
+            }
+          >
+            <Text style={[styles.text, { marginBottom: 10 }]}>
+              {this.state.renderLogin
+                ? "Register for a new account?"
+                : "Go back to login page"}
+            </Text>
           </TouchableOpacity>
 
           <TouchableHighlight>
@@ -198,16 +213,16 @@ class LoginScreen extends Component {
 
           {this.renderButton()}
 
-          {!this.state.password.length ? 
-          // Render the clickable phrase only if the password field is empty?
-          <View contentContainerStyle={styles.container}>
-            <TouchableOpacity
-              onPress={() => console.warn("You've been reminded")}
-            >
-              <Text style={styles.text}>What was my password again?</Text>
-            </TouchableOpacity>
-          </View>
-          : null}
+          {!this.state.password.length ? (
+            // Render the clickable phrase only if the password field is empty?
+            <View contentContainerStyle={styles.container}>
+              <TouchableOpacity
+                onPress={() => console.warn("You've been reminded")}
+              >
+                <Text style={styles.text}>What was my password again?</Text>
+              </TouchableOpacity>
+            </View>
+          ) : null}
 
           <View style={styles.linebreak} />
 
@@ -304,4 +319,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps, { attemptLogin, attemptRegister })(LoginScreen);
+export default connect(
+  mapStateToProps,
+  { attemptLogin, attemptRegister }
+)(LoginScreen);

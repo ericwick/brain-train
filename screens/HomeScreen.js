@@ -84,41 +84,18 @@ export default class HomeScreen extends React.Component {
               style={styles.image}
             />
           </View>
-          <View>
-            <Button
-              title="DAILY CHALLENGE"
-              onPress={() => this.props.navigation.navigate("Home")}
-              buttonStyle={{
-                height: 250,
-                width: 300,
-                borderWidth: 5,
-                borderRadius: 5,
-                paddingTop: 18,
-                marginTop: 30,
-                marginBottom: 80,
-                backgroundColor: "#9FEFA1",
-                borderColor: "#03BD08"
-              }}
-              textStyle={{
-                color: "#03BD08",
-                fontSize: 25,
-                letterSpacing: 1.3,
-                textShadowColor: "#CFF7D0",
-                textShadowOffset: { width: 1.5, height: 2 },
-                textShadowRadius: 4,
-                fontWeight: "bold"
-              }}
-            />
-          </View>
 
-          <View style={styles.tilePic}>
-            <Tile
-              imageSrc={require("../assets/images/Brain.jpg")}
-              title="Our Mission at Brain Train is to provide...some shit goes here "
-              featured
-              caption="Some Caption Text"
-            />
-          </View>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Eric")}
+            style={{ flex: 2, alignItems: "center", justifyContent: "center" }}
+          >
+            <ImageBackground
+              source={require("../assets/images/Brain.jpg")}
+              style={styles.dailyChallenge}
+            >
+              <Text style={styles.challenge}>Daily Challenge</Text>
+            </ImageBackground>
+          </TouchableOpacity>
 
           <View style={styles.container}>
             <Text style={styles.gamesTitle}>GAMES </Text>
@@ -146,32 +123,32 @@ export default class HomeScreen extends React.Component {
               <Button
                 title="Memory Tiles "
                 onPress={() => this.props.navigation.navigate("MemoryTiles")}
-                buttonStyle={styles.secondButton}
-                textStyle={styles.secondText}
-              />
-            </View>
-            <View>
-              <Button
-                title="Eric's Games"
-                onPress={() => this.props.navigation.navigate("Eric")}
                 buttonStyle={styles.thirdButton}
                 textStyle={styles.thirdText}
               />
             </View>
             <View>
               <Button
-                title="SPEED"
-                onPress={() => this.props.navigation.navigate("Home")}
+                title="Number Tap"
+                onPress={() => this.props.navigation.navigate("Eric")}
                 buttonStyle={styles.fourthButton}
                 textStyle={styles.fourthText}
               />
             </View>
             <View>
               <Button
-                title="MATH"
+                title="SPEED"
                 onPress={() => this.props.navigation.navigate("Home")}
                 buttonStyle={styles.fifthButton}
                 textStyle={styles.fifthText}
+              />
+            </View>
+            <View>
+              <Button
+                title="MATH"
+                onPress={() => this.props.navigation.navigate("Home")}
+                buttonStyle={styles.sixthButton}
+                textStyle={styles.sixthText}
               />
             </View>
           </View>
@@ -188,12 +165,11 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
-    width: 370,
-    height: 200,
+    width: width - 65,
+    height: height - height / 1.4,
     transform: [{ rotate: "-2deg" }],
     marginRight: 12,
-    top: 0,
-    marginVertical: 50
+    marginTop: 55
   },
   container: {
     flex: 1,
@@ -213,6 +189,29 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontWeight: "bold"
   },
+  dailyChallenge: {
+    flex: 1,
+    width: width - width / 6,
+    height: height - height / 1.4,
+    marginVertical: height / 15,
+    resizeMode: "contain",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+    borderColor: "green",
+    borderWidth: 5
+  },
+  challenge: {
+    fontSize: 35,
+    color: "white",
+    letterSpacing: 1,
+    textShadowColor: "black",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    fontWeight: "bold",
+    alignItems: "center",
+    justifyContent: "center"
+  },
   firstButton: {
     width: 300,
     height: 100,
@@ -223,7 +222,7 @@ const styles = StyleSheet.create({
     borderColor: "#FC1102"
   },
   firstText: {
-    fontSize: 25,
+    fontSize: 30,
     color: "#FC1102",
     letterSpacing: 1,
     textShadowColor: "#66665F",
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
   content: {
     // alignItems: "center",
   },
-  secondButton: {
+  sixthButton: {
     width: 300,
     height: 100,
     marginVertical: 40,
@@ -256,21 +255,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "#FCCE82",
     borderColor: "#FC9D01"
-    // backgroundColor: "#FCCE82",
-    // width: 80,
-    // height:80,
-    // marginTop: 5,
-    // marginBottom: 5,
-    // marginVertical: 5,
-    // marginRight: 10,
-    // // marginVertical: 40,
-    // borderColor: "#FC9D01",
-    // borderWidth: 5,
-    // borderRadius: 5,
   },
-
-  secondText: {
-    fontSize: 25,
+  sixthText: {
+    fontSize: 30,
     color: "#FC9D01",
     letterSpacing: 1,
     textShadowColor: "#66665F",
@@ -288,7 +275,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   thirdText: {
-    fontSize: 25,
+    fontSize: 30,
     color: "#B1B102",
     letterSpacing: 1,
     textShadowColor: "#66665F",
@@ -306,7 +293,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   fourthText: {
-    fontSize: 25,
+    fontSize: 30,
     color: "#0EC203",
     letterSpacing: 1,
     textShadowColor: "#66665F",
@@ -324,7 +311,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   fifthText: {
-    fontSize: 25,
+    fontSize: 30,
     color: "#0321FA",
     letterSpacing: 1,
     textShadowColor: "#66665F",
@@ -332,13 +319,23 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontWeight: "bold"
   },
-  dailyChallenge: {
-    borderColor: "black",
-    borderWidth: 1,
-    alignItems: "center",
-    height: 75,
-    width: 250,
-    marginBottom: 20
+  secondButton: {
+    backgroundColor: "#8AD1F4",
+    width: 300,
+    height: 100,
+    marginVertical: 40,
+    borderColor: "#0283C2",
+    borderWidth: 5,
+    borderRadius: 5
+  },
+  secondText: {
+    fontSize: 30,
+    color: "#0283C2",
+    letterSpacing: 1,
+    textShadowColor: "#12719F",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    fontWeight: "bold"
   },
   missionStatement: {
     position: "relative",
@@ -353,7 +350,7 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   gamesTitle: {
-    fontSize: 42,
+    fontSize: 55,
     textAlign: "center",
     marginTop: 50,
     marginBottom: 15,
@@ -372,8 +369,4 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
     fontWeight: "bold"
   }
-  // gameIcon: {
-  //   height: 40,
-  //   width: 40
-  // }
 });
