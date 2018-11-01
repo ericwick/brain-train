@@ -38,8 +38,10 @@ VALUES(1, 1, '2018-10-15T15:20:19.109624Z', '2018-10-15T15:49:55.058379Z', 2500)
       (3, 2, '2018-10-16T08:43:30.661Z', '2018-10-16T08:44:06.020Z', 1200);
 
 INSERT INTO global_games (game_name, game_cat, game_desc)
-VALUES('Make Me a Match', 'memory', 'Flip over cards to make pairs. Get as many matches in as few moves as possible.'),
-      ('Speed Match', 'logic', 'Match the given card to its closest match. Do it fast for a time bonus.');
+VALUES('Memory Tiles', 'memory', 'Memorize the requested numbers. Press 1 to start.'),
+      ('Speed Count', 'speed', 'Start with 1 and tap successive numbers.'),
+      ('Trivia', 'trivia', 'Answer challenging questions on a variety of topics.'),
+      ('TapTiles', 'speed', 'Tap the the lowest numbers as fast as you can for a higher score');
 
 
 --leaderboards stats 

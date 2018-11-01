@@ -244,7 +244,7 @@ export default class TapTile extends Component {
             style={{
               width: width - 40,
               height: width,
-              resizeMode: "contain"
+              // resizeMode: "contain"
             }}
           >
             <View style={[styles.topContent]}>

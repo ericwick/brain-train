@@ -1,5 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  Image,
+  Platform,
+  Dimensions,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableHighlight,
+  TextInput,
+  ImageBackground
+} from "react-native";
 import PopupDialog, {
   DialogTitle,
   DialogButton,
@@ -14,7 +26,12 @@ const fadeAnimation = new FadeAnimation({ animationDuration: 150 });
 
 
 export default class EditProfile extends Component {
-
+  constructor() {
+    super();
+    this.state = {
+      username: ''
+    };
+  }
 
   
 
@@ -23,8 +40,20 @@ export default class EditProfile extends Component {
   render() {
       return (
         <View style={{ flex: 1 }}>
-        
-       </View>
+          <TouchableHighlight>
+            <TextInput
+              onChangeText={text => this.setState({ username: text })}
+              style={styles.username}
+              value={!this.state.username ? null : this.state.username}
+              placeholder="USERNAME"
+              autoCapitalize="none"
+              underlineColorAndroid="transparent"
+              placeholderTextColor="#077FDD"
+              placeholderTextFontWeight="bold"
+            />
+          </TouchableHighlight>
+          <Text>{this.state.username}</Text>
+        </View>
     )
   }
 }

@@ -154,22 +154,6 @@ export default class HomeScreen extends React.Component {
                 textStyle={styles.fourthText}
               />
             </View>
-            {/* <View>
-              <Button
-                title="SPEED"
-                onPress={() => this.props.navigation.navigate("Home")}
-                buttonStyle={styles.fifthButton}
-                textStyle={styles.fifthText}
-              />
-            </View>
-            <View>
-              <Button
-                title="MATH"
-                onPress={() => this.props.navigation.navigate("Home")}
-                buttonStyle={styles.sixthButton}
-                textStyle={styles.sixthText}
-              />
-            </View> */}
           </View>
         </ScrollView>
         <Nav navigation={this.props.navigation} />

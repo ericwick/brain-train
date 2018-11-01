@@ -15,6 +15,16 @@ const addNewGame = (req, res, next) => {
     .catch(err => console.log(`Error in add_new_game() - ${err}`));
 };
 
+const addGameSessionResults = (req, res, next) => {
+  const dbInst = req.app.get("db");
+  const { uid, gid, startTime, score } = req.body;
+  console.log('uid, gid, startTime, score', uid, gid, startTime, score);
+  dbInst
+    .add_game_result([uid, gid, startTime, score])
+    .then(response => res.status(200).send(response))
+    .catch(err => console.log(`Error in addGameSessionResults() - ${err}`));
+}
+
 const getGAMEDATA = (req, res, next) => {};
 
 //---------------------Trivia Game-------------------------------
@@ -44,6 +54,7 @@ module.exports = {
   getGamesList,
   addNewGame,
   getGAMEDATA,
+  addGameSessionResults,
   //--TriviaGame
   getTrivia
 };
