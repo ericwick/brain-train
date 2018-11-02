@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Text } from 'react-native';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Text } from "react-native";
 
 // Generic Countdown Timer UI component
 //
@@ -19,14 +19,14 @@ import { Text } from 'react-native';
 //
 export default class CountdownTimer extends Component {
   static propTypes = {
-    initialTimeRemaining:PropTypes.number.isRequired,
-    interval:PropTypes.number,
-    formatFunc:PropTypes.func,
-    tickCallback:PropTypes.func,
-    completeCallback:PropTypes.func
+    initialTimeRemaining: PropTypes.number.isRequired,
+    interval: PropTypes.number,
+    formatFunc: PropTypes.func,
+    tickCallback: PropTypes.func,
+    completeCallback: PropTypes.func
   };
 
-  defaultProps = {
+  static defaultProps = {
     interval: 1000,
     formatFunc: null,
     tickCallback: null,
@@ -64,7 +64,7 @@ export default class CountdownTimer extends Component {
     var interval = this.props.interval;
 
     // correct for small variations in actual timeout time
-    var timeRemainingInInterval = interval - dt % interval;
+    var timeRemainingInInterval = interval - (dt % interval);
     var timeout = timeRemainingInInterval;
 
     if (timeRemainingInInterval < interval / 2.0) {
@@ -123,18 +123,19 @@ export default class CountdownTimer extends Component {
         style={[
           {
             fontSize: 42,
-            color: '#fff',
-            fontWeight: '700',
-            shadowColor: '#000',
+            color: "#fff",
+            fontWeight: "700",
+            shadowColor: "#000",
             shadowOffset: {
               width: 1,
               height: 2
             },
             shadowOpacity: 0.4,
             shadowRadius: 0,
-            backgroundColor: 'transparent'
+            backgroundColor: "transparent"
           }
-        ]}>
+        ]}
+      >
         {this.getFormattedTime(timeRemaining)}
       </Text>
     );

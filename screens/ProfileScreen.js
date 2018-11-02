@@ -23,6 +23,7 @@ import AppNavigator from "../navigation/AppNavigator";
 import { Button, Avatar } from "react-native-elements";
 import Nav from "../components/NavBar/Nav";
 import { AsyncStorage } from "react-native";
+import RadarChart from "../components/Charts/RadarChart";
 
 import { MonoText } from "../components/StyledText";
 
@@ -93,6 +94,20 @@ export default class ProfileScreen extends Component {
       }
     }
 
+    const table = this.state.data.map((e, i, arr) => {
+      return [e.game_name, e.score];
+    });
+    const chartName = this.state.data.map((e, i, arr) => {
+      return e.game_name;
+    });
+    const chartScore = this.state.data.map((e, i, arr) => {
+      return e.score;
+    });
+    console.log(chartScore);
+    let sanitizedInput = table.filter((e, i, self) => i === self.indexOf(e));
+    console.log(table);
+    const tabledata = [["gid", 234], ["game1", 604]];
+
     return (
       <ImageBackground
         source={require("../assets/images/mobileGUI/sky_bg.png")}
@@ -102,7 +117,6 @@ export default class ProfileScreen extends Component {
           <Text style={styles.profileTitle}>{currentUser.username}</Text>
 
           <Image
-            // source={{ uri: currentUser.profile_pic }}
             source={require("../assets/images/avatarIcon.png")}
             style={styles.image}
           />
@@ -149,9 +163,18 @@ export default class ProfileScreen extends Component {
                 style={styles.head}
                 textStyle={styles.textHead}
               />
-              <Rows data={this.state.tableData} textStyle={styles.text} />
+              <Rows data={sanitizedInput} textStyle={styles.text} />
             </Table>
           </View>
+
+          <View>
+            <Image
+              source={require("../assets/images/railroadTracks.png")}
+              style={styles.linebreak}
+            />
+          </View>
+
+          <RadarChart score={chartScore} name={chartName} />
 
           <View>
             <Image

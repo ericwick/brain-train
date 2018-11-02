@@ -21,9 +21,9 @@ import TapNumber from "../components/Games/Eric/TapNumber";
 import TapNumberGame from "../components/Games/Eric/TapNumberGame";
 import AboutScreen from "../screens/AboutScreen";
 import UserStats from "../components/Profiles/UserStats";
-// import game from "../components/Games/Aftab/Tile_Tap/game";
-// import ElasticStack from "../components/Games/Aftab/ImagePicker/ElasticStack";
-// import MemoryTiles from "../components/Games/Aftab/MemoryTiles/MemoryTiles";
+import game from "../components/Games/Aftab/Tile_Tap/game";
+import MemoryTiles from "../components/Games/Aftab/MemoryTiles/MemoryTiles";
+import MemoryLanding from "../components/Games/Aftab/MemoryTiles/MemoryTiles_Landing";
 // import sequent from '../components/Games/src2/sequent';
 
 export default (AppNavigator = createStackNavigator({
@@ -46,9 +46,10 @@ export default (AppNavigator = createStackNavigator({
   Results: { screen: Results },
   TriviaGame: { screen: TriviaGame },
   About: { screen: AboutScreen },
-  UserStats: { screen: UserStats }
-  // TileGame: {screen: game },
-  // MemoryTiles: {screen: MemoryTiles},
+  UserStats: { screen: UserStats },
+  TileGame: { screen: game },
+  MemoryTiles: { screen: MemoryTiles },
+  MemoryLanding: { screen: MemoryLanding }
   // ElasticStack: {screen: ElasticStack}
   // Sequent: {screen: sequent}
 }));
