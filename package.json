@@ -26,6 +26,7 @@
     "link": "^0.1.5",
     "lodash": "^4.17.11",
     "massive": "^5.5.0",
+    "native-echarts": "^0.4.0",
     "node-adb": "^0.1.6",
     "paths-js": "^0.4.7",
     "prop-types": "^15.6.2",

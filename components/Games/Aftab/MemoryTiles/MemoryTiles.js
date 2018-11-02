@@ -66,6 +66,9 @@ export default class TapTile extends Component {
       last: 0
     };
   }
+  static navigationOptions = {
+    header: null
+  };
 
   async componentWillMount() {
     LayoutAnimation.linear();
@@ -100,9 +103,9 @@ export default class TapTile extends Component {
     let arr = [];
     for (i = 1; i <= n * n; i++) {
       if (i <= t) {
-        arr.push({number:i, opacity: 1 });
-      } else if (i > t){
-        arr.push({number:i, opacity: 1 });
+        arr.push({ number: i, opacity: 1 });
+      } else if (i > t) {
+        arr.push({ number: i, opacity: 1 });
       }
     }
     function shuffle(a) {
@@ -243,7 +246,7 @@ export default class TapTile extends Component {
             source={FAILURE_BG}
             style={{
               width: width - 40,
-              height: width,
+              height: width
               // resizeMode: "contain"
             }}
           >
@@ -297,8 +300,8 @@ export default class TapTile extends Component {
             source={SUCCESS_BG}
             style={{
               width: width - 40,
-              height: width,
-              resizeMode: "contain"
+              height: width
+              // resizeMode: "contain"
             }}
           >
             <View
@@ -377,7 +380,7 @@ export default class TapTile extends Component {
           style={{
             width: SIZE,
             height: SIZE,
-            resizeMode: "contain",
+            resizeMode: "contain"
             // position: "absolute",
             // top: -15 - SIZE / 2, //uncomment this to render properly on iPhone
             // left: -SIZE / 2
@@ -417,7 +420,7 @@ export default class TapTile extends Component {
               }
             />
           ) : (
-              //This is where the timer is rendered 
+            //This is where the timer is rendered
             <Text
               style={[
                 {
@@ -435,13 +438,10 @@ export default class TapTile extends Component {
                 }
               ]}
             >
-        
               {this.state.finished || this.state.gameOver
                 ? this.state.timeRemaining
                 : "Ten Seconds"}
-                
             </Text>
-         
           )}
           {this.renderGame()}
         </View>
@@ -480,12 +480,12 @@ export default class TapTile extends Component {
           {this.reversedKeys().map(index => {
             return (
               <View style={styles.row} key={index}>
-              {/* {taking the matrix and mapping over each row array and producing cells with an index (i) attached to them} */}
+                {/* {taking the matrix and mapping over each row array and producing cells with an index (i) attached to them} */}
                 {game[index].map((cell, i) => {
                   //parsedIndex = row number -1
                   const parsedIndex = parseFloat(index);
                   const selectedStyle =
-                    (cell.number === this.state.last + 1 ) ||
+                    cell.number === this.state.last + 1 ||
                     (this.state.finished &&
                       moveTo === parsedIndex &&
                       moveTo + 1 === cell.number);
@@ -510,30 +510,34 @@ export default class TapTile extends Component {
 
                   return (
                     <TouchableOpacity
-                    //how much tiles dissapear on click
+                      //how much tiles dissapear on click
                       focusedOpacity={0.7}
                       activeOpacity={0.7}
                       style={[styles.cell]}
                       key={index + cell + i}
                       onPress={() => {
-                        
                         console.log("Clicked");
                         this.setState({
                           gameStarted: true
                         });
-                        if (cell.number !== this.state.last + 1 ) {
-                          console.log('GameOver: moveTo, parsedIndex', moveTo , parsedIndex);
+                        if (cell.number !== this.state.last + 1) {
+                          console.log(
+                            "GameOver: moveTo, parsedIndex",
+                            moveTo,
+                            parsedIndex
+                          );
                           this.gameoverResetState();
 
                           return;
                         }
-                        this.setState({last: this.state.last+1})
+                        this.setState({ last: this.state.last + 1 });
                         this.animateGame(moveTo);
-                      if (this.state.gameStarted = true ){ 
-                        console.log('started');
-                      }
+                        if ((this.state.gameStarted = true)) {
+                          console.log("started");
+                        }
 
-                        if (moveTo === 7) { //game.length-1 is 3 here
+                        if (moveTo === 7) {
+                          //game.length-1 is 3 here
                           this.setState({
                             score:
                               (moveTo + 1) * MULTIPLIER + timeRemaining * 100,
@@ -567,7 +571,10 @@ export default class TapTile extends Component {
                       >
                         <ImageBackground
                           source={image}
-                          style={[styles.imageCell, { width: cellWidth, opacity: cell.opacity }]}
+                          style={[
+                            styles.imageCell,
+                            { width: cellWidth, opacity: cell.opacity }
+                          ]}
                         >
                           <Text
                             style={[
@@ -609,7 +616,7 @@ const styles = StyleSheet.create({
   cellText: {
     fontFamily: "CarterOne",
     fontSize: 42,
-    color: "white", 
+    color: "white"
     // opacity:0
   },
   cell: {
@@ -627,8 +634,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    height: CELL_HEIGHT,
-    resizeMode: "stretch"
+    height: CELL_HEIGHT
+    // resizeMode: "stretch"
   },
 
   cellContent: {
@@ -648,7 +655,7 @@ const styles = StyleSheet.create({
   },
 
   backgroundImage: {
-    resizeMode: "cover",
+    // resizeMode: "cover",
     height: height,
     width: width
   },

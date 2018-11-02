@@ -56,7 +56,7 @@ class LoginScreen extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    console.log('credentials', credentials);
+    console.log("credentials", credentials);
 
     await this.props.attemptLogin(credentials);
     console.log("this.props.currentUser", this.props.currentUser);
