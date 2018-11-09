@@ -16,7 +16,6 @@ import { AsyncStorage } from "react-native";
 import AppNavigator from "../navigation/AppNavigator";
 import axios from "axios";
 import { Button } from "react-native-elements";
-// import { CLIENT_RENEG_LIMIT } from "tls";
 import { connect } from "react-redux";
 import { attemptLogin, attemptRegister } from "../redux/reducer";
 
@@ -56,7 +55,7 @@ class LoginScreen extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    console.log("credentials", credentials);
+    console.log("User ID", credentials);
 
     await this.props.attemptLogin(credentials);
     console.log("this.props.currentUser", this.props.currentUser);
@@ -71,7 +70,7 @@ class LoginScreen extends Component {
           console.warn("Error adding new user");
         });
     } else {
-      console.warn("Incorrect credentials");
+      console.warn("Incorrect username/password");
     }
   }
 
@@ -81,16 +80,7 @@ class LoginScreen extends Component {
       password: this.state.password
     };
     axios
-      .post(
-        `http://${
-          __DEV__
-            ? Platform.OS === "ios"
-              ? "localhost"
-              : "172.31.99.105"
-            : production.url
-        }:3001/api/user`,
-        credentials
-      )
+      .post("http://localhost:3001/api/user")
       .then(response => {
         // If the user successfully registers, log them in and the login function will redirect to the Home page
         this.handleLogin();

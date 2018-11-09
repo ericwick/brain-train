@@ -45,8 +45,8 @@ export default class ProfileScreen extends Component {
         ["game4", 301]
       ]
     };
-    // this.buttonCheck = this.buttonCheck.bind(this);
   }
+
   static navigationOptions = {
     header: null
   };
@@ -64,15 +64,7 @@ export default class ProfileScreen extends Component {
         console.warn("Error loading current user");
       });
     axios
-      .get(
-        `http://${
-          __DEV__
-            ? Platform.OS === "ios"
-              ? "localhost"
-              : "172.31.99.105"
-            : production.url
-        }:3001/api/users`
-      )
+      .get("http://localhost:3001/api/users")
       .then(response => {
         this.setState({
           users: response.data
@@ -82,6 +74,9 @@ export default class ProfileScreen extends Component {
   }
 
   render() {
+    console.log("Current User: ", this.state.user);
+    console.log("All Users: ", this.state.users);
+
     var currentUser = [];
 
     for (var i = 0; i < this.state.users.length; i++) {
@@ -103,8 +98,10 @@ export default class ProfileScreen extends Component {
     const chartScore = this.state.data.map((e, i, arr) => {
       return e.score;
     });
+
     console.log(chartScore);
     let sanitizedInput = table.filter((e, i, self) => i === self.indexOf(e));
+
     console.log(table);
     const tabledata = [["gid", 234], ["game1", 604]];
 

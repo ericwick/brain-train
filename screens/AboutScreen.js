@@ -28,6 +28,8 @@ export default class AboutScreen extends React.Component {
   };
 
   render() {
+    // ADD OTHER GAMES ONCE THEY ARE CHANGED TO LOOK LIKE THEY FIT IN THE APPLICATION
+
     return (
       <ImageBackground
         source={require("../assets/images/mobileGUI/sky_bg.png")}

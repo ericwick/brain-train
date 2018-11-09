@@ -1,15 +1,17 @@
-const attemptLogin = (req,res,next) => {
+// NEED TO ORGANIZE DATABASE IN A WAY THAT MAKES SENSE AND RESTRUCTURE THE CONTROLLER/SERVER SO THAT THE DATA FLOW FROM FRONT TO BACK IS ORGANIZED AND EASY TO FOLLOW
+
+const attemptLogin = (req, res, next) => {
   const dbInst = req.app.get("db");
   const { username, password } = req.body;
-  console.log('received', username, 'and', password);
+  console.log("received", username, "and", password);
   dbInst
     .login([username, password])
     .then(response => {
-      console.log("response",response)
+      console.log("response", response);
       res.status(200).json(response);
     })
     .catch(err => console.log(`Error in login() - ${err}`));
-}
+};
 
 const getAllUsers = (req, res, next) => {
   const dbInst = req.app.get("db");
@@ -66,16 +68,16 @@ const addUser = (req, res, next) => {
   const dbInst = req.app.get("db");
   const { username, password } = req.body;
   dbInst
-  .add_user([username, password])
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(err => {
-    if(err.code === "23505"){
-      res.sendStatus(409)
-    } else {
-      console.log(`Error in adduser() - ${err}`)
-    }
+    .add_user([username, password])
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(err => {
+      if (err.code === "23505") {
+        res.sendStatus(409);
+      } else {
+        console.log(`Error in adduser() - ${err}`);
+      }
     });
 };
 
